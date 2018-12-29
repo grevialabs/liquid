@@ -8,7 +8,9 @@ use Input;
 use Validator;
 use Session;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
+
+use Request;
 use DB;
 
 class LogController extends ApiController {
@@ -33,6 +35,10 @@ class LogController extends ApiController {
 	public function __construct()
 	{		
 		// $this->middleware('guest');
+
+		// auth from apicontroller
+		parent::__construct();
+
 	}
 
 	/**
@@ -59,6 +65,14 @@ class LogController extends ApiController {
 	
 	public function get_list()
 	{
+		
+		// dd($response->headers); 
+		// $header = $secretkey = NULL;
+		// if (Request::header('secretkey')) {
+		// 	$header = Request::header();
+		// 	$secretkey = Request::header('secretkey');
+		// }
+
 		$attr = $result = NULL;
 		if (! empty($_GET)) $attr = $_GET;
 			
