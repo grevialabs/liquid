@@ -17,6 +17,7 @@ $router->get('/', function () use ($router) {
 
 $router->group(['prefix' => 'api/v1', ], function () use ($router)
 {		
+	$router->get('/loging', 'Api\v1\LogController@get_list_status');
 	$router->get('/log', 'Api\v1\LogController@get_list');
 	$router->get('/log/{id}', 'Api\v1\LogController@get');
 	$router->post('/log', 'Api\v1\LogController@save');

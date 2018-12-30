@@ -44,8 +44,20 @@ class ApiController extends Controller {
 		$header = $secretkey = NULL;
 
 		if (Request::header('secretkey')) {
-			$header = Request::header();
 			$secretkey = Request::header('secretkey');
+		}
+
+		if (isset($_GET['secretkey'])) {
+			$secretkey = $_GET['secretkey'];
+		}
+		
+		if (isset($_POST['secretkey'])) {
+			$secretkey = $_POST['secretkey'];
+		}
+
+		if ($secretkey) {
+			$header = Request::header();
+			// $secretkey = Request::header('secretkey');
 
 			// Check secretkey exist and valid
 			$q = 'SELECT * FROM scr_token WHERE token = "'.$secretkey.'"';

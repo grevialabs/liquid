@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Redirect;
 use Request;
 use DB;
 
+// namespace App;
+
+use App\Models\LogModel;
+
 class LogController extends ApiController {
 
 	/*
@@ -39,6 +43,54 @@ class LogController extends ApiController {
 		// auth from apicontroller
 		parent::__construct();
 
+	}
+
+	// with eloqueen
+	public function get_list_status()
+	{
+		// $log = LogModel::all();
+		// $log = LogModel::where('log_id',3)
+		// $log = LogModel::whereName('mantap')
+		$log = LogModel::whereStatus('1')
+						->get()
+						->all();
+						// ->toSql()->get();
+		// $data = 
+
+						// $log = $logModel->toSql();
+		echo json_encode($log);
+
+		// $log = $this->sql_debug($log);
+		// debug($log);
+		die;
+		// debug($log);
+		// debug('mantap from model<hr/>');
+		// debug($log,1);
+		// echo $log->
+	}
+
+	public function sql_debug($sql_string, array $params = null) {
+		if (!empty($params)) {
+			$indexed = $params == array_values($params);
+			foreach($params as $k=>$v) {
+				if (is_object($v)) {
+					if ($v instanceof \DateTime) $v = $v->format('Y-m-d H:i:s');
+					else continue;
+				}
+				elseif (is_string($v)) $v="'$v'";
+				elseif ($v === null) $v='NULL';
+				elseif (is_array($v)) $v = implode(',', $v);
+	
+				if ($indexed) {
+					$sql_string = preg_replace('/\?/', $v, $sql_string, 1);
+				}
+				else {
+					if ($k[0] != ':') $k = ':'.$k; //add leading colon if it was left out
+					$sql_string = str_replace($k,$v,$sql_string);
+				}
+			}
+		}
+		return $sql_string;
 	}
 
 	/**
