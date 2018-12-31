@@ -27,4 +27,11 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
     // $router->get('/log/list', 'Api\v1\LogController@get_list');
 	
 	// Route::delete('/log/delete', 'Api\V1Controller@log')->name('log4');
+	
+	$router->get('/article', 'Api\v1\ArticleController@get_list');
+	$router->get('/article/get_list', 'Api\v1\ArticleController@get_list');
+	$router->get('/article/{id}', 'Api\v1\ArticleController@get');
+	$router->post('/article', 'Api\v1\ArticleController@save');
+	$router->put('/article', 'Api\v1\ArticleController@update');
+    $router->delete('/article', 'Api\v1\ArticleController@delete');
 });

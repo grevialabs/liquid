@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class LogModel extends Model
+class ArticleModel extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'tr_log';
+    protected $table = 'ms_article';
 
     protected $fillables;
 

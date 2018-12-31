@@ -41,26 +41,26 @@ class ApiController extends Controller {
 	public function authToken() 
 	{
 		$is_valid = FALSE;
-		$header = $secretkey = NULL;
+		$header = $token = NULL;
 
-		if (Request::header('secretkey')) {
-			$secretkey = Request::header('secretkey');
+		if (Request::header('token')) {
+			$token = Request::header('token');
 		}
 
-		if (isset($_GET['secretkey'])) {
-			$secretkey = $_GET['secretkey'];
+		if (isset($_GET['token'])) {
+			$token = $_GET['token'];
 		}
 		
-		if (isset($_POST['secretkey'])) {
-			$secretkey = $_POST['secretkey'];
+		if (isset($_POST['token'])) {
+			$token = $_POST['token'];
 		}
 
-		if ($secretkey) {
+		if ($token) {
 			$header = Request::header();
-			// $secretkey = Request::header('secretkey');
+			// $token = Request::header('token');
 
-			// Check secretkey exist and valid
-			$q = 'SELECT * FROM scr_token WHERE token = "'.$secretkey.'"';
+			// Check token exist and valid
+			$q = 'SELECT * FROM ms_token WHERE token = "'.$token.'"';
 			$check = orm_get($q);
 
 			// debug($check,1);
