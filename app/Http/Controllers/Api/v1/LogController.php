@@ -28,7 +28,12 @@ class LogController extends ApiController {
 	| controller as you wish. It is just here to get your app started!
 	|
     */
-    public $table = 'scr_log';
+    public $table = 'tr_log';
+    // $logmodel = new LogModel();
+    // public $table = $logmodel->table();
+    // table;
+
+    // public $table = $;
     public $primary_key = 'log_id';
 	
 	/**
@@ -43,15 +48,17 @@ class LogController extends ApiController {
 		// auth from apicontroller
 		parent::__construct();
 
-	}
+    }
 
 	// with eloqueen
 	public function get_list_status()
 	{
 		// $log = LogModel::all();
 		// $log = LogModel::where('log_id',3)
-		// $log = LogModel::whereName('mantap')
-		$log = LogModel::whereStatus('1')
+        // $log = LogModel::whereName('mantap')
+        $log = $data = NULL;
+		$log['rowcount'] = 9;
+		$log['data'] = LogModel::whereStatus('1')
 						->get()
 						->all();
 						// ->toSql()->get();
@@ -103,7 +110,7 @@ class LogController extends ApiController {
 		$attr = NULL;
 		if (! empty($_GET)) $attr = $_GET;
 			
-		$q = 'SELECT * FROM scr_log WHERE 1';
+		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
 		if (isset($attr['log_id']) && $attr['log_id'] != '') 
 		{
@@ -128,7 +135,7 @@ class LogController extends ApiController {
 		$attr = $result = NULL;
 		if (! empty($_GET)) $attr = $_GET;
 			
-		$q = 'SELECT * FROM scr_log WHERE 1';
+		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
 		if (isset($attr['log_id']) && $attr['log_id'] != '') 
 		{
