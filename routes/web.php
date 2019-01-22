@@ -40,4 +40,11 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
 	$router->post('/article', 'Api\v1\ArticleController@save');
 	$router->put('/article', 'Api\v1\ArticleController@update');
     $router->delete('/article', 'Api\v1\ArticleController@delete');
+	
+	$router->get('/company', 'Api\v1\CompanyController@get_list');
+	$router->get('/company/get_list', 'Api\v1\CompanyController@get_list');
+	$router->get('/company/{id}', 'Api\v1\CompanyController@get');
+	$router->post('/company', 'Api\v1\CompanyController@save');
+	$router->put('/company', 'Api\v1\CompanyController@update');
+    $router->delete('/company', 'Api\v1\CompanyController@delete');
 });

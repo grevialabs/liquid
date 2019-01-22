@@ -6,10 +6,10 @@ USE klbox;
 -- DONE - 15jan2019
 CREATE TABLE ms_company(
 company_id INT NOT NULL AUTO_INCREMENT,
-name varchar(150) NULL DEFAULT NULL,
-address varchar(255) NULL DEFAULT NULL,
-phone varchar(50) NULL DEFAULT NULL,
-pic_name varchar(150) NULL DEFAULT NULL,
+company_name varchar(150) NULL DEFAULT NULL,
+company_address varchar(255) NULL DEFAULT NULL,
+company_phone varchar(50) NULL DEFAULT NULL,
+company_pic varchar(150) NULL DEFAULT NULL,
 status tinyint NULL DEFAULT 1,
 created_at datetime NULL DEFAULT NULL,
 created_by varchar(25) NULL DEFAULT NULL,
