@@ -106,26 +106,21 @@ class CompanyController extends ApiController {
 			
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
-		if (isset($attr['keyword']) && $attr['keyword'] != '') 
-		{
+		if (isset($attr['keyword']) && $attr['keyword'] != '') {
 			$q.= ' AND company_name LIKE '.replace_quote($attr['keyword'],'like');
 			$q.= ' AND company_name LIKE '.replace_quote($attr['keyword'],'like');
 			$q.= ' AND company_name LIKE '.replace_quote($attr['keyword'],'like');
         }
 		
-		if (isset($attr['company_id']) && $attr['company_id'] != '') 
-		{
+		if (isset($attr['company_id']) && $attr['company_id'] != '') {
 			$q.= ' AND company_id = '.$attr['company_id'];
         }
         
-        $result['totaldata'] = count(orm_get_list($q));
+        $result['total_rows'] = count(orm_get_list($q));
 		
-		if (isset($attr['order'])) 
-		{ 
+		if (isset($attr['order'])) { 
 			$q.= ' ORDER BY ' . $attr['order'];
-		}
-		else 
-		{
+		} else  {
 			$q.= ' ORDER BY company_id DESC ';
 		}
 		
@@ -135,31 +130,22 @@ class CompanyController extends ApiController {
 			if (! isset($attr['perpage'])) $attr['perpage'] = PERPAGE;
 		}
 		
-		if (isset($attr['offset'])) 
-		{ 
+		if (isset($attr['offset'])) { 
 			$q.= ' LIMIT ' . $attr['offset'];
 			
 			if (! isset($attr['perpage'])) $attr['perpage'] = PERPAGE;
-				
+			
 			$q.= ', ' . $attr['perpage'];
 		}
-		
-        // }
-		
-		// else 
-		// {
-			
-		// }
 
 		$data = orm_get_list($q);
-        $result['rowdata'] =  $data;
+        $result['data'] = $data;
         
-        $result = json_encode($result);
-        echo $result;
-        // debug($result);
-		// die;
-	}
+        echo json_encode($result); 
+		die;
 		
+	}
+
 	public function save()
 	{
         $attr = $result = NULL;
