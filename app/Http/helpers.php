@@ -81,4 +81,15 @@ function getSql($model)
     return $sql;
 }
 
+function replace_quote($str, $type='str')
+{
+	$str = "'" . $str . "'";
+	
+	if ($type == 'like') {
+		$str = "'%" . $str . "%'";
+	}
+		
+	return $str;
+}
+
 ?>

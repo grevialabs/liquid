@@ -49,7 +49,7 @@ class CompanyController extends ApiController {
 	public function get_list_status()
 	{
 		// $log = ArticleModel::all();
-		// $log = ArticleModel::where('log_id',3)
+		// $log = ArticleModel::where('company_id',3)
 		// $log = ArticleModel::whereName('mantap')
 		$log = ArticleModel::whereStatus('1')
 						->get()
@@ -69,30 +69,6 @@ class CompanyController extends ApiController {
 		// echo $log->
 	}
 
-	public function sql_debug($sql_string, array $params = null) {
-		if (!empty($params)) {
-			$indexed = $params == array_values($params);
-			foreach($params as $k=>$v) {
-				if (is_object($v)) {
-					if ($v instanceof \DateTime) $v = $v->format('Y-m-d H:i:s');
-					else continue;
-				}
-				elseif (is_string($v)) $v="'$v'";
-				elseif ($v === null) $v='NULL';
-				elseif (is_array($v)) $v = implode(',', $v);
-	
-				if ($indexed) {
-					$sql_string = preg_replace('/\?/', $v, $sql_string, 1);
-				}
-				else {
-					if ($k[0] != ':') $k = ':'.$k; //add leading colon if it was left out
-					$sql_string = str_replace($k,$v,$sql_string);
-				}
-			}
-		}
-		return $sql_string;
-	}
-
 	/**
 	 * Show the application dashboard to the user.
 	 *
@@ -105,9 +81,9 @@ class CompanyController extends ApiController {
 			
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
-		if (isset($attr['log_id']) && $attr['log_id'] != '') 
+		if (isset($attr['company_id']) && $attr['company_id'] != '') 
 		{
-			$q.= ' AND log_id = '.$attr['log_id'];
+			$q.= ' AND company_id = '.$attr['company_id'];
 		}
 		
 		$data = orm_get($q,NULL,'json');
@@ -130,30 +106,50 @@ class CompanyController extends ApiController {
 			
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
-		if (isset($attr['log_id']) && $attr['log_id'] != '') 
+		if (isset($attr['keyword']) && $attr['keyword'] != '') 
 		{
-			$q.= ' AND log_id = '.$attr['log_id'];
+			$q.= ' AND company_name LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' AND company_name LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' AND company_name LIKE '.replace_quote($attr['keyword'],'like');
         }
-
-        if (isset($attr['order'])) {
-            $q.= ' ORDER BY ' . $attr['order'];
-        }
-        
-        // $result['']
 		
-        // debug($data);
+		if (isset($attr['company_id']) && $attr['company_id'] != '') 
+		{
+			$q.= ' AND company_id = '.$attr['company_id'];
+        }
         
         $result['totaldata'] = count(orm_get_list($q));
-
-        if (isset($attr['paging']) && $attr['paging'] != '') 
+		
+		if (isset($attr['order'])) 
+		{ 
+			$q.= ' ORDER BY ' . $attr['order'];
+		}
+		else 
 		{
-            $q.= ' AND log_id = '.$attr['log_id'];
-            
-            if (isset($attr['offset'])) $q.= ' LIMIT ' . $attr['offset'];
-            if (isset($attr['limit'])) $q.= ', ' . $attr['limit'];
-
-            
-        }
+			$q.= ' ORDER BY company_id DESC ';
+		}
+		
+		// set default paging
+		if (! isset($attr['paging'])) {
+			if (! isset($attr['offset'])) $attr['offset'] = OFFSET;
+			if (! isset($attr['perpage'])) $attr['perpage'] = PERPAGE;
+		}
+		
+		if (isset($attr['offset'])) 
+		{ 
+			$q.= ' LIMIT ' . $attr['offset'];
+			
+			if (! isset($attr['perpage'])) $attr['perpage'] = PERPAGE;
+				
+			$q.= ', ' . $attr['perpage'];
+		}
+		
+        // }
+		
+		// else 
+		// {
+			
+		// }
 
 		$data = orm_get_list($q);
         $result['rowdata'] =  $data;

@@ -69,9 +69,11 @@ class ApiController extends Controller {
 			// Check token registered and not expired then valid 
 			if ($check) {
 				$is_valid = TRUE;
+			} else {
+				$message['message'] = ERROR_SECRETKEY_INVALID;
 			}
 		} else {
-			$message['message'] = ERROR_SECRETKEY_INVALID;
+			$message['message'] = ERROR_SECRETKEY_NO_EXIST;
 		}
 
 		// debug('gokil',1);
