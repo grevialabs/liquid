@@ -79,8 +79,8 @@ class ApiController extends Controller {
 		// debug('gokil',1);
 		if (! $is_valid) {
 
-			echo json_encode($message);
-			die;
+			// echo json_encode($message);
+			// die;
 		}
 	}
 

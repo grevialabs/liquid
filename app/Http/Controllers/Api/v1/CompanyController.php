@@ -157,9 +157,11 @@ class CompanyController extends ApiController {
             
             if ($save) {
                 $result['last_insert_id'] = DB::getPdo()->lastInsertId();
+				$result['is_success'] = 1;
                 $result['message'] = 'success';
             } else {
                 // $result['
+				$result['is_success'] = 0;
                 $result['message'] = 'failed';
             }
         }
@@ -189,16 +191,18 @@ class CompanyController extends ApiController {
             // unset($attr[$this->primary_key]);
 
             
-            DB::enableQueryLog();
+            // DB::enableQueryLog();
 
             $update = DB::table($this->table)
                 ->where($this->primary_key, $param_where)
                 ->update($attr);
-            // dd($update);
+				
             if ($update) {
+                $result['is_success'] = 1;
                 $result['message'] = 'update success';
                 $result['debug'] = DB::getQueryLog();
             } else {
+                $result['is_success'] = 0;
                 $result['message'] = 'update failed';
                 $result['debug'] = DB::getQueryLog();
                 // $result['query'] = $update->toSql();
