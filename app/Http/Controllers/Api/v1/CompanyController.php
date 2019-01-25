@@ -107,9 +107,12 @@ class CompanyController extends ApiController {
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
 		if (isset($attr['keyword']) && $attr['keyword'] != '') {
-			$q.= ' AND company_name LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' AND company_name LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' AND company_name LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' AND ( ';
+			$q.= ' company_name LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR company_address LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR company_phone LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR company_pic LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ')';
         }
 		
 		if (isset($attr['company_id']) && $attr['company_id'] != '') {
@@ -120,8 +123,9 @@ class CompanyController extends ApiController {
 		
 		if (isset($attr['order'])) { 
 			$q.= ' ORDER BY ' . $attr['order'];
+			if (isset($attr['orderby'])) $q .= ' '.$attr['orderby']; 
 		} else  {
-			$q.= ' ORDER BY company_id DESC ';
+			$q.= ' ORDER BY company_id DESC';
 		}
 		
 		// set default paging

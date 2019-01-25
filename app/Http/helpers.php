@@ -82,12 +82,13 @@ function getSql($model)
 
 function replace_quote($str, $type='str')
 {
-	$str = "'" . $str . "'";
-	
 	if ($type == 'like') {
 		$str = "'%" . $str . "%'";
-	}
+	} else {
 		
+		$str = "'" . $str . "'";
+	}
+	
 	return $str;
 }
 
