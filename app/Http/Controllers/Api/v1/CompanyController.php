@@ -10,7 +10,7 @@ use Session;
 use Illuminate\Support\Facades\Redirect;
 // use Illuminate\Http\Request;
 
-use Request;
+// use Request;
 use DB;
 
 // namespace App;
@@ -60,13 +60,7 @@ class CompanyController extends ApiController {
 						// $log = $logModel->toSql();
 		echo json_encode($log);
 
-		// $log = $this->sql_debug($log);
-		// debug($log);
 		die;
-		// debug($log);
-		// debug('mantap from model<hr/>');
-		// debug($log,1);
-		// echo $log->
 	}
 
 	/**
@@ -86,8 +80,8 @@ class CompanyController extends ApiController {
 			$q.= ' AND company_id = '.$attr['company_id'];
 		}
 		
-		$data = orm_get($q,NULL,'json');
-		debug($data);
+		$data = orm_get($q);
+		echo json_encode($data);
 		die;
 	}
 	
@@ -147,7 +141,6 @@ class CompanyController extends ApiController {
         
         echo json_encode($result); 
 		die;
-		
 	}
 
 	public function save()
@@ -155,8 +148,7 @@ class CompanyController extends ApiController {
         $attr = $result = NULL;
 		if (! empty($_POST)) $attr = $_POST;
         
-        if (! empty($attr)) 
-        {
+        if (! empty($attr)) {
             $save = DB::table($this->table)->insert($attr);
             
             if ($save) {
@@ -164,7 +156,6 @@ class CompanyController extends ApiController {
 				$result['is_success'] = 1;
                 $result['message'] = 'success';
             } else {
-                // $result['
 				$result['is_success'] = 0;
                 $result['message'] = 'failed';
             }
@@ -172,7 +163,6 @@ class CompanyController extends ApiController {
 
         echo json_encode($result);
         die;
-		
 	}
 	
 	public function update()
@@ -180,22 +170,29 @@ class CompanyController extends ApiController {
 		$attr = $result = NULL;
         // if (! empty($_PUT)) $attr = $_PUT;
 
-        if ($_SERVER['REQUEST_METHOD'] == 'PUT')
-        {
+        if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
             parse_str(file_get_contents("php://input"), $_PUT);
         }
 
         $attr = $_PUT;
+		
+		$result['is_success'] = 0;
+        $result['message'] = 'no data';
         
         if (! empty($attr)) 
         {
-            if (! isset($this->primary_key)) debug($this->primary_key . ' must be filled.');
+            if (! isset($attr[$this->primary_key])) {
+				$result['message'] = $this->primary_key . ' must be filled.';
+			}
+			
+			// Print error if exist
+			if ($result['is_success']) {
+				echo json_encode($result);
+				die;
+			}
 
             $param_where = $attr[$this->primary_key];
-            // unset($attr[$this->primary_key]);
-
-            
-            // DB::enableQueryLog();
+            unset($attr[$this->primary_key]);
 
             $update = DB::table($this->table)
                 ->where($this->primary_key, $param_where)
@@ -204,24 +201,66 @@ class CompanyController extends ApiController {
             if ($update) {
                 $result['is_success'] = 1;
                 $result['message'] = 'update success';
-                $result['debug'] = DB::getQueryLog();
+                // $result['debug'] = DB::getQueryLog();
             } else {
                 $result['is_success'] = 0;
                 $result['message'] = 'update failed';
-                $result['debug'] = DB::getQueryLog();
+                // $result['debug'] = DB::getQueryLog();
                 // $result['query'] = $update->toSql();
             }
         }
 
-        // echo json_encode($result);
-        debug($result);
+        echo json_encode($result);
         die;
 	}
 	
 	public function delete()
 	{
-		echo "hello delete log";
-		die;
+		$attr = $result = NULL;
+        // if (! empty($_PUT)) $attr = $_PUT;
+
+        if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
+            parse_str(file_get_contents("php://input"), $_DELETE);
+        }
+
+        $attr = $_DELETE;
+		
+		$result['is_success'] = 0;
+        $result['message'] = 'no data';
+        
+        if (! empty($attr)) 
+        {
+            if (! isset($attr[$this->primary_key])) {
+				$result['message'] = $this->primary_key . ' must be filled.';
+			}
+			
+			// Print error if exist
+			if ($result['is_success']) {
+				echo json_encode($result);
+				die;
+			}
+
+            $param_where = $attr[$this->primary_key];
+            unset($attr[$this->primary_key]);
+
+            $update = DB::table($this->table)
+                ->where($this->primary_key, $param_where)
+                ->update($attr);
+				
+            if ($update) {
+                $result['is_success'] = 1;
+                $result['message'] = 'delete success';
+                // $result['debug'] = DB::getQueryLog();
+            } else {
+                $result['is_success'] = 0;
+                $result['message'] = 'delete failed';
+                // $result['debug'] = DB::getQueryLog();
+                // $result['query'] = $update->toSql();
+            }
+        }
+
+        echo json_encode($result);
+        die;
 	}
 	
 	public function __destruct()
