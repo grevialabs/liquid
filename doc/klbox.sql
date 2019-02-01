@@ -30,20 +30,25 @@ AUTO_INCREMENT=1;
 -- DONE - 15jan2019
 CREATE TABLE ms_user(
 user_id int NOT NULL AUTO_INCREMENT,
-username varchar(100) NULL DEFAULT NULL,
+user_code varchar(100) NULL DEFAULT NULL,
+site_id int NULL,
+parent_user_id int NULL,
+level_id int NULL,
 firstname varchar(100) NULL DEFAULT NULL,
 lastname varchar(100) NULL DEFAULT NULL,
-thepassword varchar(120) NULL DEFAULT NULL,
 
-jobtitle varchar(120) NULL DEFAULT NULL,
+quota_initial 
+quota_additional
+quota_remaining
+job_title varchar(120) NULL DEFAULT NULL,
 division varchar(120) NULL DEFAULT NULL,
 email varchar(120) NULL DEFAULT NULL,
-user_category varchar(120) NULL DEFAULT NULL,
-counter_wrong ?? varchar(120) NULL DEFAULT NULL,
-pass varchar(120) NULL DEFAULT NULL,
-status_lock varchar(120) NULL DEFAULT NULL,
+user_category varchar(100) NULL DEFAULT NULL,
+password varchar(120) NULL DEFAULT NULL,
+counter_wrong_pass tinyint NULL DEFAULT 0,
+status_lock tinyint NULL DEFAULT 0,
 locked_time varchar(120) NULL DEFAULT NULL,
-reset_by varchar(120) NULL DEFAULT NULL,
+reset_by varchar(100) NULL DEFAULT NULL,
 reset_time varchar(120) NULL DEFAULT NULL,
 
 status tinyint NULL DEFAULT 1,
@@ -452,9 +457,14 @@ ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
 CREATE TABLE tr_log (
-log_id int not null auto_increment,
+log_id bigint not null auto_increment,
 name varchar(100) NULL,
+url varchar(200) NULL,
 data text NULL,
+json text NULL,
+created_at datetime NULL DEFAULT NULL,
+created_by varchar(25) NULL DEFAULT NULL,
+created_ip varchar(25) NULL DEFAULT NULL,
 primary key(log_id)
 )COLLATE='utf8mb4_general_ci'
 ENGINE=InnoDB
