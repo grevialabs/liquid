@@ -47,4 +47,18 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
 	$router->post('/company', 'Api\v1\CompanyController@save');
 	$router->put('/company', 'Api\v1\CompanyController@update');
     $router->delete('/company', 'Api\v1\CompanyController@delete');
+
+    $router->get('/user', 'Api\v1\UserController@get_list');
+	$router->get('/user/get_list', 'Api\v1\UserController@get_list');
+	$router->get('/user/{id}', 'Api\v1\UserController@get');
+	$router->post('/user', 'Api\v1\UserController@save');
+	$router->put('/user', 'Api\v1\UserController@update');
+    $router->delete('/user', 'Api\v1\UserController@delete');
+
+    // $router->get('/', 'Api\v1\Controller@get_list');
+	// $router->get('/get_list', 'Api\v1\Controller@get_list');
+	// $router->get('/{id}', 'Api\v1\Controller@get');
+	// $router->post('/', 'Api\v1\Controller@save');
+	// $router->put('/', 'Api\v1\Controller@update');
+    // $router->delete('/', 'Api\v1\Controller@delete');
 });

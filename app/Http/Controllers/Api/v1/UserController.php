@@ -15,7 +15,7 @@ use DB;
 
 use App\Models\CompanyModel;
 
-class CompanyController extends ApiController {
+class UserController extends ApiController {
 
 	/*
 	|--------------------------------------------------------------------------
@@ -26,9 +26,9 @@ class CompanyController extends ApiController {
 	| controller as you wish. It is just here to get your app started!
 	|
     */
-    public $table = 'ms_company';
-    public $primary_key = 'company_id';
-    public $list_column = array('company_id', 'company_name', 'company_address', 'company_phone', 'company_pic', 'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
+    public $table = 'ms_user';
+    public $primary_key = 'user_id';
+    public $list_column = array('user_id', 'site_id', 'parent_user_id', 'level_id','user_code', 'firstname', 'lastname', 'quota_initial', 'quota_additional', 'quota_remaining', 'job_title', 'division', 'email', 'user_category', 'password', 'counter_wrong_pass', 'status_lock', 'locked_time', 'reset_by', 'reset_time',  'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
 	
 	/**
 	 * Create a new controller instance.
@@ -44,24 +44,6 @@ class CompanyController extends ApiController {
 
 	}
 
-	// with eloqueen
-	public function get_list_status()
-	{
-		// $log = ArticleModel::all();
-		// $log = ArticleModel::where('company_id',3)
-		// $log = ArticleModel::whereName('mantap')
-		$log = ArticleModel::whereStatus('1')
-						->get()
-						->all();
-						// ->toSql()->get();
-		// $data = 
-
-						// $log = $logModel->toSql();
-		echo json_encode($log);
-
-		die;
-	}
-
 	/**
 	 * Show the application dashboard to the user.
 	 *
@@ -74,9 +56,9 @@ class CompanyController extends ApiController {
 			
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
-		if (isset($attr['company_id']) && $attr['company_id'] != '') 
+		if (isset($attr['user_id']) && $attr['user_id'] != '') 
 		{
-			$q.= ' AND company_id = '.$attr['company_id'];
+			$q.= ' AND user_id = '.$attr['user_id'];
 		}
 		
 		$data = orm_get($q);
@@ -100,8 +82,8 @@ class CompanyController extends ApiController {
 			$q.= ')';
         }
 		
-		if (isset($attr['company_id']) && $attr['company_id'] != '') {
-			$q.= ' AND company_id = '.$attr['company_id'];
+		if (isset($attr['user_id']) && $attr['user_id'] != '') {
+			$q.= ' AND user_id = '.$attr['user_id'];
         }
         
         $result['total_rows'] = count(orm_get_list($q));
@@ -136,11 +118,10 @@ class CompanyController extends ApiController {
 
 	public function save()
 	{
-        $post = $attr = $result = NULL;
-		if (! empty($_POST)) $post = $_POST;
+        $attr = $result = NULL;
+		if (! empty($_POST)) $attr = $_POST;
 		
-		// validate_column
-		$attr = validate_column($this->list_column, $post);
+		// $columns
         
         if (! empty($attr)) {
             $save = DB::table($this->table)->insert($attr);
