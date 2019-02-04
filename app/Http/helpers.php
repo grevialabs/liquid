@@ -92,4 +92,19 @@ function replace_quote($str, $type='str')
 	return $str;
 }
 
+// still not working correctly
+function validate_column($arrsource,$arrtarget) {
+	
+	if (empty($arrsource) || empty($arrtarget)) {
+		return 'helper error: validate_column error parameter';
+	}	
+	
+	$temp = NULL;
+	foreach ($arrsource as $rs) {
+		if (isset($arrtarget[$rs])) $temp[$rs] = $arrtarget[$rs];
+	}
+	
+	return $temp;
+}
+
 ?>

@@ -30,6 +30,7 @@ class CompanyController extends ApiController {
     */
     public $table = 'ms_company';
     public $primary_key = 'company_id';
+    public $list_column = array('company_id', 'company_name', 'company_address', 'company_phone', 'company_pic', 'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
 	
 	/**
 	 * Create a new controller instance.
@@ -147,6 +148,8 @@ class CompanyController extends ApiController {
 	{
         $attr = $result = NULL;
 		if (! empty($_POST)) $attr = $_POST;
+		
+		// $columns
         
         if (! empty($attr)) {
             $save = DB::table($this->table)->insert($attr);
@@ -167,14 +170,17 @@ class CompanyController extends ApiController {
 	
 	public function update()
 	{
-		$attr = $result = NULL;
+		$put = $attr = $result = NULL;
         // if (! empty($_PUT)) $attr = $_PUT;
 
         if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
             parse_str(file_get_contents("php://input"), $_PUT);
         }
 
-        $attr = $_PUT;
+        $put = $_PUT;
+		
+		// validate_column
+		$attr = validate_column($this->list_column, $put);
 		
 		$result['is_success'] = 0;
         $result['message'] = 'no data';
