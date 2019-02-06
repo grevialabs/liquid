@@ -54,6 +54,34 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
 	$router->post('/user', 'Api\v1\UserController@save');
 	$router->put('/user', 'Api\v1\UserController@update');
     $router->delete('/user', 'Api\v1\UserController@delete');
+	
+	$router->get('/site', 'Api\v1\SiteController@get_list');
+	$router->get('/site/get_list', 'Api\v1\SiteController@get_list');
+	$router->get('/site/{id}', 'Api\v1\SiteController@get');
+	$router->post('/site', 'Api\v1\SiteController@save');
+	$router->put('/site', 'Api\v1\SiteController@update');
+    $router->delete('/site', 'Api\v1\SiteController@delete');
+	
+	$router->get('/pic', 'Api\v1\PicController@get_list');
+	$router->get('/pic/get_list', 'Api\v1\PicController@get_list');
+	$router->get('/pic/{id}', 'Api\v1\PicController@get');
+	$router->post('/pic', 'Api\v1\PicController@save');
+	$router->put('/pic', 'Api\v1\PicController@update');
+    $router->delete('/pic', 'Api\v1\PicController@delete');
+	
+	$router->get('/level', 'Api\v1\LevelController@get_list');
+	$router->get('/level/get_list', 'Api\v1\LevelController@get_list');
+	$router->get('/level/{id}', 'Api\v1\LevelController@get');
+	$router->post('/level', 'Api\v1\LevelController@save');
+	$router->put('/level', 'Api\v1\LevelController@update');
+    $router->delete('/level', 'Api\v1\LevelController@delete');
+	
+	$router->get('/reason', 'Api\v1\ReasonController@get_list');
+	$router->get('/reason/get_list', 'Api\v1\ReasonController@get_list');
+	$router->get('/reason/{id}', 'Api\v1\ReasonController@get');
+	$router->post('/reason', 'Api\v1\ReasonController@save');
+	$router->put('/reason', 'Api\v1\ReasonController@update');
+    $router->delete('/reason', 'Api\v1\ReasonController@delete');
 
     // $router->get('/', 'Api\v1\Controller@get_list');
 	// $router->get('/get_list', 'Api\v1\Controller@get_list');

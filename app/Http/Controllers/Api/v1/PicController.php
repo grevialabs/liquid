@@ -28,7 +28,7 @@ class PicController extends ApiController {
     */
     public $table = 'ms_pic';
     public $primary_key = 'pic_id';
-    public $list_column = array('', 'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
+    public $list_column = array('pic_id','site_id','pic_name','pic_phone','pic_email', 'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
 	
 	/**
 	 * Create a new controller instance.
@@ -42,24 +42,6 @@ class PicController extends ApiController {
 		// auth from apicontroller
 		parent::__construct();
 
-	}
-
-	// with eloqueen
-	public function get_list_status()
-	{
-		// $log = ArticleModel::all();
-		// $log = ArticleModel::where('company_id',3)
-		// $log = ArticleModel::whereName('mantap')
-		$log = ArticleModel::whereStatus('1')
-						->get()
-						->all();
-						// ->toSql()->get();
-		// $data = 
-
-						// $log = $logModel->toSql();
-		echo json_encode($log);
-
-		die;
 	}
 
 	/**

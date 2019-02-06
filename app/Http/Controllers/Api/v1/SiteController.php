@@ -28,7 +28,7 @@ class SiteController extends ApiController {
     */
     public $table = 'ms_site';
     public $primary_key = 'site_id';
-    public $list_column = array('', 'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
+    public $list_column = array('site_id','company_id','site_name','site_address','site_qty_value','flag_qty_value','method_calc','start_date_counting', 'reset_days', 'lgoo_file_name', 'chamber_sync_flag', 'field_sync', 'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
 	
 	/**
 	 * Create a new controller instance.
