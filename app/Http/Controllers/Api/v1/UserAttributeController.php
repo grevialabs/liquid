@@ -125,10 +125,11 @@ class UserAttributeController extends ApiController {
 
 	public function save()
 	{
-        $attr = $result = NULL;
-		if (! empty($_POST)) $attr = $_POST;
+        $post = $attr = $result = NULL;
+		if (! empty($_POST)) $post = $_POST;
 		
-		// $columns
+		// validate_column
+		$attr = validate_column($this->list_column, $post);
         
         if (! empty($attr)) {
             $save = DB::table($this->table)->insert($attr);

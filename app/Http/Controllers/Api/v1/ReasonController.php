@@ -93,10 +93,8 @@ class ReasonController extends ApiController {
 		
 		if (isset($attr['keyword']) && $attr['keyword'] != '') {
 			$q.= ' AND ( ';
-			$q.= ' company_name LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR company_address LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR company_phone LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR company_pic LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' reason_id LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR reason_value LIKE '.replace_quote($attr['keyword'],'like');
 			$q.= ')';
         }
 		

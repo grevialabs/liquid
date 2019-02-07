@@ -28,7 +28,7 @@ class SiteController extends ApiController {
     */
     public $table = 'ms_site';
     public $primary_key = 'site_id';
-    public $list_column = array('site_id','company_id','site_name','site_address','site_qty_value','flag_qty_value','method_calc','start_date_counting', 'reset_days', 'lgoo_file_name', 'chamber_sync_flag', 'field_sync', 'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
+    public $list_column = array('site_id','company_id','site_name','site_address','site_qty_value','flag_qty_value','method_calc','start_date_counting', 'reset_days', 'logo_file_name', 'chamber_sync_flag', 'field_sync', 'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
 	
 	/**
 	 * Create a new controller instance.
@@ -92,12 +92,19 @@ class SiteController extends ApiController {
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
 		if (isset($attr['keyword']) && $attr['keyword'] != '') {
+			// array('site_id','company_id','site_name','site_address','site_qty_value','flag_qty_value','method_calc','start_date_counting', 'reset_days', 'logo_file_name', 'chamber_sync_flag', 'field_sync', 'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
+			
 			$q.= ' AND ( ';
-			$q.= ' company_name LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR company_address LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR company_phone LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR company_pic LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' site_id LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR site_name LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR site_address LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR method_calc LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR logo_file_name LIKE '.replace_quote($attr['keyword'],'like');
 			$q.= ')';
+        }
+		
+		if (isset($attr['site_id']) && $attr['site_id'] != '') {
+			$q.= ' AND site_id = '.$attr['site_id'];
         }
 		
 		if (isset($attr['company_id']) && $attr['company_id'] != '') {

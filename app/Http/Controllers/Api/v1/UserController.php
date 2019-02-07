@@ -74,11 +74,17 @@ class UserController extends ApiController {
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
 		if (isset($attr['keyword']) && $attr['keyword'] != '') {
+			
+			array('user_id', 'site_id', 'parent_user_id', 'level_id','user_code', 'firstname', 'lastname', 'quota_initial', 'quota_additional', 'quota_remaining', 'job_title', 'division', 'email', 'user_category', 'password', 'counter_wrong_pass', 'status_lock', 'locked_time', 'reset_by', 'reset_time',  'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
+			
 			$q.= ' AND ( ';
-			$q.= ' company_name LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR company_address LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR company_phone LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR company_pic LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' user_code LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR CONCAT(firstname, " ", lastname) LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR lastname LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR job_title LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR division LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR email LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR user_category LIKE '.replace_quote($attr['keyword'],'like');
 			$q.= ')';
         }
 		

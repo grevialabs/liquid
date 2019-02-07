@@ -72,13 +72,12 @@ class PicController extends ApiController {
 		if (! empty($_GET)) $attr = $_GET;
 			
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
-		
+
 		if (isset($attr['keyword']) && $attr['keyword'] != '') {
 			$q.= ' AND ( ';
-			$q.= ' company_name LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR company_address LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR company_phone LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR company_pic LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' pic_name LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR pic_phone LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR pic_email LIKE '.replace_quote($attr['keyword'],'like');
 			$q.= ')';
         }
 		
@@ -165,7 +164,7 @@ class PicController extends ApiController {
 			}
 			
 			// Print error if exist
-			if ($result['is_success']) {
+			if (! $result['is_success']) {
 				echo json_encode($result);
 				die;
 			}
