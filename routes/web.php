@@ -55,6 +55,13 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
 	$router->put('/user', 'Api\v1\UserController@update');
     $router->delete('/user', 'Api\v1\UserController@delete');
 	
+    $router->get('/user_attribute', 'Api\v1\UserAttributeController@get_list');
+	$router->get('/user_attribute/get_list', 'Api\v1\UserAttributeController@get_list');
+	$router->get('/user_attribute/{id}', 'Api\v1\UserAttributeController@get');
+	$router->post('/user_attribute', 'Api\v1\UserAttributeController@save');
+	$router->put('/user_attribute', 'Api\v1\UserAttributeController@update');
+    $router->delete('/user_attribute', 'Api\v1\UserAttributeController@delete');
+	
 	$router->get('/site', 'Api\v1\SiteController@get_list');
 	$router->get('/site/get_list', 'Api\v1\SiteController@get_list');
 	$router->get('/site/{id}', 'Api\v1\SiteController@get');
