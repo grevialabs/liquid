@@ -356,11 +356,14 @@ PRIMARY KEY(reason_id)
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
+-- DONE - 11 feb 2019
 CREATE TABLE ms_reason_type(
 reason_type_id int NOT NULL AUTO_INCREMENT,
 attribute_id INT NOT NULL,
 attribute_value varchar(100) NULL DEFAULT NULL,
 site_id varchar(10) NULL DEFAULT NULL,
+chamber_sync_flag tinyint NULL DEFAULT 0,
+field_sync tinyint NULL DEFAULT 0,
 status tinyint NULL DEFAULT 1,
 created_at datetime NULL DEFAULT NULL,
 created_by varchar(25) NULL DEFAULT NULL,
