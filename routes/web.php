@@ -55,12 +55,12 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
 	$router->put('/user', 'Api\v1\UserController@update');
     $router->delete('/user', 'Api\v1\UserController@delete');
 	
-    $router->get('/user_attribute', 'Api\v1\UserAttributeController@get_list');
-	$router->get('/user_attribute/get_list', 'Api\v1\UserAttributeController@get_list');
-	$router->get('/user_attribute/{id}', 'Api\v1\UserAttributeController@get');
-	$router->post('/user_attribute', 'Api\v1\UserAttributeController@save');
-	$router->put('/user_attribute', 'Api\v1\UserAttributeController@update');
-    $router->delete('/user_attribute', 'Api\v1\UserAttributeController@delete');
+    $router->get('/user-attribute', 'Api\v1\UserAttributeController@get_list');
+	$router->get('/user-attribute/get_list', 'Api\v1\UserAttributeController@get_list');
+	$router->get('/user-attribute/{id}', 'Api\v1\UserAttributeController@get');
+	$router->post('/user-attribute', 'Api\v1\UserAttributeController@save');
+	$router->put('/user-attribute', 'Api\v1\UserAttributeController@update');
+    $router->delete('/user-attribute', 'Api\v1\UserAttributeController@delete');
 	
 	$router->get('/site', 'Api\v1\SiteController@get_list');
 	$router->get('/site/get_list', 'Api\v1\SiteController@get_list');
@@ -89,6 +89,13 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
 	$router->post('/reason', 'Api\v1\ReasonController@save');
 	$router->put('/reason', 'Api\v1\ReasonController@update');
     $router->delete('/reason', 'Api\v1\ReasonController@delete');
+	
+	$router->get('/transaction', 'Api\v1\TransactionController@get_list');
+	$router->get('/transaction/get_list', 'Api\v1\TransactionController@get_list');
+	$router->get('/transaction/{id}', 'Api\v1\TransactionController@get');
+	$router->post('/transaction', 'Api\v1\TransactionController@save');
+	$router->put('/transaction', 'Api\v1\TransactionController@update');
+    $router->delete('/transaction', 'Api\v1\TransactionController@delete');
 
     // $router->get('/', 'Api\v1\Controller@get_list');
 	// $router->get('/get_list', 'Api\v1\Controller@get_list');

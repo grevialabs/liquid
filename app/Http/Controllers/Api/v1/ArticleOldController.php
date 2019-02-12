@@ -10,12 +10,14 @@ use Session;
 use Illuminate\Support\Facades\Redirect;
 // use Illuminate\Http\Request;
 
-// use Request;
+use Request;
 use DB;
 
-use App\Models\CompanyModel;
+// namespace App;
 
-class UserAttributeController extends ApiController {
+use App\Models\ArticleModel;
+
+class ArticleOldController extends ApiController {
 
 	/*
 	|--------------------------------------------------------------------------
@@ -26,9 +28,9 @@ class UserAttributeController extends ApiController {
 	| controller as you wish. It is just here to get your app started!
 	|
     */
-    public $table = 'ms_user_attribute';
-    public $primary_key = 'user_attribute_id';
-    public $list_column = array('user_attribute_id', 'user_id', 'attribute','value', 'chamber_sync_flag', 'field_sync','status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
+    public $table = 'ms_article';
+    public $primary_key = 'article_id';
+	public $list_column = array('article_id', 'site_id', 'article', 'customer_article' ,'description','uom','conversion_value','safety_stock','column','rack','row','price','chamber_sync_flag','field_sync', 'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
 	
 	/**
 	 * Create a new controller instance.
@@ -44,6 +46,30 @@ class UserAttributeController extends ApiController {
 
 	}
 
+	public function sql_debug($sql_string, array $params = null) {
+		if (!empty($params)) {
+			$indexed = $params == array_values($params);
+			foreach($params as $k=>$v) {
+				if (is_object($v)) {
+					if ($v instanceof \DateTime) $v = $v->format('Y-m-d H:i:s');
+					else continue;
+				}
+				elseif (is_string($v)) $v="'$v'";
+				elseif ($v === null) $v='NULL';
+				elseif (is_array($v)) $v = implode(',', $v);
+	
+				if ($indexed) {
+					$sql_string = preg_replace('/\?/', $v, $sql_string, 1);
+				}
+				else {
+					if ($k[0] != ':') $k = ':'.$k; //add leading colon if it was left out
+					$sql_string = str_replace($k,$v,$sql_string);
+				}
+			}
+		}
+		return $sql_string;
+	}
+
 	/**
 	 * Show the application dashboard to the user.
 	 *
@@ -56,17 +82,13 @@ class UserAttributeController extends ApiController {
 			
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
-		if (isset($attr['user_attribute_id']) && $attr['user_attribute_id'] != '') {
-			$q.= ' AND user_attribute_id = '.$attr['user_attribute_id'];
-        }
-		
-		if (isset($attr['user_id']) && $attr['user_id'] != '') 
+		if (isset($attr['log_id']) && $attr['log_id'] != '') 
 		{
-			$q.= ' AND user_id = '.$attr['user_id'];
+			$q.= ' AND log_id = '.$attr['log_id'];
 		}
 		
-		$data = orm_get($q);
-		echo json_encode($data);
+		$data = orm_get($q,NULL,'json');
+		debug($data);
 		die;
 	}
 	
@@ -75,58 +97,40 @@ class UserAttributeController extends ApiController {
 		$attr = $result = NULL;
 		if (! empty($_GET)) $attr = $_GET;
 			
-		$q = '
-		SELECT user_attribute_id, ua.user_id, ua.attribute, ua.value, CONCAT(u.firstname," ",u.lastname) as fullname, u.email, ua.status
-		FROM ' . $this->table . ' ua 
-		LEFT JOIN ms_user u ON u.user_id = ua.user_id
-		WHERE 1';
+		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
-		if (isset($attr['keyword']) && $attr['keyword'] != '') {
-			$q.= ' AND ( ';
-			$q.= ' attribute LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR value LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR user_id LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ')';
+		if (isset($attr['log_id']) && $attr['log_id'] != '') 
+		{
+			$q.= ' AND log_id = '.$attr['log_id'];
         }
-		
-		if (isset($attr['user_attribute_id']) && $attr['user_attribute_id'] != '') {
-			$q.= ' AND ua.user_attribute_id = '.$attr['user_attribute_id'];
-        }
-		
-		if (isset($attr['user_id']) && $attr['user_id'] != '') {
-			$q.= ' AND ua.user_id = '.$attr['user_id'];
+
+        if (isset($attr['order'])) {
+            $q.= ' ORDER BY ' . $attr['order'];
         }
         
-        $result['total_rows'] = count(orm_get_list($q));
+        // $result['']
 		
-		if (isset($attr['order'])) { 
-			$q.= ' ORDER BY ' . $attr['order'];
-			if (isset($attr['orderby'])) $q .= ' '.$attr['orderby']; 
-		} else  {
-			$q.= ' ORDER BY '. $this->primary_key .' DESC';
-		}
-		
-		// set default paging
-		if (! isset($attr['paging'])) {
-			if (! isset($attr['offset'])) $attr['offset'] = OFFSET;
-			if (! isset($attr['perpage'])) $attr['perpage'] = PERPAGE;
-		}
-		
-		if (isset($attr['offset'])) { 
-			$q.= ' LIMIT ' . $attr['offset'];
-			
-			if (! isset($attr['perpage'])) $attr['perpage'] = PERPAGE;
-			
-			$q.= ', ' . $attr['perpage'];
-		}
+        // debug($data);
+        
+        $result['totaldata'] = count(orm_get_list($q));
+
+        if (isset($attr['paging']) && $attr['paging'] != '') 
+		{
+            $q.= ' AND log_id = '.$attr['log_id'];
+            
+            if (isset($attr['offset'])) $q.= ' LIMIT ' . $attr['offset'];
+            if (isset($attr['limit'])) $q.= ', ' . $attr['limit'];           
+        }
 
 		$data = orm_get_list($q);
-        $result['data'] = $data;
+        $result['rowdata'] =  $data;
         
-        echo json_encode($result); 
-		die;
+        $result = json_encode($result);
+        echo $result;
+        // debug($result);
+		// die;
 	}
-
+		
 	public function save()
 	{
         $post = $attr = $result = NULL;

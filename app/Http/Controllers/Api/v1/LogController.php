@@ -173,72 +173,120 @@ class LogController extends ApiController {
 		
 	public function save()
 	{
-        $attr = $result = NULL;
-		if (! empty($_POST)) $attr = $_POST;
+        $post = $attr = $result = NULL;
+		if (! empty($_POST)) $post = $_POST;
+		
+		// validate_column
+		$attr = validate_column($this->list_column, $post);
         
-        if (! empty($attr)) 
-        {
+        if (! empty($attr)) {
             $save = DB::table($this->table)->insert($attr);
             
             if ($save) {
                 $result['last_insert_id'] = DB::getPdo()->lastInsertId();
-                $result['message'] = 'success';
+				$result['is_success'] = 1;
+                $result['message'] = 'save success';
             } else {
-                // $result['
-                $result['message'] = 'failed';
+				$result['is_success'] = 0;
+                $result['message'] = 'save failed';
             }
         }
 
         echo json_encode($result);
         die;
-		
 	}
 	
 	public function update()
 	{
-		$attr = $result = NULL;
-        // if (! empty($_PUT)) $attr = $_PUT;
+		$put = $attr = $result = NULL;
 
-        if ($_SERVER['REQUEST_METHOD'] == 'PUT')
-        {
-            parse_str(file_get_contents("php://input"), $_PUT);
-        }
+        if ($_SERVER['REQUEST_METHOD'] == 'PUT') parse_str(file_get_contents("php://input"), $_PUT);
 
-        $attr = $_PUT;
+        $put = $_PUT;
+		
+		$attr = validate_column($this->list_column, $put);
+		
+		$result['is_success'] = 1;
+		$result['message'] = NULL;
         
-        if (! empty($attr)) 
-        {
-            if (! isset($this->primary_key)) debug($this->primary_key . ' must be filled.');
+        if (empty($attr)) $result['message'] = 'no data';
+        
+		if (! isset($attr[$this->primary_key])) $result['message'] = $this->primary_key . ' must be filled.';
+		
+		// Print error if message exist
+		if (isset($result['message'])) {
+			$result['is_success'] = 0;
+			if (isset($attr)) $result['paramdata'] = $attr;
+			echo json_encode($result);
+			die;
+		}
 
-            $param_where = $attr[$this->primary_key];
-            // unset($attr[$this->primary_key]);
+		/************ Start operation ************/
+		$param_where = $attr[$this->primary_key];
+		unset($attr[$this->primary_key]);
 
-            
-            DB::enableQueryLog();
+		$update = DB::table($this->table)
+			->where($this->primary_key, $param_where)
+			->update($attr);
+			
+		if ($update) {
+			$result['is_success'] = 1;
+			$result['message'] = 'update success';
+		} else {
+			$result['is_success'] = 0;
+			$result['message'] = 'update failed';
+			// $result['query'] = $update->toSql();
+		}
 
-            $update = DB::table($this->table)
-                ->where($this->primary_key, $param_where)
-                ->update($attr);
-            // dd($update);
-            if ($update) {
-                $result['message'] = 'update success';
-                $result['debug'] = DB::getQueryLog();
-            } else {
-                $result['message'] = 'update failed';
-                $result['debug'] = DB::getQueryLog();
-                // $result['query'] = $update->toSql();
-            }
-        }
-
-        // echo json_encode($result);
-        debug($result);
+        echo json_encode($result);
         die;
 	}
 	
 	public function delete()
 	{
-		echo "hello delete log";
-		die;
+		$delete = $attr = $result = NULL;
+
+        if ($_SERVER['REQUEST_METHOD'] == 'DELETE') parse_str(file_get_contents("php://input"), $_DELETE);
+
+        $delete = $_DELETE;
+		
+		$attr = validate_column($this->list_column, $delete);
+		
+		$result['is_success'] = 1;
+		$result['message'] = NULL;
+        
+        if (empty($attr)) $result['message'] = 'no data';
+        
+		if (! isset($attr[$this->primary_key])) $result['message'] = $this->primary_key . ' must be filled.';
+		
+		// Print error if message exist
+		if (isset($result['message'])) {
+			$result['is_success'] = 0;
+			if (isset($attr)) $result['paramdata'] = $attr;
+			echo json_encode($result);
+			die;
+		}
+
+		/************ Start operation ************/
+		$param_where = $attr[$this->primary_key];
+		// unset($attr[$this->primary_key]);
+		$attr['status'] = '-1';
+
+		$update = DB::table($this->table)
+			->where($this->primary_key, $param_where)
+			->update($attr);
+			
+		if ($update) {
+			$result['is_success'] = 1;
+			$result['message'] = 'delete success';
+		} else {
+			$result['is_success'] = 0;
+			$result['message'] = 'delete failed';
+			// $result['query'] = $update->toSql();
+		}
+
+        echo json_encode($result);
+        die;
 	}
 	
 	public function __destruct()
