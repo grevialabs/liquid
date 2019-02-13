@@ -26,8 +26,8 @@ class TransactionController extends ApiController {
 	| controller as you wish. It is just here to get your app started!
 	|
     */
-    public $table = 'ms_site';
-    public $primary_key = 'site_id';
+    public $table = 'tr_transaction';
+    public $primary_key = 'transaction_id';
     public $list_column = array('transaction_id','site_id','user_id','article','customer_article','description','qty','value','status_in_out','reason_id','wo_wbs','remark','chamber_sync_flag', 'field_sync', 'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
 	
 	/**
@@ -48,7 +48,7 @@ class TransactionController extends ApiController {
 	public function get_list_status()
 	{
 		// $log = ArticleModel::all();
-		// $log = ArticleModel::where('company_id',3)
+		// $log = ArticleModel::where('transaction_id',3)
 		// $log = ArticleModel::whereName('mantap')
 		$log = ArticleModel::whereStatus('1')
 						->get()
@@ -74,9 +74,9 @@ class TransactionController extends ApiController {
 			
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
-		if (isset($attr['company_id']) && $attr['company_id'] != '') 
+		if (isset($attr['transaction_id']) && $attr['transaction_id'] != '') 
 		{
-			$q.= ' AND company_id = '.$attr['company_id'];
+			$q.= ' AND transaction_id = '.$attr['transaction_id'];
 		}
 		
 		$data = orm_get($q);
@@ -92,14 +92,15 @@ class TransactionController extends ApiController {
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
 		if (isset($attr['keyword']) && $attr['keyword'] != '') {
-			// array('site_id','company_id','site_name','site_address','site_qty_value','flag_qty_value','method_calc','start_date_counting', 'reset_days', 'logo_file_name', 'chamber_sync_flag', 'field_sync', 'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
+			// array('site_id','transaction_id','site_name','site_address','site_qty_value','flag_qty_value','method_calc','start_date_counting', 'reset_days', 'logo_file_name', 'chamber_sync_flag', 'field_sync', 'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
 			
 			$q.= ' AND ( ';
-			$q.= ' site_id LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR site_name LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR site_address LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR method_calc LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR logo_file_name LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' transaction_id LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR article LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR customer_article LIKE '.replace_quote($attr['keyword'],'like');
+			// $q.= ' OR site_address LIKE '.replace_quote($attr['keyword'],'like');
+			// $q.= ' OR method_calc LIKE '.replace_quote($attr['keyword'],'like');
+			// $q.= ' OR logo_file_name LIKE '.replace_quote($attr['keyword'],'like');
 			$q.= ')';
         }
 		
@@ -107,8 +108,8 @@ class TransactionController extends ApiController {
 			$q.= ' AND site_id = '.$attr['site_id'];
         }
 		
-		if (isset($attr['company_id']) && $attr['company_id'] != '') {
-			$q.= ' AND company_id = '.$attr['company_id'];
+		if (isset($attr['transaction_id']) && $attr['transaction_id'] != '') {
+			$q.= ' AND transaction_id = '.$attr['transaction_id'];
         }
         
         $result['total_rows'] = count(orm_get_list($q));

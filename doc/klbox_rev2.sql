@@ -272,6 +272,10 @@ CREATE TABLE ms_role_capability(
 role_capability_id int NOT NULL AUTO_INCREMENT,
 role_id varchar(100) NULL,
 capability_id int NOT NULL,
+create tinyint NULL,
+read tinyint NULL,
+update tinyint NULL,
+delete tinyint NULL,
 status tinyint NULL DEFAULT 1,
 created_at datetime NULL DEFAULT NULL,
 created_by varchar(25) NULL DEFAULT NULL,
@@ -441,3 +445,4 @@ created_on not used same as created_at
 
 - ms_user_role 
 level_id ga bisa dipakai karena table bisa duplicate record
+

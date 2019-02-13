@@ -56,9 +56,9 @@ class PicController extends ApiController {
 			
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
-		if (isset($attr['company_id']) && $attr['company_id'] != '') 
+		if (isset($attr['pic_id']) && $attr['pic_id'] != '') 
 		{
-			$q.= ' AND company_id = '.$attr['company_id'];
+			$q.= ' AND pic_id = '.$attr['pic_id'];
 		}
 		
 		$data = orm_get($q);
@@ -81,8 +81,8 @@ class PicController extends ApiController {
 			$q.= ')';
         }
 		
-		if (isset($attr['company_id']) && $attr['company_id'] != '') {
-			$q.= ' AND company_id = '.$attr['company_id'];
+		if (isset($attr['pic_id']) && $attr['pic_id'] != '') {
+			$q.= ' AND pic_id = '.$attr['pic_id'];
         }
         
         $result['total_rows'] = count(orm_get_list($q));

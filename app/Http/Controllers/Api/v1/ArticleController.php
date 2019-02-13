@@ -48,7 +48,7 @@ class ArticleController extends ApiController {
 	public function get_list_status()
 	{
 		// $log = ArticleModel::all();
-		// $log = ArticleModel::where('company_id',3)
+		// $log = ArticleModel::where('article_id',3)
 		// $log = ArticleModel::whereName('mantap')
 		$log = ArticleModel::whereStatus('1')
 						->get()
@@ -74,9 +74,9 @@ class ArticleController extends ApiController {
 			
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
-		if (isset($attr['company_id']) && $attr['company_id'] != '') 
+		if (isset($attr['article_id']) && $attr['article_id'] != '') 
 		{
-			$q.= ' AND company_id = '.$attr['company_id'];
+			$q.= ' AND article_id = '.$attr['article_id'];
 		}
 		
 		$data = orm_get($q);
@@ -100,8 +100,8 @@ class ArticleController extends ApiController {
 			$q.= ')';
         }
 		
-		if (isset($attr['company_id']) && $attr['company_id'] != '') {
-			$q.= ' AND company_id = '.$attr['company_id'];
+		if (isset($attr['article_id']) && $attr['article_id'] != '') {
+			$q.= ' AND article_id = '.$attr['article_id'];
         }
         
         $result['total_rows'] = count(orm_get_list($q));

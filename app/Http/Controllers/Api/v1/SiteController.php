@@ -74,9 +74,12 @@ class SiteController extends ApiController {
 			
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
-		if (isset($attr['company_id']) && $attr['company_id'] != '') 
-		{
+		if (isset($attr['company_id']) && $attr['company_id'] != '') {
 			$q.= ' AND company_id = '.$attr['company_id'];
+		}
+		
+		if (isset($attr['site_id']) && $attr['site_id'] != '') {
+			$q.= ' AND site_id = '.replace_quote($attr['site_id']);
 		}
 		
 		$data = orm_get($q);

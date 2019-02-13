@@ -48,7 +48,7 @@ class ReasonController extends ApiController {
 	public function get_list_status()
 	{
 		// $log = ArticleModel::all();
-		// $log = ArticleModel::where('company_id',3)
+		// $log = ArticleModel::where('reason_id',3)
 		// $log = ArticleModel::whereName('mantap')
 		$log = ArticleModel::whereStatus('1')
 						->get()
@@ -74,9 +74,9 @@ class ReasonController extends ApiController {
 			
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
-		if (isset($attr['company_id']) && $attr['company_id'] != '') 
+		if (isset($attr['reason_id']) && $attr['reason_id'] != '') 
 		{
-			$q.= ' AND company_id = '.$attr['company_id'];
+			$q.= ' AND reason_id = '.$attr['reason_id'];
 		}
 		
 		$data = orm_get($q);
@@ -98,8 +98,8 @@ class ReasonController extends ApiController {
 			$q.= ')';
         }
 		
-		if (isset($attr['company_id']) && $attr['company_id'] != '') {
-			$q.= ' AND company_id = '.$attr['company_id'];
+		if (isset($attr['reason_id']) && $attr['reason_id'] != '') {
+			$q.= ' AND reason_id = '.$attr['reason_id'];
         }
         
         $result['total_rows'] = count(orm_get_list($q));
