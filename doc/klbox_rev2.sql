@@ -239,7 +239,7 @@ CREATE TABLE ms_article_attribute_value(
 article_attribute_value_id int NOT NULL AUTO_INCREMENT,
 article_id int NOT NULL,
 article_attribute_id int NOT NULL ,
-`value` varchar(100) NULL DEFAULT NULL,
+attribute_value varchar(100) NULL DEFAULT NULL,
 chamber_sync_flag tinyint NULL DEFAULT 0,
 field_sync tinyint NULL DEFAULT 0,
 status tinyint NULL DEFAULT 1,
@@ -563,7 +563,7 @@ AUTO_INCREMENT=1;
 
 CREATE TABLE ms_reason_type(
 reason_type_id int NOT NULL AUTO_INCREMENT,
-attribute_id INT NOT NULL,
+article_attribute_id INT NOT NULL,
 attribute_value varchar(100) NULL DEFAULT NULL,
 site_id varchar(10) NULL DEFAULT NULL,
 chamber_sync_flag tinyint NULL DEFAULT 0,
@@ -613,3 +613,7 @@ created_on not used same as created_at
 - ms_user_role 
 level_id ga bisa dipakai karena table bisa duplicate record
 
+
+- 13/02/2019 ali
+rename field attribute_id to article_attribute_id in table ms_reason_type 
+rename field value to attribute_value in table ms_article_attribute_value
