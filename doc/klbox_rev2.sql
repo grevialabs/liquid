@@ -1,3 +1,21 @@
+CREATE TABLE ms_company(
+company_id INT NOT NULL AUTO_INCREMENT,
+company_name varchar(150) NULL DEFAULT NULL,
+company_address varchar(255) NULL DEFAULT NULL,
+company_phone varchar(50) NULL DEFAULT NULL,
+company_pic varchar(150) NULL DEFAULT NULL,
+status tinyint NULL DEFAULT 1,
+created_at datetime NULL DEFAULT NULL,
+created_by varchar(25) NULL DEFAULT NULL,
+created_ip varchar(25) NULL DEFAULT NULL,
+updated_at datetime NULL DEFAULT NULL,
+updated_by varchar(25) NULL DEFAULT NULL,
+updated_ip varchar(25) NULL DEFAULT NULL,
+PRIMARY KEY(company_id)
+) COLLATE='utf8mb4_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=1;
+
 CREATE TABLE tr_transaction (
 transaction_id varchar(100)	NOT NULL,
 site_id	varchar(4) NOT NULL,
@@ -108,7 +126,7 @@ AUTO_INCREMENT=1;
 CREATE TABLE tr_article_logistic_site(
 article_logistic_site_id int NOT NULL AUTO_INCREMENT,
 site_id varchar(4) NOT NULL,
-outbound_delivery_no varchar(15) NOT NULL,
+outbound_delivery varchar(15) NOT NULL,
 status tinyint NULL DEFAULT 1,
 created_at datetime NULL DEFAULT NULL,
 created_by varchar(25) NULL DEFAULT NULL,
@@ -124,7 +142,7 @@ AUTO_INCREMENT=1;
 
 CREATE TABLE tr_article_logistic_site_detail(
 article_logistic_site_detail_id int NOT NULL AUTO_INCREMENT,
-outbound_delivery_no int NOT NULL,
+outbound_delivery int NOT NULL,
 article varchar(100) NOT NULL,
 customer_article varchar(100) NOT NULL,
 description varchar(200) NULL DEFAULT NULL,
@@ -149,7 +167,7 @@ created_ip varchar(25) NULL DEFAULT NULL,
 updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
-PRIMARY KEY(outbound_delivery_no,article)
+PRIMARY KEY(outbound_delivery,article)
 ) COLLATE='utf8mb4_general_ci' 
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
@@ -327,7 +345,7 @@ AUTO_INCREMENT=1;
 CREATE TABLE ms_rfid_article(
 rfid_article_id int NOT NULL AUTO_INCREMENT,
 site_id varchar(4) NOT NULL,
-outbound_delivery_no varchar(15) NOT NULL,
+outbound_delivery varchar(15) NOT NULL,
 article varchar(100) NOT NULL,
 description varchar(200) NOT NULL,
 rfid varchar(200) NULL,
@@ -393,7 +411,7 @@ AUTO_INCREMENT=1;
 
 CREATE TABLE tr_prepack_bundling_header(
 prepack_id int NOT NULL AUTO_INCREMENT,
-outbound_delivery_no int NOT NULL,
+outbound_delivery int NOT NULL,
 site_created_on varchar(4) NULL,
 status_prepack varchar(100) NULL,
 conv_uom varchar(100) NULL,
@@ -413,7 +431,7 @@ AUTO_INCREMENT=1;
 
 CREATE TABLE tr_prepack_bundling_detail(
 prepack_id int NOT NULL AUTO_INCREMENT,
-outbound_delivery_no int NOT NULL,
+outbound_delivery int NOT NULL,
 article varchar(100) NULL,
 line_id int NULL,
 qty_dashboard int NULL,
@@ -430,6 +448,155 @@ PRIMARY KEY(prepack_id)
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
+CREATE TABLE ms_user(
+user_id int NOT NULL AUTO_INCREMENT,
+site_id varchar(10) NULL,
+parent_user_id int NULL,
+level_id int NULL,
+user_code varchar(100) NULL DEFAULT NULL,
+firstname varchar(100) NULL DEFAULT NULL,
+lastname varchar(100) NULL DEFAULT NULL,
+
+quota_initial int NULL DEFAULT NULL,
+quota_additional int NULL DEFAULT NULL,
+quota_remaining int NULL DEFAULT NULL,
+job_title varchar(100) NULL DEFAULT NULL,
+division varchar(100) NULL DEFAULT NULL,
+email varchar(100) NULL DEFAULT NULL,
+user_category varchar(100) NULL DEFAULT NULL,
+password varchar(100) NULL DEFAULT NULL,
+counter_wrong_pass tinyint NULL DEFAULT 0,
+status_lock tinyint NULL DEFAULT 0,
+locked_time datetime NULL DEFAULT NULL,
+reset_by varchar(100) NULL DEFAULT NULL,
+reset_time datetime NULL DEFAULT NULL,
+
+status tinyint NULL DEFAULT 1,
+created_at datetime NULL DEFAULT NULL,
+created_by varchar(25) NULL DEFAULT NULL,
+created_ip varchar(25) NULL DEFAULT NULL,
+updated_at datetime NULL DEFAULT NULL,
+updated_by varchar(25) NULL DEFAULT NULL,
+updated_ip varchar(25) NULL DEFAULT NULL,
+PRIMARY KEY(user_id)
+) COLLATE='utf8mb4_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=1;
+
+
+CREATE TABLE ms_user_attribute(
+user_attribute_id int NOT NULL AUTO_INCREMENT,
+user_id int NOT NULL,
+attribute varchar(255) NULL DEFAULT NULL,
+value varchar(255) NULL DEFAULT NULL,
+chamber_sync_flag tinyint NULL DEFAULT 0,
+field_sync tinyint NULL DEFAULT 0,
+status tinyint NULL DEFAULT 1,
+created_at datetime NULL DEFAULT NULL,
+created_by varchar(25) NULL DEFAULT NULL,
+created_ip varchar(25) NULL DEFAULT NULL,
+updated_at datetime NULL DEFAULT NULL,
+updated_by varchar(25) NULL DEFAULT NULL,
+updated_ip varchar(25) NULL DEFAULT NULL,
+PRIMARY KEY(user_attribute_id)
+) COLLATE='utf8mb4_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=1;
+
+CREATE TABLE ms_site(
+site_id varchar(10) NOT NULL,
+company_id int NOT NULL,
+site_name varchar(100) NULL DEFAULT NULL,
+site_address varchar(200) NULL DEFAULT NULL,
+site_qty_value int NULL DEFAULT NULL,
+flag_qty_value varchar(100) NULL DEFAULT NULL,
+method_calc varchar(25) NULL DEFAULT NULL,
+start_date_counting datetime NULL DEFAULT NULL,
+reset_days int NULL DEFAULT NULL,
+logo_file_name text NULL DEFAULT NULL,
+chamber_sync_flag tinyint NULL DEFAULT 0,
+field_sync tinyint NULL DEFAULT 0,
+status tinyint NULL DEFAULT 1,
+created_at datetime NULL DEFAULT NULL,
+created_by varchar(25) NULL DEFAULT NULL,
+created_ip varchar(25) NULL DEFAULT NULL,
+updated_at datetime NULL DEFAULT NULL,
+updated_by varchar(25) NULL DEFAULT NULL,
+updated_ip varchar(25) NULL DEFAULT NULL,
+PRIMARY KEY(site_id)
+) COLLATE='utf8mb4_general_ci' 
+ENGINE=InnoDB
+AUTO_INCREMENT=1;
+
+CREATE TABLE ms_pic(
+pic_id int NOT NULL AUTO_INCREMENT,
+site_id int NOT NULL,
+pic_name varchar(100) NULL DEFAULT NULL,
+pic_phone varchar(100) NULL DEFAULT NULL,
+pic_email varchar(100) NULL DEFAULT NULL,
+status tinyint NULL DEFAULT 1,
+created_at datetime NULL DEFAULT NULL,
+created_by varchar(25) NULL DEFAULT NULL,
+created_ip varchar(25) NULL DEFAULT NULL,
+updated_at datetime NULL DEFAULT NULL,
+updated_by varchar(25) NULL DEFAULT NULL,
+updated_ip varchar(25) NULL DEFAULT NULL,
+PRIMARY KEY(pic_id)
+) COLLATE='utf8mb4_general_ci' 
+ENGINE=InnoDB
+AUTO_INCREMENT=1;
+
+CREATE TABLE ms_reason(
+reason_id int NOT NULL AUTO_INCREMENT,
+reason_value varchar(100) NULL DEFAULT NULL,
+status tinyint NULL DEFAULT 1,
+created_at datetime NULL DEFAULT NULL,
+created_by varchar(25) NULL DEFAULT NULL,
+created_ip varchar(25) NULL DEFAULT NULL,
+updated_at datetime NULL DEFAULT NULL,
+updated_by varchar(25) NULL DEFAULT NULL,
+updated_ip varchar(25) NULL DEFAULT NULL,
+PRIMARY KEY(reason_id)
+) COLLATE='utf8mb4_general_ci' 
+ENGINE=InnoDB
+AUTO_INCREMENT=1;
+
+CREATE TABLE ms_reason_type(
+reason_type_id int NOT NULL AUTO_INCREMENT,
+attribute_id INT NOT NULL,
+attribute_value varchar(100) NULL DEFAULT NULL,
+site_id varchar(10) NULL DEFAULT NULL,
+chamber_sync_flag tinyint NULL DEFAULT 0,
+field_sync tinyint NULL DEFAULT 0,
+status tinyint NULL DEFAULT 1,
+created_at datetime NULL DEFAULT NULL,
+created_by varchar(25) NULL DEFAULT NULL,
+created_ip varchar(25) NULL DEFAULT NULL,
+updated_at datetime NULL DEFAULT NULL,
+updated_by varchar(25) NULL DEFAULT NULL,
+updated_ip varchar(25) NULL DEFAULT NULL,
+PRIMARY KEY(reason_id)
+) COLLATE='utf8mb4_general_ci' 
+ENGINE=InnoDB
+AUTO_INCREMENT=1;
+
+CREATE TABLE ms_level(
+level_id int NOT NULL AUTO_INCREMENT,
+level_hierarchy int NULL DEFAULT 1,
+level_name varchar(100) NULL DEFAULT NULL,
+chamber_sync_flag tinyint NULL DEFAULT 0,
+field_sync tinyint NULL DEFAULT 0,
+status tinyint NULL DEFAULT 1,
+created_at datetime NULL DEFAULT NULL,
+created_by varchar(25) NULL DEFAULT NULL,
+created_ip varchar(25) NULL DEFAULT NULL,
+updated_at datetime NULL DEFAULT NULL,
+updated_by varchar(25) NULL DEFAULT NULL,
+updated_ip varchar(25) NULL DEFAULT NULL,
+PRIMARY KEY(level_id)
+) COLLATE='utf8mb4_general_ci' 
+ENGINE=InnoDB
+AUTO_INCREMENT=1;
 
 
 --------
@@ -440,7 +607,7 @@ add new PK movement_article_id
 
 - tr_article_logistic_site
 rename table from tr_article_logistic_site_header to tr_article_logistic_site
-rename column outbound_delivery int to outbound_delivery_no varchar(15) due to value 0000022151 will be saved 22151 when integer
+rename column outbound_delivery int to outbound_delivery varchar(15) due to value 0000022151 will be saved 22151 when integer
 created_on not used same as created_at
 
 - ms_user_role 

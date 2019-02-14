@@ -137,10 +137,15 @@ class LogController extends ApiController {
 			
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
-		if (isset($attr['log_id']) && $attr['log_id'] != '') 
-		{
+		if (isset($attr['log_id']) && $attr['log_id'] != '') {
 			$q.= ' AND log_id = '.$attr['log_id'];
         }
+		
+		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
+			$q.= ' AND status = '.$attr['status'];
+        } else {
+			$q.= ' AND status != -1';
+		}
 
         if (isset($attr['order'])) {
             $q.= ' ORDER BY ' . $attr['order'];

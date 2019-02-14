@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Redirect;
 // use Request;
 use DB;
 
-use App\Models\ReasonModel;
+use App\Models\CompanyModel;
 
-class ReasonController extends ApiController {
+class ArticleLogisticSiteController extends ApiController {
 
 	/*
 	|--------------------------------------------------------------------------
@@ -26,9 +26,9 @@ class ReasonController extends ApiController {
 	| controller as you wish. It is just here to get your app started!
 	|
     */
-    public $table = 'ms_reason';
-    public $primary_key = 'reason_id';
-    public $list_column = array('reason_id','reason_value','status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
+    public $table = 'tr_article_logistic_site';
+    public $primary_key = 'article_logistic_site_id';
+    public $list_column = array('site_id', 'outbound_delivery', 'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
 	
 	/**
 	 * Create a new controller instance.
@@ -48,7 +48,7 @@ class ReasonController extends ApiController {
 	public function get_list_status()
 	{
 		// $log = ArticleModel::all();
-		// $log = ArticleModel::where('reason_id',3)
+		// $log = ArticleModel::where('company_id',3)
 		// $log = ArticleModel::whereName('mantap')
 		$log = ArticleModel::whereStatus('1')
 						->get()
@@ -74,8 +74,9 @@ class ReasonController extends ApiController {
 			
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
-		if (isset($attr['reason_id']) && $attr['reason_id'] != '') {
-			$q.= ' AND reason_id = '.$attr['reason_id'];
+		if (isset($attr['company_id']) && $attr['company_id'] != '') 
+		{
+			$q.= ' AND company_id = '.$attr['company_id'];
 		}
 		
 		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
@@ -98,13 +99,15 @@ class ReasonController extends ApiController {
 		
 		if (isset($attr['keyword']) && $attr['keyword'] != '') {
 			$q.= ' AND ( ';
-			$q.= ' reason_id LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR reason_value LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' company_name LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR company_address LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR company_phone LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR company_pic LIKE '.replace_quote($attr['keyword'],'like');
 			$q.= ')';
         }
 		
-		if (isset($attr['reason_id']) && $attr['reason_id'] != '') {
-			$q.= ' AND reason_id = '.$attr['reason_id'];
+		if (isset($attr['company_id']) && $attr['company_id'] != '') {
+			$q.= ' AND company_id = '.$attr['company_id'];
         }
 		
 		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {

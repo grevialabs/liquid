@@ -71,12 +71,17 @@ class TransactionController extends ApiController {
 	{
 		$attr = NULL;
 		if (! empty($_GET)) $attr = $_GET;
-			
+		
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
-		if (isset($attr['transaction_id']) && $attr['transaction_id'] != '') 
-		{
+		if (isset($attr['transaction_id']) && $attr['transaction_id'] != '') {
 			$q.= ' AND transaction_id = '.$attr['transaction_id'];
+		}
+		
+		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
+			$q.= ' AND status = '.$attr['status'];
+        } else {
+			$q.= ' AND status != -1';
 		}
 		
 		$data = orm_get($q);
@@ -111,6 +116,12 @@ class TransactionController extends ApiController {
 		if (isset($attr['transaction_id']) && $attr['transaction_id'] != '') {
 			$q.= ' AND transaction_id = '.$attr['transaction_id'];
         }
+		
+		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
+			$q.= ' AND status = '.$attr['status'];
+        } else {
+			$q.= ' AND status != -1';
+		}
         
         $result['total_rows'] = count(orm_get_list($q));
 		

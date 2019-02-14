@@ -74,9 +74,14 @@ class ArticleController extends ApiController {
 			
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
-		if (isset($attr['article_id']) && $attr['article_id'] != '') 
-		{
+		if (isset($attr['article_id']) && $attr['article_id'] != '') {
 			$q.= ' AND article_id = '.$attr['article_id'];
+		}
+		
+		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
+			$q.= ' AND status = '.$attr['status'];
+        } else {
+			$q.= ' AND status != -1';
 		}
 		
 		$data = orm_get($q);
@@ -103,6 +108,12 @@ class ArticleController extends ApiController {
 		if (isset($attr['article_id']) && $attr['article_id'] != '') {
 			$q.= ' AND article_id = '.$attr['article_id'];
         }
+		
+		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
+			$q.= ' AND status = '.$attr['status'];
+        } else {
+			$q.= ' AND status != -1';
+		}
         
         $result['total_rows'] = count(orm_get_list($q));
 		
