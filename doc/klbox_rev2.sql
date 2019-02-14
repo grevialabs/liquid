@@ -12,7 +12,7 @@ updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
 PRIMARY KEY(company_id)
-) COLLATE='utf8mb4_general_ci'
+) COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
@@ -39,7 +39,7 @@ updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
 PRIMARY KEY(transaction_id)
-) COLLATE='utf8mb4_general_ci' 
+) COLLATE='utf8_general_ci' 
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
@@ -58,7 +58,7 @@ updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
 PRIMARY KEY(transaction_id)
-) COLLATE='utf8mb4_general_ci' 
+) COLLATE='utf8_general_ci' 
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
@@ -80,7 +80,7 @@ updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
 PRIMARY KEY(transaction_id)
-) COLLATE='utf8mb4_general_ci' 
+) COLLATE='utf8_general_ci' 
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
@@ -99,7 +99,7 @@ updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
 PRIMARY KEY(reason_id)
-) COLLATE='utf8mb4_general_ci' 
+) COLLATE='utf8_general_ci' 
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
@@ -117,7 +117,7 @@ updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
 PRIMARY KEY(reason_id)
-) COLLATE='utf8mb4_general_ci' 
+) COLLATE='utf8_general_ci' 
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
@@ -135,7 +135,7 @@ updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
 PRIMARY KEY(article_logistic_site_id,site_id)
-) COLLATE='utf8mb4_general_ci' 
+) COLLATE='utf8_general_ci' 
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
@@ -167,8 +167,8 @@ created_ip varchar(25) NULL DEFAULT NULL,
 updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
-PRIMARY KEY(outbound_delivery,article)
-) COLLATE='utf8mb4_general_ci' 
+PRIMARY KEY(article_logistic_site_detail_id,outbound_delivery,article)
+) COLLATE='utf8_general_ci' 
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
@@ -186,7 +186,7 @@ updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
 PRIMARY KEY(site_id,article)
-) COLLATE='utf8mb4_general_ci'
+) COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
@@ -213,7 +213,7 @@ updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
 PRIMARY KEY(article_id)
-) COLLATE='utf8mb4_general_ci'
+) COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
@@ -231,7 +231,7 @@ updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
 PRIMARY KEY(article_attribute_id)
-) COLLATE='utf8mb4_general_ci'
+) COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
@@ -250,7 +250,7 @@ updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
 PRIMARY KEY(article_attribute_value_id)
-) COLLATE='utf8mb4_general_ci'
+) COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
@@ -266,7 +266,7 @@ updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
 PRIMARY KEY(role_id)
-) COLLATE='utf8mb4_general_ci'
+) COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
@@ -281,7 +281,7 @@ updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
 PRIMARY KEY(capability_id)
-) COLLATE='utf8mb4_general_ci'
+) COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
@@ -290,10 +290,10 @@ CREATE TABLE ms_role_capability(
 role_capability_id int NOT NULL AUTO_INCREMENT,
 role_id varchar(100) NULL,
 capability_id int NOT NULL,
-create tinyint NULL,
-read tinyint NULL,
-update tinyint NULL,
-delete tinyint NULL,
+`create` tinyint NULL DEFAULT 0,
+`read` tinyint NULL DEFAULT 0,
+`update` tinyint NULL DEFAULT 0,
+`delete` tinyint NULL DEFAULT 0,
 status tinyint NULL DEFAULT 1,
 created_at datetime NULL DEFAULT NULL,
 created_by varchar(25) NULL DEFAULT NULL,
@@ -302,7 +302,7 @@ updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
 PRIMARY KEY(role_capability_id)
-) COLLATE='utf8mb4_general_ci'
+) COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
@@ -318,7 +318,7 @@ updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
 PRIMARY KEY(user_role_id)
-) COLLATE='utf8mb4_general_ci'
+) COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
@@ -338,7 +338,7 @@ updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
 PRIMARY KEY(config_id)
-) COLLATE='utf8mb4_general_ci'
+) COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
@@ -362,7 +362,7 @@ updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
 PRIMARY KEY(rfid_article_id)
-) COLLATE='utf8mb4_general_ci'
+) COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
@@ -386,7 +386,7 @@ updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
 PRIMARY KEY(article_po_id)
-) COLLATE='utf8mb4_general_ci'
+) COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
@@ -405,7 +405,7 @@ updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
 PRIMARY KEY(article_po_id)
-) COLLATE='utf8mb4_general_ci'
+) COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
@@ -425,7 +425,7 @@ updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
 PRIMARY KEY(prepack_id)
-) COLLATE='utf8mb4_general_ci'
+) COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
@@ -444,7 +444,7 @@ updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
 PRIMARY KEY(prepack_id)
-) COLLATE='utf8mb4_general_ci'
+) COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
@@ -479,7 +479,7 @@ updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
 PRIMARY KEY(user_id)
-) COLLATE='utf8mb4_general_ci'
+) COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
@@ -499,7 +499,7 @@ updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
 PRIMARY KEY(user_attribute_id)
-) COLLATE='utf8mb4_general_ci'
+) COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
@@ -524,7 +524,7 @@ updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
 PRIMARY KEY(site_id)
-) COLLATE='utf8mb4_general_ci' 
+) COLLATE='utf8_general_ci' 
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
@@ -542,7 +542,7 @@ updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
 PRIMARY KEY(pic_id)
-) COLLATE='utf8mb4_general_ci' 
+) COLLATE='utf8_general_ci' 
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
@@ -557,7 +557,7 @@ updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
 PRIMARY KEY(reason_id)
-) COLLATE='utf8mb4_general_ci' 
+) COLLATE='utf8_general_ci' 
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
@@ -576,7 +576,7 @@ updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
 PRIMARY KEY(reason_id)
-) COLLATE='utf8mb4_general_ci' 
+) COLLATE='utf8_general_ci' 
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
@@ -594,7 +594,7 @@ updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
 PRIMARY KEY(level_id)
-) COLLATE='utf8mb4_general_ci' 
+) COLLATE='utf8_general_ci' 
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 

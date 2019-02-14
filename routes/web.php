@@ -104,6 +104,27 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
 	$router->put('/article_logistic_site', 'Api\v1\ArticleLogisticSiteController@update');
     $router->delete('/article_logistic_site', 'Api\v1\ArticleLogisticSiteController@delete');
 	
+	$router->get('/role', 'Api\v1\RoleController@get_list');
+	$router->get('/role/get_list', 'Api\v1\RoleController@get_list');
+	$router->get('/role/{id}', 'Api\v1\RoleController@get');
+	$router->post('/role', 'Api\v1\RoleController@save');
+	$router->put('/role', 'Api\v1\RoleController@update');
+    $router->delete('/role', 'Api\v1\RoleController@delete');
+	
+	$router->get('/capability', 'Api\v1\CapabilityController@get_list');
+	$router->get('/capability/get_list', 'Api\v1\CapabilityController@get_list');
+	$router->get('/capability/{id}', 'Api\v1\CapabilityController@get');
+	$router->post('/capability', 'Api\v1\CapabilityController@save');
+	$router->put('/capability', 'Api\v1\CapabilityController@update');
+    $router->delete('/capability', 'Api\v1\CapabilityController@delete');
+	
+	$router->get('/role_capability', 'Api\v1\RoleCapabilityController@get_list');
+	$router->get('/role_capability/get_list', 'Api\v1\RoleCapabilityController@get_list');
+	$router->get('/role_capability/{id}', 'Api\v1\RoleCapabilityController@get');
+	$router->post('/role_capability', 'Api\v1\RoleCapabilityController@save');
+	$router->put('/role_capability', 'Api\v1\RoleCapabilityController@update');
+    $router->delete('/role_capability', 'Api\v1\RoleCapabilityController@delete');
+	
 	
     // $router->get('/', 'Api\v1\Controller@get_list');
 	// $router->get('/get_list', 'Api\v1\Controller@get_list');
