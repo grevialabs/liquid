@@ -72,10 +72,14 @@ class SiteController extends ApiController {
 		$attr = NULL;
 		if (! empty($_GET)) $attr = $_GET;
 			
-		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
+		$q = '
+		SELECT site_id,s.company_id, c.company_name, s.site_name, s.site_address, s.flag_qty_value, s.site_qty_value, s.method_calc, s.start_date_counting, s.reset_days,s.status, s.updated_at, s.updated_by
+		FROM ' . $this->table . ' s
+		LEFT JOIN ms_company c USING(company_id)
+		WHERE 1';
 		
 		if (isset($attr['company_id']) && $attr['company_id'] != '') {
-			$q.= ' AND company_id = '.$attr['company_id'];
+			$q.= ' AND s.company_id = '.$attr['company_id'];
 		}
 		
 		if (isset($attr['site_id']) && $attr['site_id'] != '') {
@@ -83,9 +87,9 @@ class SiteController extends ApiController {
 		}
 		
 		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
-			$q.= ' AND status = '.$attr['status'];
+			$q.= ' AND s.status = '.$attr['status'];
         } else {
-			$q.= ' AND status != -1';
+			$q.= ' AND s.status != -1';
 		}
 		
 		$data = orm_get($q);
@@ -98,11 +102,18 @@ class SiteController extends ApiController {
 		$attr = $result = NULL;
 		if (! empty($_GET)) $attr = $_GET;
 			
-		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
+		// $q = '
+		// SELECT * 
+		// FROM ' . $this->table . ' 
+		// WHERE 1';
 		
-		if (isset($attr['keyword']) && $attr['keyword'] != '') {
-			// array('site_id','company_id','site_name','site_address','site_qty_value','flag_qty_value','method_calc','start_date_counting', 'reset_days', 'logo_file_name', 'chamber_sync_flag', 'field_sync', 'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
-			
+		$q = '
+		SELECT site_id,s.company_id, c.company_name, s.site_name, s.site_address, s.flag_qty_value, s.site_qty_value, s.method_calc, s.start_date_counting, s.reset_days,s.status, s.updated_at, s.updated_by
+		FROM ' . $this->table . ' s
+		LEFT JOIN ms_company c USING(company_id)
+		WHERE 1';
+		
+		if (isset($attr['keyword']) && $attr['keyword'] != '') {			
 			$q.= ' AND ( ';
 			$q.= ' site_id LIKE '.replace_quote($attr['keyword'],'like');
 			$q.= ' OR site_name LIKE '.replace_quote($attr['keyword'],'like');
@@ -117,18 +128,23 @@ class SiteController extends ApiController {
         }
 		
 		if (isset($attr['company_id']) && $attr['company_id'] != '') {
-			$q.= ' AND company_id = '.$attr['company_id'];
+			$q.= ' AND s.company_id = '.$attr['company_id'];
         }
 		
 		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
-			$q.= ' AND status = '.$attr['status'];
+			$q.= ' AND s.status = '.$attr['status'];
         } else {
-			$q.= ' AND status != -1';
+			$q.= ' AND s.status != -1';
 		}
         
         $result['total_rows'] = count(orm_get_list($q));
 		
 		if (isset($attr['order'])) { 
+			
+			// extra order table company
+			// $extra_order = array('company_name');			
+			// if (in_array($attr['order'],$extra_order)) $attr['order'] = 'c.'.$attr['order'];
+
 			$q.= ' ORDER BY ' . $attr['order'];
 			if (isset($attr['orderby'])) $q .= ' '.$attr['orderby']; 
 		} else  {
