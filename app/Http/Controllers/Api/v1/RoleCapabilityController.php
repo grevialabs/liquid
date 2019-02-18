@@ -156,6 +156,94 @@ class RoleCapabilityController extends ApiController {
 		die;
 	}
 
+	public function get_list_detail()
+	{
+		$attr = $result = NULL;
+		if (! empty($_GET)) $attr = $_GET;
+			
+		$q = '
+		SELECT rc.role_capability_id, c.capability as capability, r.role_name, rc.`create`, rc.`read`, rc.`update` ,rc.`delete`
+		FROM ' . $this->table .' rc 
+		LEFT JOIN ms_role r USING(role_id)
+		LEFT JOIN ms_capability c USING(capability_id)
+		WHERE 1';
+		
+		if (isset($attr['keyword']) && $attr['keyword'] != '') {
+			$q.= ' AND ( ';
+			$q.= ' role_name LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR c.capability LIKE '.replace_quote($attr['keyword'],'like');
+			// $q.= ' OR capability_id LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ')';
+        }
+		
+		// no use harusnya
+		// if (isset($attr['capability_id']) && $attr['capability_id'] != '') {
+		// 	$q.= ' AND capability_id = '.$attr['capability_id'];
+		// }
+		
+		if (isset($attr['role_id']) && $attr['role_id'] != '') {
+			$q.= ' AND role_id = '.$attr['role_id'];
+        }
+		
+		// no use harusnya
+		// if (isset($attr['role_capability_id']) && $attr['role_capability_id'] != '') {
+		// 	$q.= ' AND role_capability_id = '.$attr['role_capability_id'];
+        // }
+		
+		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
+			$q.= ' AND rc.status = '.$attr['status'];
+        } else {
+			$q.= ' AND rc.status != -1';
+		}
+        
+        $result['total_rows'] = count(orm_get_list($q));
+		
+		if (isset($attr['order'])) { 
+			$q.= ' ORDER BY ' . $attr['order'];
+			if (isset($attr['orderby'])) $q .= ' '.$attr['orderby']; 
+		} else  {
+			$q.= ' ORDER BY '. $this->primary_key .' DESC';
+		}
+		
+		// set default paging
+		if (! isset($attr['paging'])) {
+			if (! isset($attr['offset'])) $attr['offset'] = OFFSET;
+			if (! isset($attr['perpage'])) $attr['perpage'] = PERPAGE;
+		}
+		
+		if (isset($attr['offset'])) { 
+			$q.= ' LIMIT ' . $attr['offset'];
+			
+			if (! isset($attr['perpage'])) $attr['perpage'] = PERPAGE;
+			
+			$q.= ', ' . $attr['perpage'];
+		}
+		// debug($q,1);
+
+		$data = orm_get_list($q);
+        $result['data'] = $data;
+        
+        echo json_encode($result); 
+		die;
+	}
+
+	// Insert all role capability
+	public function auto_insert_role()
+	{
+		$attr = 
+		
+		$result['is_success'] = 'on progress';
+		$result['message'] = 'under maintenance';
+		
+		$q = '
+		INSERT INTO ms_role_capability(role_id,capability_id,`create`,`read`,`update`,`delete`) 
+		VALUES(1,4,0,0,1,1) ON DUPLICATE KEY UPDATE `create` = VALUES(`create`), `update` = VALUES(`update`)
+		';
+
+        echo json_encode($result); 
+		die;
+	}
+
 	public function save()
 	{
         $post = $attr = $result = NULL;
