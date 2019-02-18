@@ -128,7 +128,7 @@ class UserController extends ApiController {
 		die;
 	}
 	
-	public function get_list()
+	public function get_list_dropdown()
 	{
 		$attr = $result = NULL;
 		if (! empty($_GET)) $attr = $_GET;
