@@ -125,6 +125,12 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
 	$router->put('/role_capability', 'Api\v1\RoleCapabilityController@update');
     $router->delete('/role_capability', 'Api\v1\RoleCapabilityController@delete');
 	
+	$router->get('/reason_type', 'Api\v1\ReasonTypeController@get_list');
+	$router->get('/reason_type/get_list', 'Api\v1\ReasonTypeController@get_list');
+	$router->get('/reason_type/{id}', 'Api\v1\ReasonTypeController@get');
+	$router->post('/reason_type', 'Api\v1\ReasonTypeController@save');
+	$router->put('/reason_type', 'Api\v1\ReasonTypeController@update');
+    $router->delete('/reason_type', 'Api\v1\ReasonTypeController@delete');
 	
     // $router->get('/', 'Api\v1\Controller@get_list');
 	// $router->get('/get_list', 'Api\v1\Controller@get_list');

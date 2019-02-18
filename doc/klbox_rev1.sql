@@ -235,7 +235,7 @@ AUTO_INCREMENT=1;
 
 CREATE TABLE ms_capability(
 capability_id int NOT NULL AUTO_INCREMENT,
-description varchar(200) NULL DEFAULT NULL,
+capability varchar(200) NULL DEFAULT NULL,
 status tinyint NULL DEFAULT 1,
 created_at datetime NULL DEFAULT NULL,
 created_by varchar(25) NULL DEFAULT NULL,
@@ -287,11 +287,10 @@ AUTO_INCREMENT=1;
 
 
 
-CREATE TABLE ms_user_role_level(
-user_role_level_id int NOT NULL AUTO_INCREMENT,
+CREATE TABLE ms_user_role(
+user_role_id int NOT NULL AUTO_INCREMENT,
 user_id int NOT NULL,
 role_id int NOT NULL,
-level_id int NOT NULL,
 status tinyint NULL DEFAULT 1,
 created_at datetime NULL DEFAULT NULL,
 created_by varchar(25) NULL DEFAULT NULL,
@@ -299,7 +298,7 @@ created_ip varchar(25) NULL DEFAULT NULL,
 updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
-PRIMARY KEY(user_role_level_id)
+PRIMARY KEY(user_role_id)
 ) COLLATE='utf8mb4_general_ci' 
 ENGINE=InnoDB
 AUTO_INCREMENT=1;

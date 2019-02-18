@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Redirect;
 // use Request;
 use DB;
 
-use App\Models\CompanyModel;
+use App\Models\ReasonTypeModel;
 
-class UserController extends ApiController {
+class ReasonTypeController extends ApiController {
 
 	/*
 	|--------------------------------------------------------------------------
@@ -26,9 +26,9 @@ class UserController extends ApiController {
 	| controller as you wish. It is just here to get your app started!
 	|
     */
-    public $table = 'ms_user';
-    public $primary_key = 'user_id';
-    public $list_column = array('user_id', 'site_id', 'parent_user_id', 'level_id','user_code', 'firstname', 'lastname', 'quota_initial', 'quota_additional', 'quota_remaining', 'job_title', 'division', 'email', 'user_category', 'password', 'counter_wrong_pass', 'status_lock', 'locked_time', 'reset_by', 'reset_time',  'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
+    public $table = 'ms_reason_type';
+    public $primary_key = 'reason_type_id';
+    public $list_column = array('reason_type_id','attribute_id','attribute_value','site_id','status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
 	
 	/**
 	 * Create a new controller instance.
@@ -44,6 +44,24 @@ class UserController extends ApiController {
 
 	}
 
+	// with eloqueen
+	public function get_list_status()
+	{
+		// $log = ArticleModel::all();
+		// $log = ArticleModel::where('reason_type_id',3)
+		// $log = ArticleModel::whereName('mantap')
+		$log = ArticleModel::whereStatus('1')
+						->get()
+						->all();
+						// ->toSql()->get();
+		// $data = 
+
+						// $log = $logModel->toSql();
+		echo json_encode($log);
+
+		die;
+	}
+
 	/**
 	 * Show the application dashboard to the user.
 	 *
@@ -56,9 +74,14 @@ class UserController extends ApiController {
 			
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
-		if (isset($attr['user_id']) && $attr['user_id'] != '') 
-		{
-			$q.= ' AND user_id = '.$attr['user_id'];
+		if (isset($attr['reason_type_id']) && $attr['reason_type_id'] != '') {
+			$q.= ' AND reason_type_id = '.$attr['reason_type_id'];
+		}
+		
+		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
+			$q.= ' AND status = '.$attr['status'];
+        } else {
+			$q.= ' AND status != -1';
 		}
 		
 		$data = orm_get($q);
@@ -71,88 +94,26 @@ class UserController extends ApiController {
 		$attr = $result = NULL;
 		if (! empty($_GET)) $attr = $_GET;
 			
-		$q = '
-		SELECT  user_id, firstname, lastname, job_title, division, email, user_category, name, level_id, level_name, site_id 
-		FROM '	. $this->table . ' u
-		LEFT JOIN ms_level l USING(level_id)
-		LEFT JOIN ms_user_role ur USING(user_id)
-		LEFT JOIN ms_role r USING(role_id)
-		WHERE 1';
-		
-		if (isset($attr['keyword']) && $attr['keyword'] != '') {
-			
-			// array('user_id', 'site_id', 'parent_user_id', 'level_id','user_code', 'firstname', 'lastname', 'quota_initial', 'quota_additional', 'quota_remaining', 'job_title', 'division', 'email', 'user_category', 'password', 'counter_wrong_pass', 'status_lock', 'locked_time', 'reset_by', 'reset_time',  'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
-			
-			$q.= ' AND ( ';
-			$q.= ' user_code LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR CONCAT(firstname, " ", lastname) LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR lastname LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR job_title LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR division LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR email LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR user_category LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ')';
-        }
-		
-		if (isset($attr['user_id']) && $attr['user_id'] != '') {
-			$q.= ' AND user_id = '.$attr['user_id'];
-        }
-        
-        $result['total_rows'] = count(orm_get_list($q));
-		
-		if (isset($attr['order'])) { 
-			$q.= ' ORDER BY ' . $attr['order'];
-			if (isset($attr['orderby'])) $q .= ' '.$attr['orderby']; 
-		} else  {
-			$q.= ' ORDER BY '. $this->primary_key .' DESC';
-		}
-		
-		// set default paging
-		if (! isset($attr['paging'])) {
-			if (! isset($attr['offset'])) $attr['offset'] = OFFSET;
-			if (! isset($attr['perpage'])) $attr['perpage'] = PERPAGE;
-		}
-		
-		if (isset($attr['offset'])) { 
-			$q.= ' LIMIT ' . $attr['offset'];
-			
-			if (! isset($attr['perpage'])) $attr['perpage'] = PERPAGE;
-			
-			$q.= ', ' . $attr['perpage'];
-		}
-
-		$data = orm_get_list($q);
-        $result['data'] = $data;
-        
-        echo json_encode($result); 
-		die;
-	}
-	
-	public function get_list()
-	{
-		$attr = $result = NULL;
-		if (! empty($_GET)) $attr = $_GET;
-			
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
 		if (isset($attr['keyword']) && $attr['keyword'] != '') {
-			
-			array('user_id', 'site_id', 'parent_user_id', 'level_id','user_code', 'firstname', 'lastname', 'quota_initial', 'quota_additional', 'quota_remaining', 'job_title', 'division', 'email', 'user_category', 'password', 'counter_wrong_pass', 'status_lock', 'locked_time', 'reset_by', 'reset_time',  'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
-			
 			$q.= ' AND ( ';
-			$q.= ' user_code LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR CONCAT(firstname, " ", lastname) LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR lastname LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR job_title LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR division LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR email LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR user_category LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' reason_type_id LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR attribute_id LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR attribute_value LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR site_id LIKE '.replace_quote($attr['keyword'],'like');
 			$q.= ')';
         }
 		
-		if (isset($attr['user_id']) && $attr['user_id'] != '') {
-			$q.= ' AND user_id = '.$attr['user_id'];
+		if (isset($attr['reason_type_id']) && $attr['reason_type_id'] != '') {
+			$q.= ' AND reason_type_id = '.$attr['reason_type_id'];
         }
+		
+		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
+			$q.= ' AND status = '.$attr['status'];
+        } else {
+			$q.= ' AND status != -1';
+		}
         
         $result['total_rows'] = count(orm_get_list($q));
 		
