@@ -98,8 +98,8 @@ class ReasonTypeMappingController extends ApiController {
 		
 		if (isset($attr['keyword']) && $attr['keyword'] != '') {
 			$q.= ' AND ( ';
-			$q.= ' reason_type_mapping_id LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR reason_type_id LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' reason_type_id LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR reason_id LIKE '.replace_quote($attr['keyword'],'like');
 			$q.= ')';
         }
 		

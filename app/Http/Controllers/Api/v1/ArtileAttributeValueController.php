@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Redirect;
 // use Request;
 use DB;
 
-use App\Models\ReasonTypeModel;
+use App\Models\ArticleAttributValueeModel;
 
-class ReasonTypeController extends ApiController {
+class ArticleAttributeValueController extends ApiController {
 
 	/*
 	|--------------------------------------------------------------------------
@@ -26,9 +26,9 @@ class ReasonTypeController extends ApiController {
 	| controller as you wish. It is just here to get your app started!
 	|
     */
-    public $table = 'ms_reason_type';
-    public $primary_key = 'reason_type_id';
-    public $list_column = array('reason_type_id','article_attribute_id','attribute_value','status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
+    public $table = 'ms_article_attribute_value';
+    public $primary_key = 'article_attribute_value_id';
+	public $list_column = array('article_attribute_value_id','article_id','article_attribute_id','attribute_value','chamber_sync_flag','field_sync', 'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
 	
 	/**
 	 * Create a new controller instance.
@@ -48,7 +48,7 @@ class ReasonTypeController extends ApiController {
 	public function get_list_status()
 	{
 		// $log = ArticleModel::all();
-		// $log = ArticleModel::where('reason_type_id',3)
+		// $log = ArticleModel::where('article_attribute_value_id',3)
 		// $log = ArticleModel::whereName('mantap')
 		$log = ArticleModel::whereStatus('1')
 						->get()
@@ -74,8 +74,8 @@ class ReasonTypeController extends ApiController {
 			
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
-		if (isset($attr['reason_type_id']) && $attr['reason_type_id'] != '') {
-			$q.= ' AND reason_type_id = '.$attr['reason_type_id'];
+		if (isset($attr['article_attribute_value_id']) && $attr['article_attribute_value_id'] != '') {
+			$q.= ' AND article_attribute_value_id = '.$attr['article_attribute_value_id'];
 		}
 		
 		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
@@ -98,15 +98,14 @@ class ReasonTypeController extends ApiController {
 		
 		if (isset($attr['keyword']) && $attr['keyword'] != '') {
 			$q.= ' AND ( ';
-			$q.= ' reason_type_id LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR attribute_id LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' artice_attribute_id LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR article_id LIKE '.replace_quote($attr['keyword'],'like');
 			$q.= ' OR attribute_value LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR site_id LIKE '.replace_quote($attr['keyword'],'like');
 			$q.= ')';
         }
 		
-		if (isset($attr['reason_type_id']) && $attr['reason_type_id'] != '') {
-			$q.= ' AND reason_type_id = '.$attr['reason_type_id'];
+		if (isset($attr['article_attribute_value_id']) && $attr['article_attribute_value_id'] != '') {
+			$q.= ' AND article_attribute_value_id = '.$attr['article_attribute_value_id'];
         }
 		
 		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {

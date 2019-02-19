@@ -141,6 +141,20 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
 	$router->put('/reason_type_mapping', 'Api\v1\ReasonTypeMappingController@update');
     $router->delete('/reason_type_mapping', 'Api\v1\ReasonTypeMappingController@delete');
 	
+	$router->get('/articlle_attribute', 'Api\v1\ArticlleAttributeController@get_list');
+	$router->get('/articlle_attribute/get_list', 'Api\v1\ArticlleAttributeController@get_list');
+	$router->get('/articlle_attribute/{id}', 'Api\v1\ArticlleAttributeController@get');
+	$router->post('/articlle_attribute', 'Api\v1\ArticlleAttributeController@save');
+	$router->put('/articlle_attribute', 'Api\v1\ArticlleAttributeController@update');
+    $router->delete('/articlle_attribute', 'Api\v1\ArticlleAttributeController@delete');
+	
+	$router->get('/articlle_attribute_value', 'Api\v1\ArticlleAttributeValueController@get_list');
+	$router->get('/articlle_attribute_value/get_list', 'Api\v1\ArticlleAttributeValueController@get_list');
+	$router->get('/articlle_attribute_value/{id}', 'Api\v1\ArticlleAttributeValueController@get');
+	$router->post('/articlle_attribute_value', 'Api\v1\ArticlleAttributeValueController@save');
+	$router->put('/articlle_attribute_value', 'Api\v1\ArticlleAttributeValueController@update');
+    $router->delete('/articlle_attribute_value', 'Api\v1\ArticlleAttributeValueController@delete');
+	
     // $router->get('/', 'Api\v1\Controller@get_list');
 	// $router->get('/get_list', 'Api\v1\Controller@get_list');
 	// $router->get('/{id}', 'Api\v1\Controller@get');
