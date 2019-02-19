@@ -155,6 +155,34 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
 	$router->put('/articlle_attribute_value', 'Api\v1\ArticlleAttributeValueController@update');
     $router->delete('/articlle_attribute_value', 'Api\v1\ArticlleAttributeValueController@delete');
 	
+	$router->get('/articlle_stock', 'Api\v1\ArticlleStockController@get_list');
+	$router->get('/articlle_stock/get_list', 'Api\v1\ArticlleStockController@get_list');
+	$router->get('/articlle_stock/{id}', 'Api\v1\ArticlleStockController@get');
+	$router->post('/articlle_stock', 'Api\v1\ArticlleStockController@save');
+	$router->put('/articlle_stock', 'Api\v1\ArticlleStockController@update');
+    $router->delete('/articlle_stock', 'Api\v1\ArticlleStockController@delete');
+	
+	$router->get('/articlle_po', 'Api\v1\ArticllePoController@get_list');
+	$router->get('/articlle_po/get_list', 'Api\v1\ArticllePoController@get_list');
+	$router->get('/articlle_po/{id}', 'Api\v1\ArticllePoController@get');
+	$router->post('/articlle_po', 'Api\v1\ArticllePoController@save');
+	$router->put('/articlle_po', 'Api\v1\ArticllePoController@update');
+    $router->delete('/articlle_po', 'Api\v1\ArticllePoController@delete');
+	
+	$router->get('/rfid_articlle', 'Api\v1\RfidArticlleController@get_list');
+	$router->get('/rfid_articlle/get_list', 'Api\v1\RfidArticlleController@get_list');
+	$router->get('/rfid_articlle/{id}', 'Api\v1\RfidArticlleController@get');
+	$router->post('/rfid_articlle', 'Api\v1\RfidArticlleController@save');
+	$router->put('/rfid_articlle', 'Api\v1\RfidArticlleController@update');
+    $router->delete('/rfid_articlle', 'Api\v1\RfidArticlleController@delete');
+	
+	$router->get('/config', 'Api\v1\ConfigController@get_list');
+	$router->get('/config/get_list', 'Api\v1\ConfigController@get_list');
+	$router->get('/config/{id}', 'Api\v1\ConfigController@get');
+	$router->post('/config', 'Api\v1\ConfigController@save');
+	$router->put('/config', 'Api\v1\ConfigController@update');
+    $router->delete('/config', 'Api\v1\ConfigController@delete');
+	
     // $router->get('/', 'Api\v1\Controller@get_list');
 	// $router->get('/get_list', 'Api\v1\Controller@get_list');
 	// $router->get('/{id}', 'Api\v1\Controller@get');
