@@ -134,6 +134,13 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
 	$router->put('/reason_type', 'Api\v1\ReasonTypeController@update');
     $router->delete('/reason_type', 'Api\v1\ReasonTypeController@delete');
 	
+	$router->get('/reason_type_mapping', 'Api\v1\ReasonTypeMappingController@get_list');
+	$router->get('/reason_type_mapping/get_list', 'Api\v1\ReasonTypeMappingController@get_list');
+	$router->get('/reason_type_mapping/{id}', 'Api\v1\ReasonTypeMappingController@get');
+	$router->post('/reason_type_mapping', 'Api\v1\ReasonTypeMappingController@save');
+	$router->put('/reason_type_mapping', 'Api\v1\ReasonTypeMappingController@update');
+    $router->delete('/reason_type_mapping', 'Api\v1\ReasonTypeMappingController@delete');
+	
     // $router->get('/', 'Api\v1\Controller@get_list');
 	// $router->get('/get_list', 'Api\v1\Controller@get_list');
 	// $router->get('/{id}', 'Api\v1\Controller@get');
