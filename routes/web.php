@@ -142,40 +142,41 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
 	$router->put('/reason_type_mapping', 'Api\v1\ReasonTypeMappingController@update');
     $router->delete('/reason_type_mapping', 'Api\v1\ReasonTypeMappingController@delete');
 	
-	$router->get('/articlle_attribute', 'Api\v1\ArticlleAttributeController@get_list');
-	$router->get('/articlle_attribute/get_list', 'Api\v1\ArticlleAttributeController@get_list');
-	$router->get('/articlle_attribute/{id}', 'Api\v1\ArticlleAttributeController@get');
-	$router->post('/articlle_attribute', 'Api\v1\ArticlleAttributeController@save');
-	$router->put('/articlle_attribute', 'Api\v1\ArticlleAttributeController@update');
-    $router->delete('/articlle_attribute', 'Api\v1\ArticlleAttributeController@delete');
 	
-	$router->get('/articlle_attribute_value', 'Api\v1\ArticlleAttributeValueController@get_list');
-	$router->get('/articlle_attribute_value/get_list', 'Api\v1\ArticlleAttributeValueController@get_list');
-	$router->get('/articlle_attribute_value/{id}', 'Api\v1\ArticlleAttributeValueController@get');
-	$router->post('/articlle_attribute_value', 'Api\v1\ArticlleAttributeValueController@save');
-	$router->put('/articlle_attribute_value', 'Api\v1\ArticlleAttributeValueController@update');
-    $router->delete('/articlle_attribute_value', 'Api\v1\ArticlleAttributeValueController@delete');
+	$router->get('/article_attribute', 'Api\v1\ArticleAttributeController@get_list');
+	$router->get('/article_attribute/get_list', 'Api\v1\ArticleAttributeController@get_list');
+	$router->get('/article_attribute/{id}', 'Api\v1\ArticleAttributeController@get');
+	$router->post('/article_attribute', 'Api\v1\ArticleAttributeController@save');
+	$router->put('/article_attribute', 'Api\v1\ArticleAttributeController@update');
+    $router->delete('/article_attribute', 'Api\v1\ArticleAttributeController@delete');
 	
-	$router->get('/articlle_stock', 'Api\v1\ArticlleStockController@get_list');
-	$router->get('/articlle_stock/get_list', 'Api\v1\ArticlleStockController@get_list');
-	$router->get('/articlle_stock/{id}', 'Api\v1\ArticlleStockController@get');
-	$router->post('/articlle_stock', 'Api\v1\ArticlleStockController@save');
-	$router->put('/articlle_stock', 'Api\v1\ArticlleStockController@update');
-    $router->delete('/articlle_stock', 'Api\v1\ArticlleStockController@delete');
+	$router->get('/article_attribute_value', 'Api\v1\ArticleAttributeValueController@get_list');
+	$router->get('/article_attribute_value/get_list', 'Api\v1\ArticleAttributeValueController@get_list');
+	$router->get('/article_attribute_value/{id}', 'Api\v1\ArticleAttributeValueController@get');
+	$router->post('/article_attribute_value', 'Api\v1\ArticleAttributeValueController@save');
+	$router->put('/article_attribute_value', 'Api\v1\ArticleAttributeValueController@update');
+    $router->delete('/article_attribute_value', 'Api\v1\ArticleAttributeValueController@delete');
 	
-	$router->get('/articlle_po', 'Api\v1\ArticllePoController@get_list');
-	$router->get('/articlle_po/get_list', 'Api\v1\ArticllePoController@get_list');
-	$router->get('/articlle_po/{id}', 'Api\v1\ArticllePoController@get');
-	$router->post('/articlle_po', 'Api\v1\ArticllePoController@save');
-	$router->put('/articlle_po', 'Api\v1\ArticllePoController@update');
-    $router->delete('/articlle_po', 'Api\v1\ArticllePoController@delete');
+	$router->get('/article_stock', 'Api\v1\ArticleStockController@get_list');
+	$router->get('/article_stock/get_list', 'Api\v1\ArticleStockController@get_list');
+	$router->get('/article_stock/{id}', 'Api\v1\ArticleStockController@get');
+	$router->post('/article_stock', 'Api\v1\ArticleStockController@save');
+	$router->put('/article_stock', 'Api\v1\ArticleStockController@update');
+    $router->delete('/article_stock', 'Api\v1\ArticleStockController@delete');
 	
-	$router->get('/rfid_articlle', 'Api\v1\RfidArticlleController@get_list');
-	$router->get('/rfid_articlle/get_list', 'Api\v1\RfidArticlleController@get_list');
-	$router->get('/rfid_articlle/{id}', 'Api\v1\RfidArticlleController@get');
-	$router->post('/rfid_articlle', 'Api\v1\RfidArticlleController@save');
-	$router->put('/rfid_articlle', 'Api\v1\RfidArticlleController@update');
-    $router->delete('/rfid_articlle', 'Api\v1\RfidArticlleController@delete');
+	$router->get('/article_po', 'Api\v1\ArticlePoController@get_list');
+	$router->get('/article_po/get_list', 'Api\v1\ArticlePoController@get_list');
+	$router->get('/article_po/{id}', 'Api\v1\ArticlePoController@get');
+	$router->post('/article_po', 'Api\v1\ArticlePoController@save');
+	$router->put('/article_po', 'Api\v1\ArticlePoController@update');
+    $router->delete('/article_po', 'Api\v1\ArticlePoController@delete');
+	
+	$router->get('/rfid_article', 'Api\v1\RfidArticlleControler@get_list');
+	$router->get('/rfid_article/get_list', 'Api\v1\RfidArticleController@get_list');
+	$router->get('/rfid_article/{id}', 'Api\v1\RfidArticleController@get');
+	$router->post('/rfid_article', 'Api\v1\RfidArticleController@save');
+	$router->put('/rfid_article', 'Api\v1\RfidArticleController@update');
+    $router->delete('/rfid_article', 'Api\v1\RfidArticleController@delete');
 	
 	$router->get('/config', 'Api\v1\ConfigController@get_list');
 	$router->get('/config/get_list', 'Api\v1\ConfigController@get_list');
