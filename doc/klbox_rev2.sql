@@ -220,7 +220,7 @@ AUTO_INCREMENT=1;
 
 CREATE TABLE ms_article_attribute(
 article_attribute_id int NOT NULL AUTO_INCREMENT,
-attribute_name int NOT NULL ,
+attribute_name varchar(100) NOT NULL ,
 chamber_sync_flag tinyint NULL DEFAULT 0,
 field_sync tinyint NULL DEFAULT 0,
 status tinyint NULL DEFAULT 1,
@@ -456,7 +456,6 @@ level_id int NULL,
 user_code varchar(100) NULL DEFAULT NULL,
 firstname varchar(100) NULL DEFAULT NULL,
 lastname varchar(100) NULL DEFAULT NULL,
-
 quota_initial int NULL DEFAULT NULL,
 quota_additional int NULL DEFAULT NULL,
 quota_remaining int NULL DEFAULT NULL,
