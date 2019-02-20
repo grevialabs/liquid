@@ -98,7 +98,7 @@ created_ip varchar(25) NULL DEFAULT NULL,
 updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
-PRIMARY KEY(reason_id)
+PRIMARY KEY(reason_type_id)
 ) COLLATE='utf8_general_ci' 
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
@@ -116,7 +116,7 @@ created_ip varchar(25) NULL DEFAULT NULL,
 updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
-PRIMARY KEY(reason_id)
+PRIMARY KEY(reason_type_mapping_id)
 ) COLLATE='utf8_general_ci' 
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
@@ -548,25 +548,6 @@ AUTO_INCREMENT=1;
 CREATE TABLE ms_reason(
 reason_id int NOT NULL AUTO_INCREMENT,
 reason_value varchar(100) NULL DEFAULT NULL,
-status tinyint NULL DEFAULT 1,
-created_at datetime NULL DEFAULT NULL,
-created_by varchar(25) NULL DEFAULT NULL,
-created_ip varchar(25) NULL DEFAULT NULL,
-updated_at datetime NULL DEFAULT NULL,
-updated_by varchar(25) NULL DEFAULT NULL,
-updated_ip varchar(25) NULL DEFAULT NULL,
-PRIMARY KEY(reason_id)
-) COLLATE='utf8_general_ci' 
-ENGINE=InnoDB
-AUTO_INCREMENT=1;
-
-CREATE TABLE ms_reason_type(
-reason_type_id int NOT NULL AUTO_INCREMENT,
-article_attribute_id INT NOT NULL,
-attribute_value varchar(100) NULL DEFAULT NULL,
-site_id varchar(10) NULL DEFAULT NULL,
-chamber_sync_flag tinyint NULL DEFAULT 0,
-field_sync tinyint NULL DEFAULT 0,
 status tinyint NULL DEFAULT 1,
 created_at datetime NULL DEFAULT NULL,
 created_by varchar(25) NULL DEFAULT NULL,

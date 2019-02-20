@@ -94,7 +94,10 @@ class RoleController extends ApiController {
 		$attr = $result = NULL;
 		if (! empty($_GET)) $attr = $_GET;
 			
-		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
+		$q = '
+		SELECT * 
+		FROM ' . $this->table . ' 
+		WHERE 1';
 		
 		if (isset($attr['keyword']) && $attr['keyword'] != '') {
 			$q.= ' AND ( ';

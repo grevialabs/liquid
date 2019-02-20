@@ -54,11 +54,18 @@ class UserController extends ApiController {
 		$attr = NULL;
 		if (! empty($_GET)) $attr = $_GET;
 			
-		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
+		// $q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
+		$q = '
+		SELECT user_id, firstname, lastname, CONCAT(firstname," ",lastname) as fullname, job_title, division, email, user_code, password, user_category, role_name, level_id, level_name, site_id, ur.role_id
+		FROM '	. $this->table . ' u
+		LEFT JOIN ms_level l USING(level_id)
+		LEFT JOIN ms_user_role ur USING(user_id)
+		LEFT JOIN ms_role r USING(role_id)
+		WHERE 1';
 		
 		if (isset($attr['user_id']) && $attr['user_id'] != '') 
 		{
-			$q.= ' AND user_id = '.$attr['user_id'];
+			$q.= ' AND u.user_id = '.$attr['user_id'];
 		}
 		
 		$data = orm_get($q);
@@ -72,7 +79,7 @@ class UserController extends ApiController {
 		if (! empty($_GET)) $attr = $_GET;
 			
 		$q = '
-		SELECT  user_id, firstname, lastname, job_title, division, email, user_category, role_name, level_id, level_name, site_id 
+		SELECT user_id, firstname, lastname, job_title, division, email, user_category, role_name, level_id, level_name, site_id, ur.role_id
 		FROM '	. $this->table . ' u
 		LEFT JOIN ms_level l USING(level_id)
 		LEFT JOIN ms_user_role ur USING(user_id)

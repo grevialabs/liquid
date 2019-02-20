@@ -119,11 +119,11 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
 	$router->put('/capability', 'Api\v1\CapabilityController@update');
     $router->delete('/capability', 'Api\v1\CapabilityController@delete');
 	
-	$router->get('/role_capability/auto_insert_role', 'Api\v1\RoleCapabilityController@auto_insert_role');
 	$router->get('/role_capability', 'Api\v1\RoleCapabilityController@get_list');
 	$router->get('/role_capability/get_list', 'Api\v1\RoleCapabilityController@get_list');
 	$router->get('/role_capability/get_list_detail', 'Api\v1\RoleCapabilityController@get_list_detail');
 	$router->get('/role_capability/{id}', 'Api\v1\RoleCapabilityController@get');
+	$router->get('/role_capability/cron_insert_role', 'Api\v1\RoleCapabilityController@cron_insert_role');
 	$router->post('/role_capability', 'Api\v1\RoleCapabilityController@save');
 	$router->put('/role_capability', 'Api\v1\RoleCapabilityController@update');
     $router->delete('/role_capability', 'Api\v1\RoleCapabilityController@delete');
@@ -141,7 +141,6 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
 	$router->post('/reason_type_mapping', 'Api\v1\ReasonTypeMappingController@save');
 	$router->put('/reason_type_mapping', 'Api\v1\ReasonTypeMappingController@update');
     $router->delete('/reason_type_mapping', 'Api\v1\ReasonTypeMappingController@delete');
-	
 	
 	$router->get('/article_attribute', 'Api\v1\ArticleAttributeController@get_list');
 	$router->get('/article_attribute/get_list', 'Api\v1\ArticleAttributeController@get_list');
@@ -183,7 +182,7 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
 	$router->get('/config/{id}', 'Api\v1\ConfigController@get');
 	$router->post('/config', 'Api\v1\ConfigController@save');
 	$router->put('/config', 'Api\v1\ConfigController@update');
-    $router->delete('/config', 'Api\v1\ConfigController@delete');
+	$router->delete('/config', 'Api\v1\ConfigController@delete');
 	
     // $router->get('/', 'Api\v1\Controller@get_list');
 	// $router->get('/get_list', 'Api\v1\Controller@get_list');

@@ -102,28 +102,32 @@ class RoleCapabilityController extends ApiController {
 		$attr = $result = NULL;
 		if (! empty($_GET)) $attr = $_GET;
 			
-		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
+		$q = '
+		SELECT rc.role_capability_id,rc.capability_id, r.role_name, rc.`create`, rc.`read`, rc.`update`, rc.`delete`, rc.status, rc.created_at, rc.created_by, rc.updated_at, rc.updated_by
+		FROM ' . $this->table . ' rc
+		LEFT JOIN ms_role r USING(role_id)
+		WHERE 1';
 		
 		if (isset($attr['keyword']) && $attr['keyword'] != '') {
 			$q.= ' AND ( ';
-			$q.= ' role_capability_id LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR role_id LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR capability_id LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' rc.role_capability_id LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR rc.role_id LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR rc.capability_id LIKE '.replace_quote($attr['keyword'],'like');
 			$q.= ')';
         }
 		
 		if (isset($attr['capability_id']) && $attr['capability_id'] != '') {
-			$q.= ' AND capability_id = '.$attr['capability_id'];
+			$q.= ' AND rc.capability_id = '.$attr['capability_id'];
         }
 		
 		if (isset($attr['role_capability_id']) && $attr['role_capability_id'] != '') {
-			$q.= ' AND role_capability_id = '.$attr['role_capability_id'];
+			$q.= ' AND rc.role_capability_id = '.$attr['role_capability_id'];
         }
 		
 		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
-			$q.= ' AND status = '.$attr['status'];
+			$q.= ' AND rc.status = '.$attr['status'];
         } else {
-			$q.= ' AND status != -1';
+			$q.= ' AND rc.status != -1';
 		}
         
         $result['total_rows'] = count(orm_get_list($q));
@@ -228,19 +232,36 @@ class RoleCapabilityController extends ApiController {
 	}
 
 	// Insert all role capability
-	public function auto_insert_role()
+	public function cron_insert_role()
 	{
-		$attr = 
+		// debug($_GET,1);
+		$get = $attr = $result = NULL;
+		if (! empty($_GET)) $get = $_GET;
+
+		if (! isset($get['role_id'])) {
+			$message = 'role_id harus diisi';
+			$result['message'] = $message;
+			echo json_encode($result);
+			die;
+		}
+		// $attr = NULL;
 		
 		$result['is_success'] = 'on progress';
 		$result['message'] = 'under maintenance';
 		
 		$q = '
-		INSERT INTO ms_role_capability(role_id,capability_id,`create`,`read`,`update`,`delete`) 
-		VALUES(1,4,0,0,1,1) ON DUPLICATE KEY UPDATE `create` = VALUES(`create`), `update` = VALUES(`update`)
+		INSERT IGNORE INTO ms_role_capability(role_id,capability_id) SELECT "' . $get['role_id'] . '", c.capability_id 
+		FROM ms_capability c 
+		WHERE 1 AND c.`status` = 1
 		';
 
-        echo json_encode($result); 
+		$save = DB::insert($q);
+		// $q = '
+		// INSERT INTO ms_role_capability(role_id,capability_id,`create`,`read`,`update`,`delete`) 
+		// VALUES(1,4,0,0,1,1) ON DUPLICATE KEY UPDATE `create` = VALUES(`create`), `update` = VALUES(`update`)
+		// ';
+
+        echo json_encode($save); 
 		die;
 	}
 
