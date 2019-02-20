@@ -49,6 +49,7 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
     $router->delete('/company', 'Api\v1\CompanyController@delete');
 
     $router->get('/user', 'Api\v1\UserController@get_list');
+    $router->get('/user/get_list_dropdown', 'Api\v1\UserController@get_list_dropdown');
 	$router->get('/user/get_list', 'Api\v1\UserController@get_list');
 	$router->get('/user/{id}', 'Api\v1\UserController@get');
 	$router->post('/user', 'Api\v1\UserController@save');

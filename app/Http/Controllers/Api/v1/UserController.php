@@ -133,11 +133,11 @@ class UserController extends ApiController {
 		$attr = $result = NULL;
 		if (! empty($_GET)) $attr = $_GET;
 			
-		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
+		$q = 'SELECT user_id, CONCAT(firstname," ",lastname) as fullname FROM ' . $this->table . ' WHERE 1';
 		
 		if (isset($attr['keyword']) && $attr['keyword'] != '') {
 			
-			array('user_id', 'site_id', 'parent_user_id', 'level_id','user_code', 'firstname', 'lastname', 'quota_initial', 'quota_additional', 'quota_remaining', 'job_title', 'division', 'email', 'user_category', 'password', 'counter_wrong_pass', 'status_lock', 'locked_time', 'reset_by', 'reset_time',  'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
+			// array('user_id', 'site_id', 'parent_user_id', 'level_id','user_code', 'firstname', 'lastname', 'quota_initial', 'quota_additional', 'quota_remaining', 'job_title', 'division', 'email', 'user_category', 'password', 'counter_wrong_pass', 'status_lock', 'locked_time', 'reset_by', 'reset_time',  'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
 			
 			$q.= ' AND ( ';
 			$q.= ' user_code LIKE '.replace_quote($attr['keyword'],'like');
@@ -153,8 +153,6 @@ class UserController extends ApiController {
 		if (isset($attr['user_id']) && $attr['user_id'] != '') {
 			$q.= ' AND user_id = '.$attr['user_id'];
         }
-        
-        $result['total_rows'] = count(orm_get_list($q));
 		
 		if (isset($attr['order'])) { 
 			$q.= ' ORDER BY ' . $attr['order'];
@@ -177,8 +175,7 @@ class UserController extends ApiController {
 			$q.= ', ' . $attr['perpage'];
 		}
 
-		$data = orm_get_list($q);
-        $result['data'] = $data;
+		$result['data'] = orm_get_list($q);
         
         echo json_encode($result); 
 		die;
