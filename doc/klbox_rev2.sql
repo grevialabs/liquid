@@ -578,6 +578,13 @@ PRIMARY KEY(level_id)
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
+-- thursday 21 feb 10:54
+ALTER TABLE `ms_role_capability`
+	ADD UNIQUE INDEX `role_id_capability_id` (`role_id`, `capability_id`);
+ALTER TABLE `ms_capability`
+	ADD UNIQUE INDEX `capability` (`capability`);
+ALTER TABLE `ms_pic`
+	CHANGE COLUMN `site_id` `site_id` VARCHAR(4) NOT NULL AFTER `pic_id`;
 
 --------
 - NOTES BUDI

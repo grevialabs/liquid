@@ -192,7 +192,15 @@ class RoleCapabilityController extends ApiController {
 		// no use harusnya
 		// if (isset($attr['role_capability_id']) && $attr['role_capability_id'] != '') {
 		// 	$q.= ' AND role_capability_id = '.$attr['role_capability_id'];
-        // }
+		// }
+		// get list list_unavail_menu
+		if (isset($attr['list_unavail_menu']) && $attr['list_unavail_menu'] != '') {
+			$q.= ' AND (( `read` = 0 ) OR ( `create` = 0  AND `update` = 0 AND `delete` = 0 ))';
+        }
+		
+		if (isset($attr['list_avail_menu']) && $attr['list_avail_menu'] != '') {
+			$q.= ' AND (( `read` = 1 ) OR ( `create` = 1 OR `update` = 1 OR `delete` = 1 ))';
+        }
 		
 		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
 			$q.= ' AND rc.status = '.$attr['status'];

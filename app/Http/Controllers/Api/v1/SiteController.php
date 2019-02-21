@@ -73,7 +73,7 @@ class SiteController extends ApiController {
 		if (! empty($_GET)) $attr = $_GET;
 			
 		$q = '
-		SELECT site_id,s.company_id, c.company_name, s.site_name, s.site_address, s.flag_qty_value, s.site_qty_value, s.method_calc, s.start_date_counting, s.reset_days,s.status, s.updated_at, s.updated_by
+		SELECT site_id, s.company_id, c.company_name, s.site_name, s.site_address, s.flag_qty_value, s.site_qty_value, s.method_calc, s.start_date_counting, s.reset_days,s.status, s.updated_at, s.updated_by
 		FROM ' . $this->table . ' s
 		LEFT JOIN ms_company c USING(company_id)
 		WHERE 1';
@@ -91,7 +91,7 @@ class SiteController extends ApiController {
         } else {
 			$q.= ' AND s.status != -1';
 		}
-		
+
 		$data = orm_get($q);
 		echo json_encode($data);
 		die;
