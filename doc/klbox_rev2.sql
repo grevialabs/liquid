@@ -2,7 +2,7 @@ CREATE TABLE ms_company(
 company_id INT NOT NULL AUTO_INCREMENT,
 company_name varchar(150) NULL DEFAULT NULL,
 company_address varchar(255) NULL DEFAULT NULL,
-company_phone varchar(50) NULL DEFAULT NULL,
+company_phone int(50) NULL DEFAULT NULL,
 company_pic varchar(150) NULL DEFAULT NULL,
 status tinyint NULL DEFAULT 1,
 created_at datetime NULL DEFAULT NULL,
@@ -529,7 +529,7 @@ AUTO_INCREMENT=1;
 
 CREATE TABLE ms_pic(
 pic_id int NOT NULL AUTO_INCREMENT,
-site_id int NOT NULL,
+site_id varchar(4) NOT NULL,
 pic_name varchar(100) NULL DEFAULT NULL,
 pic_phone varchar(100) NULL DEFAULT NULL,
 pic_email varchar(100) NULL DEFAULT NULL,
