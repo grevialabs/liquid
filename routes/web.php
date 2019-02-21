@@ -119,11 +119,11 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
 	$router->put('/capability', 'Api\v1\CapabilityController@update');
     $router->delete('/capability', 'Api\v1\CapabilityController@delete');
 	
-	$router->get('/role_capability', 'Api\v1\RoleCapabilityController@get_list');
+	$router->get('/role_capability/cron_insert_role', 'Api\v1\RoleCapabilityController@cron_insert_role');
 	$router->get('/role_capability/get_list', 'Api\v1\RoleCapabilityController@get_list');
 	$router->get('/role_capability/get_list_detail', 'Api\v1\RoleCapabilityController@get_list_detail');
 	$router->get('/role_capability/{id}', 'Api\v1\RoleCapabilityController@get');
-	$router->get('/role_capability/cron_insert_role', 'Api\v1\RoleCapabilityController@cron_insert_role');
+	$router->get('/role_capability', 'Api\v1\RoleCapabilityController@get_list');
 	$router->post('/role_capability', 'Api\v1\RoleCapabilityController@save');
 	$router->put('/role_capability', 'Api\v1\RoleCapabilityController@update');
     $router->delete('/role_capability', 'Api\v1\RoleCapabilityController@delete');

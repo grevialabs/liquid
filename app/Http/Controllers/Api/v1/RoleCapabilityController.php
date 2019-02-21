@@ -250,7 +250,7 @@ class RoleCapabilityController extends ApiController {
 		$result['message'] = 'under maintenance';
 		
 		$q = '
-		INSERT IGNORE INTO ms_role_capability(role_id,capability_id) SELECT "' . $get['role_id'] . '", c.capability_id 
+		INSERT IGNORE INTO ms_role_capability(role_id,capability_id,created_at) SELECT "' . $get['role_id'] . '", c.capability_id, now()
 		FROM ms_capability c 
 		WHERE 1 AND c.`status` = 1
 		';
