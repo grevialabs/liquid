@@ -83,7 +83,7 @@ class UserController extends ApiController {
 		if (! empty($_GET)) $attr = $_GET;
 			
 		$q = '
-		SELECT user_id, firstname, lastname, job_title, division, email, user_category, role_name, level_id, level_name, site_id, ur.role_id
+		SELECT user_id, firstname, lastname, job_title, division, email, user_category, role_name, level_id, level_name, site_id, ur.role_id, u.status
 		FROM '	. $this->table . ' u
 		LEFT JOIN ms_level l USING(level_id)
 		LEFT JOIN ms_user_role ur USING(user_id)
