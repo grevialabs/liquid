@@ -183,6 +183,20 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
 	$router->post('/config', 'Api\v1\ConfigController@save');
 	$router->put('/config', 'Api\v1\ConfigController@update');
 	$router->delete('/config', 'Api\v1\ConfigController@delete');
+
+	$router->get('/movement_article', 'Api\v1\MovementArticleController@get_list');
+	$router->get('/movement_article/get_list', 'Api\v1\MovementArticleController@get_list');
+	$router->get('/movement_article/{id}', 'Api\v1\MovementArticleController@get');
+	$router->post('/movement_article', 'Api\v1\MovementArticleController@save');
+	$router->put('/movement_article', 'Api\v1\MovementArticleController@update');
+	$router->delete('/movement_article', 'Api\v1\MovementArticleController@delete');
+
+	$router->get('/movement_quota_level', 'Api\v1\MovementQuotaLevelController@get_list');
+	$router->get('/movement_quota_level/get_list', 'Api\v1\MovementQuotaLevelController@get_list');
+	$router->get('/movement_quota_level/{id}', 'Api\v1\MovementQuotaLevelController@get');
+	$router->post('/movement_quota_level', 'Api\v1\MovementQuotaLevelController@save');
+	$router->put('/movement_quota_level', 'Api\v1\MovementQuotaLevelController@update');
+	$router->delete('/movement_quota_level', 'Api\v1\MovementQuotaLevelController@delete');
 	
     // $router->get('/', 'Api\v1\Controller@get_list');
 	// $router->get('/get_list', 'Api\v1\Controller@get_list');

@@ -57,14 +57,14 @@ created_ip varchar(25) NULL DEFAULT NULL,
 updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
-PRIMARY KEY(transaction_id)
+PRIMARY KEY(movement_article_id)
 ) COLLATE='utf8_general_ci' 
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
 CREATE TABLE tr_movement_quota_level (
-movement_quota_id int NOT NULL AUTO_INCREMENT,
-user_id int	NOT NULL AUTO_INCREMENT,
+movement_quota_level_id int NOT NULL AUTO_INCREMENT,
+user_id int	NOT NULL,
 site_id varchar(4) NULL ,
 transaction_id varchar(100) NULL,
 transaction_code varchar(100) NULL,
@@ -79,7 +79,7 @@ created_ip varchar(25) NULL DEFAULT NULL,
 updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
-PRIMARY KEY(transaction_id)
+PRIMARY KEY(movement_quota_level_id)
 ) COLLATE='utf8_general_ci' 
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
@@ -408,7 +408,6 @@ PRIMARY KEY(article_po_id)
 ) COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
-
 CREATE TABLE tr_prepack_bundling_header(
 prepack_id int NOT NULL AUTO_INCREMENT,
 outbound_delivery int NOT NULL,
@@ -430,7 +429,8 @@ ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
 CREATE TABLE tr_prepack_bundling_detail(
-prepack_id int NOT NULL AUTO_INCREMENT,
+prepack_bundling_detail int NOT NULL AUTO_INCREMENT,
+prepack_id int NOT NULL,
 outbound_delivery int NOT NULL,
 article varchar(100) NULL,
 line_id int NULL,
@@ -443,7 +443,7 @@ created_ip varchar(25) NULL DEFAULT NULL,
 updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
-PRIMARY KEY(prepack_id)
+PRIMARY KEY(prepack_bundling_detail)
 ) COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
@@ -585,6 +585,16 @@ ALTER TABLE `ms_capability`
 	ADD UNIQUE INDEX `capability` (`capability`);
 ALTER TABLE `ms_pic`
 	CHANGE COLUMN `site_id` `site_id` VARCHAR(4) NOT NULL AFTER `pic_id`;
+
+-- friday 22 feb 9:45
+ALTER TABLE `ms_article_attribute`
+	CHANGE COLUMN `attribute_name` `attribute_name` VARCHAR(100) NOT NULL AFTER `article_attribute_id`;
+
+ALTER TABLE `ms_pic`
+	CHANGE COLUMN `site_id` `site_id` VARCHAR(4) NOT NULL AFTER `pic_id`;
+
+ALTER TABLE `ms_article_attribute_value`
+	CHANGE COLUMN `value` `attribute_value` VARCHAR(100) NULL DEFAULT NULL AFTER `article_attribute_id`;
 
 --------
 - NOTES BUDI

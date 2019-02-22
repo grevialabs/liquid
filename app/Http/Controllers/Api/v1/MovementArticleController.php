@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Redirect;
 // use Request;
 use DB;
 
-use App\Models\RoleCapabilityModel;
+use App\Models\ArticleModel;
 
-class RoleCapabilityController extends ApiController {
+class MovementArticleController extends ApiController {
 
 	/*
 	|--------------------------------------------------------------------------
@@ -26,9 +26,9 @@ class RoleCapabilityController extends ApiController {
 	| controller as you wish. It is just here to get your app started!
 	|
     */
-    public $table = 'ms_role_capability';
-    public $primary_key = 'role_capability_id';
-    public $list_column = array('role_capability_id','role_id','capability_id','create','read','update','delete','status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
+    public $table = 'ms_movement_article';
+    public $primary_key = 'movement_article_id';
+	public $list_column = array('movement_article_id', 'receiving_site_id', 'article', 'description','qty','movement_type', 'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
 	
 	/**
 	 * Create a new controller instance.
@@ -48,7 +48,7 @@ class RoleCapabilityController extends ApiController {
 	public function get_list_status()
 	{
 		// $log = ArticleModel::all();
-		// $log = ArticleModel::where('capability_id',3)
+		// $log = ArticleModel::where('article_id',3)
 		// $log = ArticleModel::whereName('mantap')
 		$log = ArticleModel::whereStatus('1')
 						->get()
@@ -74,16 +74,8 @@ class RoleCapabilityController extends ApiController {
 			
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
-		if (isset($attr['role_capability_id']) && $attr['role_capability_id'] != '') {
-			$q.= ' AND role_capability_id = '.$attr['role_capability_id'];
-		}
-		
-		if (isset($attr['capability_id']) && $attr['capability_id'] != '') {
-			$q.= ' AND capability_id = '.$attr['capability_id'];
-		}
-		
-		if (isset($attr['role_id']) && $attr['role_id'] != '') {
-			$q.= ' AND role_id = '.$attr['role_id'];
+		if (isset($attr['article_id']) && $attr['article_id'] != '') {
+			$q.= ' AND article_id = '.$attr['article_id'];
 		}
 		
 		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
@@ -102,32 +94,25 @@ class RoleCapabilityController extends ApiController {
 		$attr = $result = NULL;
 		if (! empty($_GET)) $attr = $_GET;
 			
-		$q = '
-		SELECT rc.role_capability_id,rc.capability_id, r.role_name, rc.`create`, rc.`read`, rc.`update`, rc.`delete`, rc.status, rc.created_at, rc.created_by, rc.updated_at, rc.updated_by
-		FROM ' . $this->table . ' rc
-		LEFT JOIN ms_role r USING(role_id)
-		WHERE 1';
+		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
 		if (isset($attr['keyword']) && $attr['keyword'] != '') {
 			$q.= ' AND ( ';
-			$q.= ' rc.role_capability_id LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR rc.role_id LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR rc.capability_id LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' company_name LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR company_address LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR company_phone LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR company_pic LIKE '.replace_quote($attr['keyword'],'like');
 			$q.= ')';
         }
 		
-		if (isset($attr['capability_id']) && $attr['capability_id'] != '') {
-			$q.= ' AND rc.capability_id = '.$attr['capability_id'];
-        }
-		
-		if (isset($attr['role_capability_id']) && $attr['role_capability_id'] != '') {
-			$q.= ' AND rc.role_capability_id = '.$attr['role_capability_id'];
+		if (isset($attr['article_id']) && $attr['article_id'] != '') {
+			$q.= ' AND article_id = '.$attr['article_id'];
         }
 		
 		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
-			$q.= ' AND rc.status = '.$attr['status'];
+			$q.= ' AND status = '.$attr['status'];
         } else {
-			$q.= ' AND rc.status != -1';
+			$q.= ' AND status != -1';
 		}
         
         $result['total_rows'] = count(orm_get_list($q));
@@ -157,119 +142,6 @@ class RoleCapabilityController extends ApiController {
         $result['data'] = $data;
         
         echo json_encode($result); 
-		die;
-	}
-
-	public function get_list_detail()
-	{
-		$attr = $result = NULL;
-		if (! empty($_GET)) $attr = $_GET;
-			
-		$q = '
-		SELECT rc.role_capability_id, c.capability as capability, r.role_name, rc.`create`, rc.`read`, rc.`update` ,rc.`delete`
-		FROM ' . $this->table .' rc 
-		LEFT JOIN ms_role r USING(role_id)
-		LEFT JOIN ms_capability c USING(capability_id)
-		WHERE 1';
-		
-		if (isset($attr['keyword']) && $attr['keyword'] != '') {
-			$q.= ' AND ( ';
-			$q.= ' role_name LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR c.capability LIKE '.replace_quote($attr['keyword'],'like');
-			// $q.= ' OR capability_id LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ')';
-        }
-		
-		// no use harusnya
-		// if (isset($attr['capability_id']) && $attr['capability_id'] != '') {
-		// 	$q.= ' AND capability_id = '.$attr['capability_id'];
-		// }
-		
-		if (isset($attr['role_id']) && $attr['role_id'] != '') {
-			$q.= ' AND role_id = '.$attr['role_id'];
-        }
-		
-		// no use harusnya
-		// if (isset($attr['role_capability_id']) && $attr['role_capability_id'] != '') {
-		// 	$q.= ' AND role_capability_id = '.$attr['role_capability_id'];
-		// }
-		// get list list_unavail_menu
-		if (isset($attr['list_unavail_menu']) && $attr['list_unavail_menu'] != '') {
-			$q.= ' AND (( `read` = 0 ) AND ( `create` = 0  AND `update` = 0 AND `delete` = 0 ))';
-        }
-		
-		if (isset($attr['list_avail_menu']) && $attr['list_avail_menu'] != '') {
-			$q.= ' AND (( `read` = 1 ) OR ( `create` = 1 OR `update` = 1 OR `delete` = 1 ))';
-        }
-		
-		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
-			$q.= ' AND rc.status = '.$attr['status'];
-        } else {
-			$q.= ' AND rc.status != -1';
-		}
-        
-        $result['total_rows'] = count(orm_get_list($q));
-		
-		if (isset($attr['order'])) { 
-			$q.= ' ORDER BY ' . $attr['order'];
-			if (isset($attr['orderby'])) $q .= ' '.$attr['orderby']; 
-		} else  {
-			$q.= ' ORDER BY '. $this->primary_key .' DESC';
-		}
-		
-		// set default paging
-		if (! isset($attr['paging'])) {
-			if (! isset($attr['offset'])) $attr['offset'] = OFFSET;
-			if (! isset($attr['perpage'])) $attr['perpage'] = PERPAGE;
-		}
-		
-		if (isset($attr['offset'])) { 
-			$q.= ' LIMIT ' . $attr['offset'];
-			
-			if (! isset($attr['perpage'])) $attr['perpage'] = PERPAGE;
-			
-			$q.= ', ' . $attr['perpage'];
-		}
-		// debug($q,1);
-
-		$data = orm_get_list($q);
-        $result['data'] = $data;
-        
-        echo json_encode($result); 
-		die;
-	}
-
-	// Insert all role capability
-	public function cron_insert_role()
-	{
-		// debug($_GET,1);
-		$get = $attr = $result = NULL;
-		if (! empty($_GET)) $get = $_GET;
-
-		if (! isset($get['role_id'])) {
-			$message = 'role_id harus diisi';
-			$result['message'] = $message;
-			echo json_encode($result);
-			die;
-		}
-		// $attr = NULL;
-		
-		$result['is_success'] = 'on progress';
-		$result['message'] = 'under maintenance';
-		
-		$q = '
-		INSERT IGNORE INTO ms_role_capability(role_id,capability_id,created_at) SELECT "' . $get['role_id'] . '", c.capability_id, now()
-		FROM ms_capability c 
-		WHERE 1 AND c.`status` = 1
-		';
-
-		$save = DB::insert($q);
-		// $q = '
-		// INSERT INTO ms_role_capability(role_id,capability_id,`create`,`read`,`update`,`delete`) 
-		// VALUES(1,4,0,0,1,1) ON DUPLICATE KEY UPDATE `create` = VALUES(`create`), `update` = VALUES(`update`)
-		// ';
-
-        echo json_encode($save); 
 		die;
 	}
 
