@@ -174,7 +174,7 @@ AUTO_INCREMENT=1;
 
 CREATE TABLE ms_article_stock(
 site_id varchar(4) NOT NULL,
-article_id int(10) NOT NULL,
+article int(10) NOT NULL,
 customer_article varchar(100) NULL DEFAULT NULL,
 description varchar(200) NULL DEFAULT NULL,
 stock_qty int NULL,
