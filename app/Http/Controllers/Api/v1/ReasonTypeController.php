@@ -28,7 +28,7 @@ class ReasonTypeController extends ApiController {
     */
     public $table = 'ms_reason_type';
     public $primary_key = 'reason_type_id';
-    public $list_column = array('reason_type_id','article_attribute_id','attribute_value','status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
+    public $list_column = array('reason_type_id','article_attribute_id','site_id','attribute_value','status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
 	
 	/**
 	 * Create a new controller instance.
