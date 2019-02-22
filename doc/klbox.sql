@@ -135,8 +135,7 @@ AUTO_INCREMENT=1;
 
 CREATE TABLE ms_article_attribute(
 article_attribute_id int NOT NULL AUTO_INCREMENT,
-article_id int NOT NULL AUTO_INCREMENT,
-name varchar(100) NULL DEFAULT NULL,
+attribute_name varchar(100) NULL DEFAULT NULL,
 status tinyint NULL DEFAULT 1,
 created_at datetime NULL DEFAULT NULL,
 created_by varchar(25) NULL DEFAULT NULL,
