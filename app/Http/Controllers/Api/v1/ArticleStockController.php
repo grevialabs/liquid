@@ -27,7 +27,7 @@ class ArticleStockController extends ApiController {
 	|
     */
     public $table = 'ms_article_stock';
-    public $primary_key = 'site_id';
+    public $primary_key = 'article_stock_id';
     public $list_column = array('site_id','article','customer_article','description','stock_qty','status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
 	
 	/**
@@ -48,7 +48,7 @@ class ArticleStockController extends ApiController {
 	public function get_list_status()
 	{
 		// $log = ArticleModel::all();
-		// $log = ArticleModel::where('site_id',3)
+		// $log = ArticleModel::where('article_stock_id',3)
 		// $log = ArticleModel::whereName('mantap')
 		$log = ArticleModel::whereStatus('1')
 						->get()
@@ -73,6 +73,10 @@ class ArticleStockController extends ApiController {
 		if (! empty($_GET)) $attr = $_GET;
 			
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
+		
+		if (isset($attr['article_stock_id']) && $attr['article_stock_id'] != '') {
+			$q.= ' AND article_stock_id = '.$attr['article_stock_id'];
+		}
 		
 		if (isset($attr['site_id']) && $attr['site_id'] != '') {
 			$q.= ' AND site_id = '.replace_quote($attr['site_id']);
@@ -109,10 +113,18 @@ class ArticleStockController extends ApiController {
 			$q.= ')';
         }
 		
-		if (isset($attr['site_id']) && $attr['site_id'] != '') {
-			$q.= ' AND site_id = '.$attr['site_id'];
+		if (isset($attr['article_stock_id']) && $attr['article_stock_id'] != '') {
+			$q.= ' AND article_stock_id = '.$attr['article_stock_id'];
         }
+			
+		if (isset($attr['site_id']) && $attr['site_id'] != '') {
+			$q.= ' AND site_id = '.replace_quote($attr['site_id']);
+		}
 		
+		if (isset($attr['article']) && $attr['article'] != '') {
+			$q.= ' AND article = '.$attr['article'];
+		}
+	
 		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
 			$q.= ' AND status = '.$attr['status'];
         } else {
