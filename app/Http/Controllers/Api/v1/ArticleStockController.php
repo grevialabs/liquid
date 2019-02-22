@@ -75,7 +75,11 @@ class ArticleStockController extends ApiController {
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
 		if (isset($attr['site_id']) && $attr['site_id'] != '') {
-			$q.= ' AND site_id = '.$attr['site_id'];
+			$q.= ' AND site_id = '.replace_quote($attr['site_id']);
+		}
+		
+		if (isset($attr['article']) && $attr['article'] != '') {
+			$q.= ' AND article = '.$attr['article'];
 		}
 		
 		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
