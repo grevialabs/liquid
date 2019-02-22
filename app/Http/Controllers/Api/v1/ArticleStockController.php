@@ -28,7 +28,7 @@ class ArticleStockController extends ApiController {
     */
     public $table = 'ms_article_stock';
     public $primary_key = 'site_id';
-    public $list_column = array('article','customer_article','description','stock_qty','status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
+    public $list_column = array('site_id','article','customer_article','description','stock_qty','status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
 	
 	/**
 	 * Create a new controller instance.
