@@ -160,6 +160,14 @@ class RoleCapabilityController extends ApiController {
 		die;
 	}
 
+	/*
+	* Siap2 pake query ini untuk get list role capability dengan priority 1
+	SELECT rc.role_capability_id, MAX(rc.create) `create`, MAX(rc.read) `read`, MAX(rc.update) `update`, MAX(rc.delete) `delete`
+	FROM ms_role r 
+	LEFT JOIN ms_role_capability rc USING(role_id)
+	WHERE 1 AND rc.role_capability_id IS NOT NULL
+	GROUP BY rc.capability_id
+	*/
 	public function get_list_detail()
 	{
 		$attr = $result = NULL;
