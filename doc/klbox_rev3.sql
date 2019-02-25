@@ -933,6 +933,82 @@ CREATE TABLE IF NOT EXISTS `tr_transaction` (
   PRIMARY KEY (`transaction_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE tr_prepack_bundling_header(
+prepack_id int NOT NULL AUTO_INCREMENT,
+outbound_delivery int NOT NULL,
+site_created_on varchar(4) NULL,
+status_prepack varchar(100) NULL,
+conv_uom varchar(100) NULL,
+combine_qty int NULL,
+user_id int NULL,
+status tinyint NULL DEFAULT 1,
+created_at datetime NULL DEFAULT NULL,
+created_by varchar(25) NULL DEFAULT NULL,
+created_ip varchar(25) NULL DEFAULT NULL,
+updated_at datetime NULL DEFAULT NULL,
+updated_by varchar(25) NULL DEFAULT NULL,
+updated_ip varchar(25) NULL DEFAULT NULL,
+PRIMARY KEY(prepack_id)
+) COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=1;
+
+CREATE TABLE tr_prepack_bundling_detail(
+prepack_bundling_detail int NOT NULL AUTO_INCREMENT,
+prepack_id int NOT NULL,
+outbound_delivery int NOT NULL,
+article varchar(100) NULL,
+line_id int NULL,
+qty_dashboard int NULL,
+reference varchar(20) NULL,
+status tinyint NULL DEFAULT 1,
+created_at datetime NULL DEFAULT NULL,
+created_by varchar(25) NULL DEFAULT NULL,
+created_ip varchar(25) NULL DEFAULT NULL,
+updated_at datetime NULL DEFAULT NULL,
+updated_by varchar(25) NULL DEFAULT NULL,
+updated_ip varchar(25) NULL DEFAULT NULL,
+PRIMARY KEY(prepack_bundling_detail)
+) COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=1;
+
+CREATE TABLE tr_article_logistic_site(
+article_logistic_site_id int NOT NULL AUTO_INCREMENT,
+site_id varchar(4) NOT NULL,
+outbound_delivery varchar(15) NOT NULL,
+status tinyint NULL DEFAULT 1,
+created_at datetime NULL DEFAULT NULL,
+created_by varchar(25) NULL DEFAULT NULL,
+created_ip varchar(25) NULL DEFAULT NULL,
+updated_at datetime NULL DEFAULT NULL,
+updated_by varchar(25) NULL DEFAULT NULL,
+updated_ip varchar(25) NULL DEFAULT NULL,
+PRIMARY KEY(article_logistic_site_id,site_id)
+) COLLATE='utf8_general_ci' 
+ENGINE=InnoDB
+AUTO_INCREMENT=1;
+
+CREATE TABLE tr_article_logistic_site_detail(
+article_logistic_site_detail_id int NOT NULL AUTO_INCREMENT,
+outbound_delivery int NOT NULL,
+article varchar(100) NOT NULL,
+customer_article varchar(100) NOT NULL,
+description varchar(200) NULL DEFAULT NULL,
+qty_issue int NULL DEFAULT NULL,
+conv_uom varchar(10) NULL DEFAULT NULL,
+qty_receive_actual int NULL DEFAULT NULL,
+qty_receive int NULL DEFAULT NULL,
+disc_minus int NULL DEFAULT NULL,
+disc_plus int NULL DEFAULT NULL,
+conversion_diff int NULL DEFAULT NULL COMMENT 'selisih conversion',
+dashboard_received_date datetime NULL DEFAULT NULL,
+qty_chamber varchar(100) NULL DEFAULT NULL,
+chamber_disc_minus int NULL DEFAULT NULL,
+chamber_disc_plus int NULL DEFAULT NULL,
+chamber_sync_flag tinyint NULL DEFAULT 0,
+field_sync tinyint NULL DEFAULT 0,
+
 /*!40000 ALTER TABLE `tr_transaction` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tr_transaction` ENABLE KEYS */;
 
