@@ -26,7 +26,7 @@ class MovementArticleController extends ApiController {
 	| controller as you wish. It is just here to get your app started!
 	|
     */
-    public $table = 'ms_movement_article';
+    public $table = 'tr_movement_article';
     public $primary_key = 'movement_article_id';
 	public $list_column = array('movement_article_id', 'receiving_site_id', 'article', 'description','qty','movement_type', 'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
 	
