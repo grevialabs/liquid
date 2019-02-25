@@ -26,7 +26,7 @@ class MovementQuotaLevelController extends ApiController {
 	| controller as you wish. It is just here to get your app started!
 	|
     */
-    public $table = 'ms_movement_quota_level';
+    public $table = 'tr_movement_quota_level';
     public $primary_key = 'movement_quota_level_id';
 	public $list_column = array('user_id', 'site_id', 'transaction_id', 'transaction_code' ,'qty','value','balance_qty','balance_value','status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
 	
