@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ArticleAttributValueModel extends Model
+class PrepackBundlingHeaderModel extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'ms_article_attribute_value';
+    protected $table = 'tr_prepack_bundling_header';
 
     protected $fillables;
 

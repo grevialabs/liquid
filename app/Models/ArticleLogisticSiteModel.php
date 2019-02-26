@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ArticleAttributValueModel extends Model
+class ArticleLogisticSiteModel extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'ms_article_attribute_value';
+    protected $table = 'tr_article_logistic_site';
 
     protected $fillables;
 

@@ -76,6 +76,9 @@ class PrepackBundlingHeaderController extends ApiController {
 			
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
+		if (isset($attr['prepack_id']) && $attr['prepack_id'] != '') {
+			$q.= ' AND prepack_id = '.$attr['prepack_id'];
+		}
 		if (isset($attr['outbound_delivery']) && $attr['outbound_delivery'] != '') {
 			$q.= ' AND outbound_delivery = '.$attr['outbound_delivery'];
 		}
@@ -98,6 +101,9 @@ class PrepackBundlingHeaderController extends ApiController {
 			
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
+		if (isset($attr['prepack_id']) && $attr['prepack_id'] != '') {
+			$q.= ' AND prepack_id = '.$attr['prepack_id'];
+		}
 		if (isset($attr['outbound_delivery']) && $attr['outbound_delivery'] != '') {
 			$q.= ' AND outbound_delivery = '.$attr['outbound_delivery'];
         }

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Redirect;
 // use Request;
 use DB;
 
-use App\Models\CompanyModel;
+use App\Models\ArticleLogisticSiteDetailModel;
 
 class ArticleLogisticSiteDetailController extends ApiController {
 
@@ -74,9 +74,24 @@ class ArticleLogisticSiteDetailController extends ApiController {
 			
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
-		if (isset($attr['company_id']) && $attr['company_id'] != '') 
+		if (isset($attr['article_logistic_site_detail_id']) && $attr['article_logistic_site_detail_id'] != '') 
 		{
-			$q.= ' AND company_id = '.$attr['company_id'];
+			$q.= ' AND article_logistic_site_detail_id = '.$attr['article_logistic_site_detail_id'];
+		}
+		
+		if (isset($attr['outbound_delivery']) && $attr['outbound_delivery'] != '') 
+		{
+			$q.= ' AND outbound_delivery = '.$attr['outbound_delivery'];
+		}
+		
+		if (isset($attr['article']) && $attr['article'] != '') 
+		{
+			$q.= ' AND article = '.$attr['article'];
+		}
+		
+		if (isset($attr['customer_article']) && $attr['customer_article'] != '') 
+		{
+			$q.= ' AND customer_article = '.$attr['customer_article'];
 		}
 		
 		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
@@ -97,18 +112,34 @@ class ArticleLogisticSiteDetailController extends ApiController {
 			
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
-		if (isset($attr['keyword']) && $attr['keyword'] != '') {
-			$q.= ' AND ( ';
-			$q.= ' company_name LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR company_address LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR company_phone LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR company_pic LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ')';
-        }
+		// if (isset($attr['keyword']) && $attr['keyword'] != '') {
+		// 	$q.= ' AND ( ';
+		// 	$q.= ' company_name LIKE '.replace_quote($attr['keyword'],'like');
+		// 	$q.= ' OR company_address LIKE '.replace_quote($attr['keyword'],'like');
+		// 	$q.= ' OR company_phone LIKE '.replace_quote($attr['keyword'],'like');
+		// 	$q.= ' OR company_pic LIKE '.replace_quote($attr['keyword'],'like');
+		// 	$q.= ')';
+        // }
 		
-		if (isset($attr['company_id']) && $attr['company_id'] != '') {
-			$q.= ' AND company_id = '.$attr['company_id'];
-        }
+		if (isset($attr['article_logistic_site_detail_id']) && $attr['article_logistic_site_detail_id'] != '') 
+		{
+			$q.= ' AND article_logistic_site_detail_id = '.$attr['article_logistic_site_detail_id'];
+		}
+		
+		if (isset($attr['outbound_delivery']) && $attr['outbound_delivery'] != '') 
+		{
+			$q.= ' AND outbound_delivery = '.$attr['outbound_delivery'];
+		}
+		
+		if (isset($attr['article']) && $attr['article'] != '') 
+		{
+			$q.= ' AND article = '.$attr['article'];
+		}
+		
+		if (isset($attr['customer_article']) && $attr['customer_article'] != '') 
+		{
+			$q.= ' AND customer_article = '.$attr['customer_article'];
+		}
 		
 		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
 			$q.= ' AND status = '.$attr['status'];

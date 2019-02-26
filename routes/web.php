@@ -105,6 +105,13 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
 	$router->put('/article_logistic_site', 'Api\v1\ArticleLogisticSiteController@update');
     $router->delete('/article_logistic_site', 'Api\v1\ArticleLogisticSiteController@delete');
 	
+	$router->get('/article_logistic_site_detail', 'Api\v1\ArticleLogisticSiteDetailController@get_list');
+	$router->get('/article_logistic_site_detail/get_list', 'Api\v1\ArticleLogisticSiteDetailController@get_list');
+	$router->get('/article_logistic_site_detail/{id}', 'Api\v1\ArticleLogisticSiteDetailController@get');
+	$router->post('/article_logistic_site_detail', 'Api\v1\ArticleLogisticSiteDetailController@save');
+	$router->put('/article_logistic_site_detail', 'Api\v1\ArticleLogisticSiteDetailController@update');
+    $router->delete('/article_logistic_site_detail', 'Api\v1\ArticleLogisticSiteDetailController@delete');
+	
 	$router->get('/role', 'Api\v1\RoleController@get_list');
 	$router->get('/role/get_list', 'Api\v1\RoleController@get_list');
 	$router->get('/role/{id}', 'Api\v1\RoleController@get');
@@ -197,6 +204,20 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
 	$router->post('/movement_quota_level', 'Api\v1\MovementQuotaLevelController@save');
 	$router->put('/movement_quota_level', 'Api\v1\MovementQuotaLevelController@update');
 	$router->delete('/movement_quota_level', 'Api\v1\MovementQuotaLevelController@delete');
+	
+	$router->get('/prepack_bundling_header', 'Api\v1\PrepackBundlingHeaderController@get_list');
+	$router->get('/prepack_bundling_header/get_list', 'Api\v1\PrepackBundlingHeaderController@get_list');
+	$router->get('/prepack_bundling_header/{id}', 'Api\v1\PrepackBundlingHeaderController@get');
+	$router->post('/prepack_bundling_header', 'Api\v1\PrepackBundlingHeaderController@save');
+	$router->put('/prepack_bundling_header', 'Api\v1\PrepackBundlingHeaderController@update');
+	$router->delete('/prepack_bundling_header', 'Api\v1\PrepackBundlingHeaderController@delete');
+	
+	$router->get('/prepack_bundling_detail', 'Api\v1\PrepackBundlingDetailController@get_list');
+	$router->get('/prepack_bundling_detail/get_list', 'Api\v1\PrepackBundlingDetailController@get_list');
+	$router->get('/prepack_bundling_detail/{id}', 'Api\v1\PrepackBundlingDetailController@get');
+	$router->post('/prepack_bundling_detail', 'Api\v1\PrepackBundlingDetailController@save');
+	$router->put('/prepack_bundling_detail', 'Api\v1\PrepackBundlingDetailController@update');
+	$router->delete('/prepack_bundling_detail', 'Api\v1\PrepackBundlingDetailController@delete');
 	
     // $router->get('/', 'Api\v1\Controller@get_list');
 	// $router->get('/get_list', 'Api\v1\Controller@get_list');
