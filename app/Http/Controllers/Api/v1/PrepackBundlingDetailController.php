@@ -27,7 +27,7 @@ class PrepackBundlingDetailController extends ApiController {
 	|
     */
     public $table = 'tr_prepack_bundling_detail';
-    public $primary_key = 'prepack_bundling_detail';
+    public $primary_key = 'prepack_bundling_detail_id';
     public $list_column = array('prepack_id','outbound_delivery','article','line_id','qty_dashboard','reference', 'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
 	
 	/**
@@ -56,8 +56,8 @@ class PrepackBundlingDetailController extends ApiController {
 			
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
-		if (isset($attr['prepack_bundling_detail']) && $attr['prepack_bundling_detail'] != '') {
-			$q.= ' AND prepack_bundling_detail = '.$attr['prepack_bundling_detail'];
+		if (isset($attr['prepack_bundling_detail_id']) && $attr['prepack_bundling_detail_id'] != '') {
+			$q.= ' AND prepack_bundling_detail_id = '.$attr['prepack_bundling_detail_id'];
 		}
 		if (isset($attr['prepack_id']) && $attr['prepack_id'] != '') {
 			$q.= ' AND prepack_id = '.$attr['prepack_id'];
@@ -92,8 +92,8 @@ class PrepackBundlingDetailController extends ApiController {
 		// 	$q.= ')';
         // }
 		
-		if (isset($attr['prepack_bundling_detail']) && $attr['prepack_bundling_detail'] != '') {
-			$q.= ' AND prepack_bundling_detail = '.$attr['prepack_bundling_detail'];
+		if (isset($attr['prepack_bundling_detail_id']) && $attr['prepack_bundling_detail_id'] != '') {
+			$q.= ' AND prepack_bundling_detail_id = '.$attr['prepack_bundling_detail_id'];
         }
 		if (isset($attr['prepack_id']) && $attr['prepack_id'] != '') {
 			$q.= ' AND prepack_id = '.$attr['prepack_id'];

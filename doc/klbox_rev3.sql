@@ -954,7 +954,7 @@ ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
 CREATE TABLE tr_prepack_bundling_detail(
-prepack_bundling_detail int NOT NULL AUTO_INCREMENT,
+prepack_bundling_detail_id int NOT NULL AUTO_INCREMENT,
 prepack_id int NOT NULL,
 outbound_delivery int NOT NULL,
 article varchar(100) NULL,
@@ -968,7 +968,7 @@ created_ip varchar(25) NULL DEFAULT NULL,
 updated_at datetime NULL DEFAULT NULL,
 updated_by varchar(25) NULL DEFAULT NULL,
 updated_ip varchar(25) NULL DEFAULT NULL,
-PRIMARY KEY(prepack_bundling_detail)
+PRIMARY KEY(prepack_bundling_detail_id)
 ) COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
