@@ -26,7 +26,7 @@ class ArticleLogisticSiteDetailController extends ApiController {
 	| controller as you wish. It is just here to get your app started!
 	|
     */
-    public $table = 'tr_article_logistic_site';
+    public $table = 'tr_article_logistic_site_detail';
     public $primary_key = 'article_logistic_site_detail_id';
     public $list_column = array('outbound_delivery', 'article', 'customer_article','','','','status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
 	
