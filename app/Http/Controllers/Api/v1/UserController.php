@@ -109,6 +109,12 @@ class UserController extends ApiController {
 			$q.= ' AND user_id = '.$attr['user_id'];
         }
         
+		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
+			$q.= ' AND u.status = '.$attr['status'];
+        } else {
+			$q.= ' AND u.status != -1';
+		}
+        
         $result['total_rows'] = count(orm_get_list($q));
 		
 		if (isset($attr['order'])) { 

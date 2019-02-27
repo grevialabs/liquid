@@ -97,6 +97,12 @@ class UserAttributeController extends ApiController {
 			$q.= ' AND ua.user_id = '.$attr['user_id'];
         }
         
+		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
+			$q.= ' AND ua.status = '.$attr['status'];
+        } else {
+			$q.= ' AND ua.status != -1';
+		}
+        
         $result['total_rows'] = count(orm_get_list($q));
 		
 		if (isset($attr['order'])) { 
