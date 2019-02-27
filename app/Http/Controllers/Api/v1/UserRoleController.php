@@ -28,7 +28,7 @@ class UserRoleController extends ApiController {
     */
     public $table = 'ms_user_role';
     public $primary_key = 'user_role_id';
-	public $list_column = array('role_id', 'user_id', 'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
+	public $list_column = array('user_role_id','role_id', 'user_id', 'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
 	
 	/**
 	 * Create a new controller instance.
