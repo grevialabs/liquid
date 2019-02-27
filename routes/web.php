@@ -219,19 +219,19 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
 	$router->put('/prepack_bundling_detail', 'Api\v1\PrepackBundlingDetailController@update');
 	$router->delete('/prepack_bundling_detail', 'Api\v1\PrepackBundlingDetailController@delete');
 	
-	$router->get('/article-po-history', 'Api\v1\ArticlePoHistoryController@get_list');
-	$router->get('/article-po-history/get_list', 'Api\v1\ArticlePoHistoryController@get_list');
-	$router->get('/article-po-history/{id}', 'Api\v1\ArticlePoHistoryController@get');
-	$router->post('/article-po-history', 'Api\v1\ArticlePoHistoryController@save');
-	$router->put('/article-po-history', 'Api\v1\ArticlePoHistoryController@update');
-	$router->delete('/article-po-history', 'Api\v1\ArticlePoHistoryController@delete');
+	$router->get('/article_po_history', 'Api\v1\ArticlePoHistoryController@get_list');
+	$router->get('/article_po_history/get_list', 'Api\v1\ArticlePoHistoryController@get_list');
+	$router->get('/article_po_history/{id}', 'Api\v1\ArticlePoHistoryController@get');
+	$router->post('/article_po_history', 'Api\v1\ArticlePoHistoryController@save');
+	$router->put('/article_po_history', 'Api\v1\ArticlePoHistoryController@update');
+	$router->delete('/article_po_history', 'Api\v1\ArticlePoHistoryController@delete');
 
-	$router->get('/user-role', 'Api\v1\UserRoleController@get_list');
-	$router->get('/user-role/get_list', 'Api\v1\UserRoleController@get_list');
-	$router->get('/user-role/{id}', 'Api\v1\UserRoleController@get');
-	$router->post('/user-role', 'Api\v1\UserRoleController@save');
-	$router->put('/user-role', 'Api\v1\UserRoleController@update');
-	$router->delete('/user-role', 'Api\v1\UserRoleController@delete');
+	$router->get('/user_role', 'Api\v1\UserRoleController@get_list');
+	$router->get('/user_role/get_list', 'Api\v1\UserRoleController@get_list');
+	$router->get('/user_role/{id}', 'Api\v1\UserRoleController@get');
+	$router->post('/user_role', 'Api\v1\UserRoleController@save');
+	$router->put('/user_role', 'Api\v1\UserRoleController@update');
+	$router->delete('/user_role', 'Api\v1\UserRoleController@delete');
 
     // $router->get('/', 'Api\v1\Controller@get_list');
 	// $router->get('/get_list', 'Api\v1\Controller@get_list');
