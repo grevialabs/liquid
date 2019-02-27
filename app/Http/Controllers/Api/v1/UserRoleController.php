@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Redirect;
 // use Request;
 use DB;
 
-use App\Models\ArticleModel;
+use App\Models\UserRoleModel;
 
-class ArticleController extends ApiController {
+class UserRoleController extends ApiController {
 
 	/*
 	|--------------------------------------------------------------------------
@@ -26,9 +26,9 @@ class ArticleController extends ApiController {
 	| controller as you wish. It is just here to get your app started!
 	|
     */
-    public $table = 'ms_article';
-    public $primary_key = 'article_id';
-	public $list_column = array('article_id', 'site_id', 'article', 'customer_article' ,'description','uom','conversion_value','safety_stock','column','rack','row','price','chamber_sync_flag','field_sync', 'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
+    public $table = 'ms_user_role';
+    public $primary_key = 'user_role_id';
+	public $list_column = array('role_id', 'user_id', 'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
 	
 	/**
 	 * Create a new controller instance.
@@ -48,7 +48,7 @@ class ArticleController extends ApiController {
 	public function get_list_status()
 	{
 		// $log = ArticleModel::all();
-		// $log = ArticleModel::where('article_id',3)
+		// $log = ArticleModel::where('user_role_id',3)
 		// $log = ArticleModel::whereName('mantap')
 		$log = ArticleModel::whereStatus('1')
 						->get()
@@ -74,8 +74,8 @@ class ArticleController extends ApiController {
 			
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
-		if (isset($attr['article_id']) && $attr['article_id'] != '') {
-			$q.= ' AND article_id = '.$attr['article_id'];
+		if (isset($attr['user_role_id']) && $attr['user_role_id'] != '') {
+			$q.= ' AND user_role_id = '.$attr['user_role_id'];
 		}
 		
 		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
@@ -96,8 +96,15 @@ class ArticleController extends ApiController {
 			
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
-		if (isset($attr['article_id']) && $attr['article_id'] != '') {
-			$q.= ' AND article_id = '.$attr['article_id'];
+		if (isset($attr['keyword']) && $attr['keyword'] != '') {
+			$q.= ' AND ( ';
+			$q.= ' role_id LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR user_id LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ')';
+        }
+		
+		if (isset($attr['user_role_id']) && $attr['user_role_id'] != '') {
+			$q.= ' AND user_role_id = '.$attr['user_role_id'];
         }
 		
 		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {

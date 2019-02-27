@@ -9,10 +9,15 @@
 
 --Monday 25 Feb 2019 (Ali)
 
-CREATE TABLE `klbox`.`tr_prepack_bundling_header`
-CREATE TABLE `klbox`.`tr_prepack_bundling_detail`
-CREATE TABLE `klbox`.`tr_article_logistic_site`
-CREATE TABLE `klbox`.`tr_article_logistic_site_detail`
+CREATE TABLE `tr_prepack_bundling_header` in klbox_rev3.sql
+CREATE TABLE `tr_prepack_bundling_detail` in klbox_rev3.sql
+CREATE TABLE `tr_article_logistic_site` in klbox_rev3.sql
+CREATE TABLE `tr_article_logistic_site_detail` in klbox_rev3.sql
 
 --Tuesday 26 Feb 2019 (Ali)
 ALTER TABLE `tr_prepack_bundling_detail` CHANGE COLUMN `prepack_bundling_detail` `prepack_bundling_detail_id` INT(11) NOT NULL AUTO_INCREMENT FIRST;
+
+--wednesday 27 Feb 2019 (Ali)
+CREATE TABLE `tr_movement_article` in klbox_rev3.sql
+CREATE TABLE `tr_movement_quota_level` in klbox_rev3.sql
+CREATE TABLE `tr_article_po_history` in dev klbox

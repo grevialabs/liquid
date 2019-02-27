@@ -1009,6 +1009,48 @@ chamber_disc_plus int NULL DEFAULT NULL,
 chamber_sync_flag tinyint NULL DEFAULT 0,
 field_sync tinyint NULL DEFAULT 0,
 
+
+CREATE TABLE tr_movement_article (
+movement_article_id int	NOT NULL AUTO_INCREMENT,
+receiving_site_id varchar(4) NULL,
+article varchar(100) NULL,
+description varchar(200) NULL,
+qty int NULL,
+movement_type varchar(10) NULL,
+status tinyint NULL DEFAULT 1,
+created_at datetime NULL DEFAULT NULL,
+created_by varchar(25) NULL DEFAULT NULL,
+created_ip varchar(25) NULL DEFAULT NULL,
+updated_at datetime NULL DEFAULT NULL,
+updated_by varchar(25) NULL DEFAULT NULL,
+updated_ip varchar(25) NULL DEFAULT NULL,
+PRIMARY KEY(movement_article_id)
+) COLLATE='utf8_general_ci' 
+ENGINE=InnoDB
+AUTO_INCREMENT=1;
+
+CREATE TABLE tr_movement_quota_level (
+movement_quota_level_id int NOT NULL AUTO_INCREMENT,
+user_id int	NOT NULL,
+site_id varchar(4) NULL ,
+transaction_id varchar(100) NULL,
+transaction_code varchar(100) NULL,
+qty int NULL,
+`value` int NULL,
+balance_qty int NULL,
+balance_value int NULL,
+status tinyint NULL DEFAULT 1,
+created_at datetime NULL DEFAULT NULL,
+created_by varchar(25) NULL DEFAULT NULL,
+created_ip varchar(25) NULL DEFAULT NULL,
+updated_at datetime NULL DEFAULT NULL,
+updated_by varchar(25) NULL DEFAULT NULL,
+updated_ip varchar(25) NULL DEFAULT NULL,
+PRIMARY KEY(movement_quota_level_id)
+) COLLATE='utf8_general_ci' 
+ENGINE=InnoDB
+AUTO_INCREMENT=1;
+
 /*!40000 ALTER TABLE `tr_transaction` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tr_transaction` ENABLE KEYS */;
 

@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Redirect;
 // use Request;
 use DB;
 
-use App\Models\ArticleModel;
+use App\Models\ArticlePoHistoryModel;
 
-class ArticleController extends ApiController {
+class ArticlePoHistoryController extends ApiController {
 
 	/*
 	|--------------------------------------------------------------------------
@@ -26,9 +26,10 @@ class ArticleController extends ApiController {
 	| controller as you wish. It is just here to get your app started!
 	|
     */
-    public $table = 'ms_article';
-    public $primary_key = 'article_id';
-	public $list_column = array('article_id', 'site_id', 'article', 'customer_article' ,'description','uom','conversion_value','safety_stock','column','rack','row','price','chamber_sync_flag','field_sync', 'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
+    public $table = 'tr_article_po_history';
+    public $primary_key = 'article_po_history_id';
+	public $list_column = array('article_po_id', 'po_usage_qty', 'po_remaining_qty', 'po_created_date' ,
+	'status_in_out', 'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
 	
 	/**
 	 * Create a new controller instance.
@@ -48,7 +49,7 @@ class ArticleController extends ApiController {
 	public function get_list_status()
 	{
 		// $log = ArticleModel::all();
-		// $log = ArticleModel::where('article_id',3)
+		// $log = ArticleModel::where('article_po_history_id',3)
 		// $log = ArticleModel::whereName('mantap')
 		$log = ArticleModel::whereStatus('1')
 						->get()
@@ -74,8 +75,8 @@ class ArticleController extends ApiController {
 			
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
-		if (isset($attr['article_id']) && $attr['article_id'] != '') {
-			$q.= ' AND article_id = '.$attr['article_id'];
+		if (isset($attr['article_po_history_id']) && $attr['article_po_history_id'] != '') {
+			$q.= ' AND article_po_history_id = '.$attr['article_po_history_id'];
 		}
 		
 		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
@@ -96,8 +97,18 @@ class ArticleController extends ApiController {
 			
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
-		if (isset($attr['article_id']) && $attr['article_id'] != '') {
-			$q.= ' AND article_id = '.$attr['article_id'];
+		if (isset($attr['keyword']) && $attr['keyword'] != '') {
+			$q.= ' AND ( ';
+			$q.= ' article_po_id LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR po_usage_qty LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR po_remaining_qty LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR po_created_date LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR status_in_out LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ')';
+        }
+		
+		if (isset($attr['article_po_history_id']) && $attr['article_po_history_id'] != '') {
+			$q.= ' AND article_po_history_id = '.$attr['article_po_history_id'];
         }
 		
 		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
