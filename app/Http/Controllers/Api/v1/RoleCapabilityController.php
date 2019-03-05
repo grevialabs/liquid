@@ -350,6 +350,93 @@ class RoleCapabilityController extends ApiController {
 
         echo json_encode($result);
         die;
+    }
+    
+    // Insert all role capability
+	public function update_bulk()
+	{
+		// debug($_GET,1);
+		$post = $attr = $result = NULL;
+        if (! empty($_POST)) $post = $_POST;
+        
+        if (! isset($post['rcid'])) {
+			$message = 'data harus diisi';
+			$result['message'] = $message;
+			echo json_encode($result);
+			die;
+		}
+
+		if (! isset($post['role_id'])) {
+			$message = 'role_id harus diisi';
+			$result['message'] = $message;
+			echo json_encode($result);
+			die;
+        }
+        
+        if (! isset($post['role_capability_id'])) {
+			$message = 'role_capability_id harus diisi';
+			$result['message'] = $message;
+			echo json_encode($result);
+			die;
+		}
+		// $attr = NULL;
+		
+		// $result['is_success'] = 'on progress';
+        // $result['message'] = 'under maintenance';
+        /*
+        SAMPLE
+
+        SELECT * FROM ms_role_capability r WHERE r.role_capability_id IN(66,67);
+
+        INSERT INTO ms_role_capability(role_capability_id,`create`,`read`,`update`,`delete`) 
+        VALUES
+        (66,1,0,0,0), 
+        (67,1,1,1,0)
+        ON DUPLICATE KEY UPDATE updated_at = now(), 
+        `create`  = VALUES(`create`), `read`  = VALUES(`read`), `update`  = VALUES(`update`), `delete`  = VALUES(`delete`), updated_at = now()
+        */
+		
+		$q = "
+        INSERT IGNORE INTO ms_role_capability(role_capability_id,`create`,`read`,`update`,`delete`) VALUES";
+
+        if (!empty($post['rcid'])) {
+            $i = 1;
+            foreach ($post['rcid'] as $key => $rs) {
+                $create = $read = $edit = $delete = 0;
+                
+                if (isset($rs['create'])) $create = $rs['create'];
+                if (isset($rs['read'])) $read = $rs['read'];
+                if (isset($rs['edit'])) $edit = $rs['edit'];
+                if (isset($rs['delete'])) $delete = $rs['delete'];
+
+                $q .= " (" . $post['role_capability_id'] . "," . $create . "," . $read . "," . $edit . "," . $delete . ")";
+
+                if ($i != count($post['rcid'])) $q .= ",";
+                $i++;
+            }
+        }
+
+        $q .= " ON DUPLICATE KEY UPDATE `create`  = VALUES(`create`), `read`  = VALUES(`read`), `update`  = VALUES(`update`), `delete`  = VALUES(`delete`), updated_at = now();
+        ";
+        
+        // debug($q,1);
+
+		$save = DB::insert($q);
+		// $q = '
+		// INSERT INTO ms_role_capability(role_id,capability_id,`create`,`read`,`update`,`delete`) 
+		// VALUES(1,4,0,0,1,1) ON DUPLICATE KEY UPDATE `create` = VALUES(`create`), `update` = VALUES(`update`)
+        // ';
+        if ($save) {
+			$result['is_success'] = 1;
+			$result['message'] = 'update success';
+		} else {
+			$result['is_success'] = 0;
+			$result['message'] = 'update failed';
+			// $result['query'] = $update->toSql();
+		}
+
+        echo json_encode($result); 
+		die;
 	}
 	
 	public function delete()
