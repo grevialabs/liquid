@@ -397,19 +397,22 @@ class RoleCapabilityController extends ApiController {
         */
 		
 		$q = "
-        INSERT IGNORE INTO ms_role_capability(role_capability_id,`create`,`read`,`update`,`delete`) VALUES";
+        INSERT IGNORE INTO ms_role_capability(role_id,capability_id,`create`,`read`,`update`,`delete`) VALUES";
 
         if (!empty($post['rcid'])) {
             $i = 1;
             foreach ($post['rcid'] as $key => $rs) {
-                $create = $read = $edit = $delete = 0;
+                $create = $read = $edit = $delete = $capability_id = 0;
                 
+                // debug($rs['edit'],1);
+                if (isset($post['role_id'])) $role_id = $post['role_id'];
+                if (isset($rs['capability_id'])) $capability_id = $rs['capability_id'];
                 if (isset($rs['create'])) $create = $rs['create'];
                 if (isset($rs['read'])) $read = $rs['read'];
                 if (isset($rs['edit'])) $edit = $rs['edit'];
                 if (isset($rs['delete'])) $delete = $rs['delete'];
 
-                $q .= " (" . $key . "," . $create . "," . $read . "," . $edit . "," . $delete . ")";
+                $q .= " (" . $role_id . "," . $capability_id . "," . $create . "," . $read . "," . $edit . "," . $delete . ")";
 
                 if ($i != count($post['rcid'])) $q .= ",";
                 $i++;
