@@ -373,12 +373,12 @@ class RoleCapabilityController extends ApiController {
 			die;
         }
         
-        if (! isset($post['role_capability_id'])) {
-			$message = 'role_capability_id harus diisi';
-			$result['message'] = $message;
-			echo json_encode($result);
-			die;
-		}
+        // if (! isset($post['role_capability_id'])) {
+		// 	$message = 'role_capability_id harus diisi';
+		// 	$result['message'] = $message;
+		// 	echo json_encode($result);
+		// 	die;
+		// }
 		// $attr = NULL;
 		
 		// $result['is_success'] = 'on progress';
@@ -409,7 +409,7 @@ class RoleCapabilityController extends ApiController {
                 if (isset($rs['edit'])) $edit = $rs['edit'];
                 if (isset($rs['delete'])) $delete = $rs['delete'];
 
-                $q .= " (" . $post['role_capability_id'] . "," . $create . "," . $read . "," . $edit . "," . $delete . ")";
+                $q .= " (" . $key . "," . $create . "," . $read . "," . $edit . "," . $delete . ")";
 
                 if ($i != count($post['rcid'])) $q .= ",";
                 $i++;
