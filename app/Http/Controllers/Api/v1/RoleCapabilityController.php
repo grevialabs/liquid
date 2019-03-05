@@ -174,7 +174,7 @@ class RoleCapabilityController extends ApiController {
 		if (! empty($_GET)) $attr = $_GET;
 			
 		$q = '
-		SELECT rc.role_capability_id, c.capability as capability, r.role_name, rc.`create`, rc.`read`, rc.`update` ,rc.`delete`
+		SELECT rc.role_capability_id, c.capability_id, c.capability as capability, r.role_name, rc.`create`, rc.`read`, rc.`update` ,rc.`delete`
 		FROM ' . $this->table .' rc 
 		LEFT JOIN ms_role r USING(role_id)
 		LEFT JOIN ms_capability c USING(capability_id)
