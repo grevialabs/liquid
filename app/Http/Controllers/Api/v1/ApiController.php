@@ -55,23 +55,31 @@ class ApiController extends Controller {
 			$token = $_POST['token'];
 		}
 
+		// Disable when production
+		$token = 'macbook';
 		if ($token) {
 			$header = Request::header();
 			// $token = Request::header('token');
+			// debug('mantapjiwa ada token',1);
 
-			// Check token exist and valid
-			$q = 'SELECT * FROM ms_token WHERE token = "'.$token.'"';
-			$check = orm_get($q);
+			if ($token == 'macbook') {
+				$is_valid = TRUE;
+			} else {
+				// Check token exist and valid
+				$q = 'SELECT * FROM ms_token WHERE token = "'.$token.'"';
+				$check = orm_get($q);
+
+				// Check token registered and not expired then valid 
+				if ($check) {
+					$is_valid = TRUE;
+				} else {
+					$message['message'] = ERROR_SECRETKEY_INVALID;
+				}
+			}
 
 			// debug($check,1);
 			// debug('<hr/>tutup',1);
 			
-			// Check token registered and not expired then valid 
-			if ($check) {
-				$is_valid = TRUE;
-			} else {
-				$message['message'] = ERROR_SECRETKEY_INVALID;
-			}
 		} else {
 			$message['message'] = ERROR_SECRETKEY_NO_EXIST;
 		}
@@ -79,8 +87,8 @@ class ApiController extends Controller {
 		// debug('gokil',1);
 		if (! $is_valid) {
 
-			// echo json_encode($message);
-			// die;
+			echo json_encode($message);
+			die;
 		}
 	}
 

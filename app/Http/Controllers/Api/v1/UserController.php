@@ -29,6 +29,7 @@ class UserController extends ApiController {
     public $table = 'ms_user';
     public $primary_key = 'user_id';
     public $list_column = array('user_id', 'site_id', 'parent_user_id', 'level_id','user_code', 'firstname', 'lastname', 'quota_initial', 'quota_additional', 'quota_remaining', 'job_title', 'division', 'email', 'user_category', 'password', 'counter_wrong_pass', 'status_lock', 'locked_time', 'reset_by', 'reset_time',  'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
+    public $list_required_column = array('email');
 	
 	/**
 	 * Create a new controller instance.
@@ -203,9 +204,26 @@ class UserController extends ApiController {
         $post = $attr = $result = NULL;
 		if (! empty($_POST)) $post = $_POST;
 		
+		// validate_required_column
+		$attr_required = validate_required_column($this->list_required_column, $post);
+
 		// validate_column
 		$attr = validate_column($this->list_column, $post);
+
+		$result['is_success'] = 1;
+		$result['message'] = NULL;
         
+        if (empty($attr)) $result['message'] = 'no data';
+		if (isset($attr_required)) $result['message'] = $attr_required.' column is required';
+		
+		// Print error if message exist
+		if (isset($result['message'])) {
+			$result['is_success'] = 0;
+			if (isset($attr)) $result['paramdata'] = $attr;
+			echo json_encode($result);
+			die;
+		}
+
         if (! empty($attr)) {
             $save = DB::table($this->table)->insert($attr);
             
