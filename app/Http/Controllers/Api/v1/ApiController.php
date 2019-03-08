@@ -42,21 +42,23 @@ class ApiController extends Controller {
 	{
 		$is_valid = FALSE;
 		$header = $token = NULL;
+		
+		if (Request::header()) $header = Request::header();
 
-		if (Request::header('token')) {
-			$token = Request::header('token');
+		if (isset($header['token'][0])) {
+			$token = $header['token'][0];
 		}
 
-		if (isset($_GET['token'])) {
+		if (isset($_GET['token']) && ! isset($token)) {
 			$token = $_GET['token'];
 		}
 		
-		if (isset($_POST['token'])) {
+		if (isset($_POST['token']) && ! isset($token)) {
 			$token = $_POST['token'];
 		}
 
 		// Disable when production
-		$token = 'macbook';
+		// $token = 'macbook';
 		if ($token) {
 			$header = Request::header();
 			// $token = Request::header('token');
