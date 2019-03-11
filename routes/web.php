@@ -107,6 +107,7 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
 	
 	$router->get('/article_logistic_site_detail', 'Api\v1\ArticleLogisticSiteDetailController@get_list');
 	$router->get('/article_logistic_site_detail/get_list', 'Api\v1\ArticleLogisticSiteDetailController@get_list');
+	$router->get('/article_logistic_site_detail/get_list_replenish', 'Api\v1\ArticleLogisticSiteDetailController@get_list_replenish');
 	$router->get('/article_logistic_site_detail/{id}', 'Api\v1\ArticleLogisticSiteDetailController@get');
 	$router->post('/article_logistic_site_detail', 'Api\v1\ArticleLogisticSiteDetailController@save');
 	$router->put('/article_logistic_site_detail', 'Api\v1\ArticleLogisticSiteDetailController@update');
