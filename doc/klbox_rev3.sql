@@ -434,7 +434,7 @@ CREATE TABLE IF NOT EXISTS `ms_role_capability` (
   `updated_at` datetime DEFAULT NULL,
   `updated_by` varchar(25) DEFAULT NULL,
   `updated_ip` varchar(25) DEFAULT NULL,
-  UNIQUE KEY `site_id_article` (`site_id`,`article`),
+  UNIQUE KEY `role_capability` (`role_id`,`capability_id`),
   PRIMARY KEY (`role_capability_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=374 DEFAULT CHARSET=utf8;
 
@@ -463,8 +463,8 @@ INSERT INTO `ms_role_capability` (`role_capability_id`, `role_id`, `capability_i
 	(84, '1', 21, 0, 0, 0, 0, 1, '2019-02-22 21:22:20', NULL, NULL, NULL, NULL, NULL),
 	(85, '1', 22, 0, 0, 0, 0, 1, '2019-02-22 21:22:20', NULL, NULL, NULL, NULL, NULL),
 	(86, '1', 23, 0, 0, 0, 0, 1, '2019-02-22 21:22:20', NULL, NULL, NULL, NULL, NULL),
-	(87, '1', 24, 0, 0, 0, 0, 1, '2019-02-22 21:22:20', NULL, NULL, NULL, NULL, NULL)
-/*!40000 ALTER TABLE `ms_role_capability` ENABLE KEYS */;
+	(87, '1', 24, 0, 0, 0, 0, 1, '2019-02-22 21:22:20', NULL, NULL, NULL, NULL, NULL);
+
 
 CREATE TABLE IF NOT EXISTS `ms_site` (
   `site_id` varchar(10) NOT NULL,
@@ -620,9 +620,6 @@ CREATE TABLE IF NOT EXISTS `tr_article_logistic_site` (
   `updated_ip` varchar(25) DEFAULT NULL,
   PRIMARY KEY (`article_logistic_site_id`,`site_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*!40000 ALTER TABLE `tr_article_logistic_site` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tr_article_logistic_site` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `tr_article_logistic_site_detail` (
   `article_logistic_site_detail_id` int(11) NOT NULL AUTO_INCREMENT,
