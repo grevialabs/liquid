@@ -187,7 +187,7 @@ class ArticleLogisticSiteDetailController extends ApiController {
 						
 		if (isset($attr['outbound_delivery']) && $attr['outbound_delivery'] != '') 
 		{
-			$q.= ' AND outbound_delivery = '.$attr['outbound_delivery'];
+			$q.= ' AND a.outbound_delivery = '.$attr['outbound_delivery'];
 		}
 		
 		if (isset($attr['article']) && $attr['article'] != '') 
@@ -196,9 +196,9 @@ class ArticleLogisticSiteDetailController extends ApiController {
 		}
 				
 		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
-			$q.= ' AND status = '.$attr['status'];
+			$q.= ' AND a.status = '.$attr['status'];
         } else {
-			$q.= ' AND status != -1';
+			$q.= ' AND a.status != -1';
 		}
         
         $result['total_rows'] = count(orm_get_list($q));
