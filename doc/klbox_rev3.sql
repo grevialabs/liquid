@@ -626,7 +626,7 @@ CREATE TABLE IF NOT EXISTS `tr_article_logistic_site` (
 
 CREATE TABLE IF NOT EXISTS `tr_article_logistic_site_detail` (
   `article_logistic_site_detail_id` int(11) NOT NULL AUTO_INCREMENT,
-  `outbound_delivery` int(11) NOT NULL,
+  `outbound_delivery` varchar(15) NOT NULL,
   `article` varchar(100) NOT NULL,
   `customer_article` varchar(100) NOT NULL,
   `description` varchar(200) DEFAULT NULL,
@@ -720,7 +720,7 @@ CREATE TABLE IF NOT EXISTS `tr_transaction` (
 
 CREATE TABLE tr_prepack_bundling_header(
 prepack_id int NOT NULL AUTO_INCREMENT,
-outbound_delivery int NOT NULL,
+outbound_delivery varchar(15) NOT NULL,
 site_created_on varchar(4) NULL,
 status_prepack varchar(100) NULL,
 conv_uom varchar(100) NULL,
@@ -741,7 +741,7 @@ AUTO_INCREMENT=1;
 CREATE TABLE tr_prepack_bundling_detail(
 prepack_bundling_detail_id int NOT NULL AUTO_INCREMENT,
 prepack_id int NOT NULL,
-outbound_delivery int NOT NULL,
+outbound_delivery varchar(15) NOT NULL,
 article varchar(100) NULL,
 line_id int NULL,
 qty_dashboard int NULL,
@@ -776,7 +776,7 @@ AUTO_INCREMENT=1;
 
 CREATE TABLE tr_article_logistic_site_detail(
 article_logistic_site_detail_id int NOT NULL AUTO_INCREMENT,
-outbound_delivery int NOT NULL,
+outbound_delivery varchar(15) NOT NULL,
 article varchar(100) NOT NULL,
 customer_article varchar(100) NOT NULL,
 description varchar(200) NULL DEFAULT NULL,

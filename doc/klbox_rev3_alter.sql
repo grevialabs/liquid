@@ -21,3 +21,8 @@ ALTER TABLE `tr_prepack_bundling_detail` CHANGE COLUMN `prepack_bundling_detail`
 CREATE TABLE `tr_movement_article` in klbox_rev3.sql
 CREATE TABLE `tr_movement_quota_level` in klbox_rev3.sql
 CREATE TABLE `tr_article_po_history` in dev klbox
+
+--Tuesday 12 Mar 2019(Ali)
+ALTER TABLE `tr_article_logistic_site_detail` CHANGE COLUMN `outbound_delivery` `outbound_delivery` VARCHAR(15) NOT NULL AFTER `article_logistic_site_detail_id`;
+ALTER TABLE `tr_prepack_bundling_detail` CHANGE COLUMN `outbound_delivery` `outbound_delivery` VARCHAR(15) NOT NULL AFTER `prepack_id`;
+ALTER TABLE `tr_prepack_bundling_header` CHANGE COLUMN `outbound_delivery` `outbound_delivery` VARCHAR(15) NOT NULL AFTER `prepack_id`;
