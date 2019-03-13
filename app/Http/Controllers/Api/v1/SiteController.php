@@ -73,7 +73,7 @@ class SiteController extends ApiController {
 		if (! empty($_GET)) $attr = $_GET;
 			
 		$q = '
-		SELECT site_id, s.company_id, c.company_name, s.site_name, s.site_address, s.flag_qty_value, s.site_qty_value, s.method_calc, s.start_date_counting, s.reset_days,s.status, s.updated_at, s.updated_by
+		SELECT site_id, s.company_id, c.company_name, s.site_name, s.site_address, s.flag_qty_value, s.site_qty_value, s.method_calc, s.start_date_counting, s.reset_days, logo_file_name, s.chamber_sync_flag, s.field_sync, s.status, s.created_at, s.created_by, s.created_ip, s.updated_at, s.updated_by, s.updated_ip
 		FROM ' . $this->table . ' s
 		LEFT JOIN ms_company c USING(company_id)
 		WHERE 1';
@@ -108,8 +108,8 @@ class SiteController extends ApiController {
 		// WHERE 1';
 		
 		$q = '
-		SELECT site_id,s.company_id, c.company_name, s.site_name, s.site_address, s.flag_qty_value, s.site_qty_value, s.method_calc, s.start_date_counting, s.reset_days,s.status, s.updated_at, s.updated_by
-		FROM ' . $this->table . ' s
+        SELECT site_id, s.company_id, c.company_name, s.site_name, s.site_address, s.flag_qty_value, s.site_qty_value, s.method_calc, s.start_date_counting, s.reset_days, logo_file_name, s.chamber_sync_flag, s.field_sync, s.status, s.created_at, s.created_by, s.created_ip, s.updated_at, s.updated_by, s.updated_ip
+        FROM ' . $this->table . ' s
 		LEFT JOIN ms_company c USING(company_id)
 		WHERE 1';
 		

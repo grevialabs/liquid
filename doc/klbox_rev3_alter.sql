@@ -26,3 +26,9 @@ CREATE TABLE `tr_article_po_history` in dev klbox
 ALTER TABLE `tr_article_logistic_site_detail` CHANGE COLUMN `outbound_delivery` `outbound_delivery` VARCHAR(15) NOT NULL AFTER `article_logistic_site_detail_id`;
 ALTER TABLE `tr_prepack_bundling_detail` CHANGE COLUMN `outbound_delivery` `outbound_delivery` VARCHAR(15) NOT NULL AFTER `prepack_id`;
 ALTER TABLE `tr_prepack_bundling_header` CHANGE COLUMN `outbound_delivery` `outbound_delivery` VARCHAR(15) NOT NULL AFTER `prepack_id`;
+
+-- Wednesday 13 maret
+ALTER TABLE 'ms_article_po' ADD `remain_po_qty` ;
+ALTER TABLE 'ms_article_po' ADD `line_id`;
+
+ 

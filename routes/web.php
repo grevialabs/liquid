@@ -12,7 +12,10 @@
 */
 
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+    // return $router->app->version();
+
+    $return['message'] = 'Hello world from API Liquid :D';
+    return json_encode($return);
 });
 
 $router->group(['prefix' => 'api/v1', ], function () use ($router)
@@ -21,6 +24,11 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
     // {		
     
     // },
+
+    $router->group(['prefix' => 'cron', ], function () use ($router)
+    {
+        $router->get('/', 'Api\v1\CronController@index');
+    });
 
     $router->get('/loging', 'Api\v1\LogController@get_list_status');
     $router->get('/log', 'Api\v1\LogController@get_list');
@@ -31,8 +39,6 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
     $router->delete('/log', 'Api\v1\LogController@delete');
 
     // $router->get('/log/list', 'Api\v1\LogController@get_list');
-	
-	// Route::delete('/log/delete', 'Api\V1Controller@log')->name('log4');
 	
 	$router->get('/article', 'Api\v1\ArticleController@get_list');
 	$router->get('/article/get_list', 'Api\v1\ArticleController@get_list');
