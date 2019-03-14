@@ -57,6 +57,7 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
     $router->get('/user', 'Api\v1\UserController@get_list');
     $router->get('/user/get_list_dropdown', 'Api\v1\UserController@get_list_dropdown');
 	$router->get('/user/get_list', 'Api\v1\UserController@get_list');
+	$router->get('/user/get_level_by_user', 'Api\v1\UserController@get_level_by_user');
 	$router->get('/user/{id}', 'Api\v1\UserController@get');
 	$router->post('/user', 'Api\v1\UserController@save');
 	$router->put('/user', 'Api\v1\UserController@update');
@@ -239,7 +240,7 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
 	$router->get('/user_role/{id}', 'Api\v1\UserRoleController@get');
 	$router->post('/user_role', 'Api\v1\UserRoleController@save');
 	$router->put('/user_role', 'Api\v1\UserRoleController@update');
-	$router->delete('/user_role', 'Api\v1\UserRoleController@delete');
+    $router->delete('/user_role', 'Api\v1\UserRoleController@delete');
 
     // $router->get('/', 'Api\v1\Controller@get_list');
 	// $router->get('/get_list', 'Api\v1\Controller@get_list');

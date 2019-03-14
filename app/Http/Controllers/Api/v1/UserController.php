@@ -144,8 +144,107 @@ class UserController extends ApiController {
         
         echo json_encode($result); 
 		die;
-	}
-	
+    }
+    
+
+	public function get_level_by_user()
+	{
+		$attr = $result = NULL;
+        if (! empty($_GET)) $attr = $_GET;
+        
+        // Get all parent with child
+        $q = '
+		SELECT user_id,user_code, l.level_name, l.level_hierarchy, 
+        (
+            SELECT COUNT(user_id)
+            FROM ms_user mu 
+            WHERE mu.parent_user_id = u.user_id
+        ) as totalchild
+        FROM ms_user u 
+        LEFT JOIN ms_level l USING (level_id)
+        WHERE 1 AND u.parent_user_id IS NULL
+        HAVING totalchild > 0
+        ';
+
+        $data = orm_get_list($q,'json');
+        $data = json_decode($data,1);
+        // debug($data,1);
+
+        $result = array();
+        if (! empty($data)) {
+            foreach ($data as $key => $rs) {
+                $result[$key] = $rs;
+
+                $listchild = NULL;
+                $listchild = $this->get_list_child($rs['user_id']);
+                $result[$key]['listchild'] = $listchild;
+
+                // $q = 'SELECT * FROM ms_user u WHERE u.parent_user_id = ' . $rs['user_id'];
+                // $listchild = orm_get_list($q,'json');
+                // $listchild = json_decode($listchild,1);
+
+                // if (! empty($listchild)) {
+                //     $temp = NULL;
+                //     foreach ($listchild as $x => $rc)
+                //     {
+                //         $temp[] = $rc;
+                //     }
+                //     $result[$key]['listchild'] = $temp;
+                // }
+
+            }
+        }
+
+        debug($result,1);
+		
+		// if (isset($attr['user_id']) && $attr['user_id'] != '') {
+		// 	$q.= ' AND user_id = '.$attr['user_id'];
+        // }
+
+        // $data = orm_get_list($q);
+        // $result['data'] = $data;
+        
+        // echo json_encode($result); 
+		// die;
+    }
+    
+    // Recursive function get all child below level
+    public function get_list_child($user_id)
+    {
+        $return = $listchild = NULL;
+
+        if (! isset($user_id)) return $return;
+
+        $q = '
+        SELECT user_id,user_code, l.level_name, l.level_hierarchy, 
+        (
+            SELECT COUNT(user_id)
+            FROM ms_user mu 
+            WHERE mu.parent_user_id = u.user_id
+        ) as totalchild
+        FROM ms_user u 
+        LEFT JOIN ms_level l USING (level_id)
+        WHERE 1 AND u.parent_user_id = ' . $user_id;
+        $listchild = orm_get_list($q,'json');
+        $listchild = json_decode($listchild,1);
+
+        if (! empty($listchild)) {
+            $temp = NULL;
+            foreach ($listchild as $x => $rc) {
+                $temp[] = $rc;
+
+                if ($rc['totalchild'] > 0) {
+                    $tempchild = NULL;
+                    $tempchild = $this->get_list_child($rc['user_id']);
+                    $temp[$x]['listchild'] = $tempchild;
+                }
+            }
+            $return = $temp;
+        }
+
+        return $return;
+    }
+
 	public function get_list_dropdown()
 	{
 		$attr = $result = NULL;
