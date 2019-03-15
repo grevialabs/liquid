@@ -28,7 +28,7 @@ class UserController extends ApiController {
     */
     public $table = 'ms_user';
     public $primary_key = 'user_id';
-    public $list_column = array('user_id', 'site_id', 'parent_user_id', 'level_id','user_code', 'firstname', 'lastname', 'quota_initial', 'quota_additional', 'quota_remaining', 'job_title', 'division', 'email', 'user_category', 'password', 'counter_wrong_pass', 'status_lock', 'locked_time', 'reset_by', 'reset_time',  'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
+    public $list_column = array('user_id', 'site_id', 'parent_user_id', 'level_id','user_code', 'firstname', 'lastname', 'quota_initial', 'quota_additional', 'quota_remaining', 'job_title', 'division', 'email', 'user_category', 'password', 'counter_wrong_pass', 'status_lock', 'locked_time', 'reset_by', 'reset_time', 'reset_token', 'reset_token_expired', 'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
     public $list_required_column = array('email');
 	
 	/**
@@ -60,7 +60,7 @@ class UserController extends ApiController {
 		SELECT user_id, firstname, lastname, CONCAT(firstname," ",lastname) as fullname, job_title, division, 
 		email, user_code, password, user_category, role_name, level_id, level_name, site_id, ur.role_id,
 		parent_user_id, quota_initial, quota_additional, quota_remaining, email, password, counter_wrong_pass, 
-		status_lock, locked_time, reset_by, reset_time,  u.status, u.created_at, u.created_by, u.created_ip, 
+		status_lock, locked_time, reset_by, reset_time, reset_token, reset_token_expired, u.status, u.created_at, u.created_by, u.created_ip, 
 		u.updated_at, u.updated_by, u.updated_ip
 		FROM '	. $this->table . ' u
 		LEFT JOIN ms_level l USING(level_id)
@@ -68,10 +68,19 @@ class UserController extends ApiController {
 		LEFT JOIN ms_role r USING(role_id)
 		WHERE 1';
 		
-		if (isset($attr['user_id']) && $attr['user_id'] != '') 
-		{
+		if (isset($attr['user_id']) && $attr['user_id'] != '') {
 			$q.= ' AND u.user_id = '.$attr['user_id'];
 		}
+
+		if (isset($attr['user_code']) && $attr['user_code'] != '') {
+			$q.= ' AND u.user_code = '.replace_quote($attr['user_code']);
+		}
+
+		if (isset($attr['email']) && $attr['email'] != '') {
+			$q.= ' AND u.email = '.replace_quote($attr['email']);
+		}
+
+		// debug($q,1);
 		
 		$data = orm_get($q);
 		echo json_encode($data);

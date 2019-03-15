@@ -119,8 +119,8 @@ function validate_column($arrsource,$arrtarget) {
  * --------------------------------------
  * return: string - string of all invalid parameter submitted by user, ex: user,role
  * --------------------------------------
- * @arrsource : array of string. 
- * @arrtarget : array of string. 
+ * @arrsource : array of string . 
+ * @arrtarget : array of string postdata. 
 */
 function validate_required_column($arrsource,$arrtarget) {
 	

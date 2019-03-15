@@ -31,4 +31,9 @@ ALTER TABLE `tr_prepack_bundling_header` CHANGE COLUMN `outbound_delivery` `outb
 ALTER TABLE 'ms_article_po' ADD `remain_po_qty` ;
 ALTER TABLE 'ms_article_po' ADD `line_id`;
 
- 
+-- thursday 14 maret
+ALTER TABLE `ms_user`
+	ADD COLUMN `reset_token` varchar(50) DEFAULT NULL AFTER `reset_time`;
+ALTER TABLE `ms_user`
+	ADD COLUMN `reset_token_expired` DATETIME NULL DEFAULT NULL AFTER `reset_token`;
+
