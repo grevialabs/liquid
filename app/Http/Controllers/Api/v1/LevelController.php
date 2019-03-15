@@ -145,6 +145,7 @@ class LevelController extends ApiController {
 
 	public function save()
 	{
+		debug('test',1);
         $post = $attr = $result = NULL;
 		if (! empty($_POST)) $post = $_POST;
 		
