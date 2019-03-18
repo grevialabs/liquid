@@ -58,8 +58,8 @@ class UserController extends ApiController {
 		// $q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		$q = '
 		SELECT user_id, firstname, lastname, CONCAT(firstname," ",lastname) as fullname, job_title, division, 
-		email, user_code, password, user_category, role_name, level_id, level_name, site_id, ur.role_id,
-		parent_user_id, quota_initial, quota_additional, quota_remaining, email, password, counter_wrong_pass, 
+		email, user_code, `password`, user_category, role_name, level_id, level_name, site_id, ur.role_id,
+		parent_user_id, quota_initial, quota_additional, quota_remaining, email, counter_wrong_pass, 
 		status_lock, locked_time, reset_by, reset_time, reset_token, reset_token_expired, u.status, u.created_at, u.created_by, u.created_ip, 
 		u.updated_at, u.updated_by, u.updated_ip
 		FROM '	. $this->table . ' u

@@ -92,6 +92,8 @@ class ApiController extends Controller {
 			echo json_encode($message);
 			die;
 		}
+		
+		header('Access-Control-Allow-Origin: *');
 	}
 
 	/**
