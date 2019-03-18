@@ -45,6 +45,8 @@ class ApiController extends Controller {
 		
 		if (Request::header()) $header = Request::header();
 
+		debug($header,1);
+		
 		if (isset($header['token'][0])) {
 			$token = $header['token'][0];
 		}
