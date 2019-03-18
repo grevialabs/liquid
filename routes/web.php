@@ -54,11 +54,10 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
 	$router->put('/company', 'Api\v1\CompanyController@update');
     $router->delete('/company', 'Api\v1\CompanyController@delete');
 
+    $router->get('/user', 'Api\v1\UserController@get_list');
     $router->get('/user/get_list_dropdown', 'Api\v1\UserController@get_list_dropdown');
 	$router->get('/user/get_list', 'Api\v1\UserController@get_list');
 	$router->get('/user/get_level_by_user', 'Api\v1\UserController@get_level_by_user');
-	$router->get('/user/insert_quota_by_site_id', 'Api\v1\UserController@insert_quota_by_site_id');
-    $router->get('/user', 'Api\v1\UserController@get_list');
 	$router->get('/user/{id}', 'Api\v1\UserController@get');
 	$router->post('/user', 'Api\v1\UserController@save');
 	$router->put('/user', 'Api\v1\UserController@update');
@@ -187,7 +186,7 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
 	$router->put('/article_po', 'Api\v1\ArticlePoController@update');
     $router->delete('/article_po', 'Api\v1\ArticlePoController@delete');
 	
-	$router->get('/rfid_article', 'Api\v1\RfidArticlleControler@get_list');
+	$router->get('/rfid_article', 'Api\v1\RfidArticleControler@get_list');
 	$router->get('/rfid_article/get_list', 'Api\v1\RfidArticleController@get_list');
 	$router->get('/rfid_article/{id}', 'Api\v1\RfidArticleController@get');
 	$router->post('/rfid_article', 'Api\v1\RfidArticleController@save');
