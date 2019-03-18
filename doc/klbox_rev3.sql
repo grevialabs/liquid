@@ -833,6 +833,47 @@ PRIMARY KEY(movement_quota_level_id)
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
 
+CREATE TABLE ms_movement_type (
+movement_type_id INT(3)	NOT NULL,
+movement_type_desc VARCHAR(20) NULL,  
+chamber_sync_flag TINYINT(4) DEFAULT '0',
+field_sync TINYINT(4) DEFAULT '0',
+STATUS TINYINT NULL DEFAULT 1,
+created_at DATETIME NULL DEFAULT NULL,
+created_by VARCHAR(25) NULL DEFAULT NULL,
+created_ip VARCHAR(25) NULL DEFAULT NULL,
+updated_at DATETIME NULL DEFAULT NULL,
+updated_by VARCHAR(25) NULL DEFAULT NULL,
+updated_ip VARCHAR(25) NULL DEFAULT NULL,
+PRIMARY KEY(movement_type_id)
+) COLLATE='utf8_general_ci' 
+ENGINE=INNODB
+
+CREATE TABLE IF NOT EXISTS `tr_transaction_in` (
+  transaction_id VARCHAR(20) NOT NULL,
+  site_id VARCHAR(4) NOT NULL,
+  outbound_delivery VARCHAR(10) NOT NULL,
+  article VARCHAR(100) NOT NULL,
+  rfid VARCHAR(200) NOT NULL,
+  description VARCHAR(200) DEFAULT NULL,
+  picktime DATETIME DEFAULT NULL,
+  user_id VARCHAR(4) NOT NULL,
+  sync_date DATETIME DEFAULT NULL,
+  chamber_sync_flag TINYINT(4) DEFAULT '0',
+  field_sync TINYINT(4) DEFAULT '0',
+  flag_used TINYINT(4) DEFAULT '1',
+  movement_type	TINYINT(3) DEFAULT '101',
+  Site_Chamber_GR VARCHAR(4) DEFAULT NULL,
+  STATUS TINYINT(4) DEFAULT '1',
+  created_at DATETIME DEFAULT NULL,
+  created_by VARCHAR(25) DEFAULT NULL,
+  created_ip VARCHAR(25) DEFAULT NULL,
+  updated_at DATETIME DEFAULT NULL,
+  updated_by VARCHAR(25) DEFAULT NULL,
+  updated_ip VARCHAR(25) DEFAULT NULL,
+  PRIMARY KEY (transaction_id)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
 /*!40000 ALTER TABLE `tr_transaction` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tr_transaction` ENABLE KEYS */;
 

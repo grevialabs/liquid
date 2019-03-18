@@ -37,3 +37,12 @@ ALTER TABLE `ms_user`
 ALTER TABLE `ms_user`
 	ADD COLUMN `reset_token_expired` DATETIME NULL DEFAULT NULL AFTER `reset_token`;
 
+
+--monday 18 maret
+create table ms_movement_type
+create table tr_transaction_in
+
+
+
+
+
