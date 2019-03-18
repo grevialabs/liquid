@@ -57,7 +57,7 @@ class ApiController extends Controller {
 			$token = $_POST['token'];
 		}
 
-		debug($token,1);
+		debug($_POST,1);
 		// Disable when production
 		// $token = 'macbook';
 		if ($token) {
