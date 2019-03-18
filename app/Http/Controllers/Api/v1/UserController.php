@@ -262,15 +262,31 @@ class UserController extends ApiController {
 
         $result = array();
         if (! empty($data)) {
+			$tmpquota = $total_person = 0;
+			$total_person = count($data);
+			
             foreach ($data as $key => $rs) {
+				
+				// Count quota here
+				$tmpquota = $quota / $total_person;
+				if (strpos($tmpquota,'.')) {
+					
+					// round up on last round
+					if ($key == ($total_person - 1)) {
+						$tmpquota = ceil($tmpquota);
+					} else {
+						$tmpquota = round($tmpquota);
+					}
+				} 
+
 				$result[$key] = $rs;
 				
 				// identifier top global parent
 				$result[$key]['is_top_parent'] = TRUE;
-				$result[$key]['quota'] = $quota;
+				$result[$key]['quota'] = $tmpquota;
 
                 $listchild = NULL;
-                $listchild = $this->get_list_child($rs['user_id'], $quota);
+                $listchild = $this->get_list_child($rs['user_id'], $tmpquota);
                 $result[$key]['listchild'] = $listchild;
             }
         }
@@ -280,7 +296,7 @@ class UserController extends ApiController {
     }
     
     // Recursive function get all child below level
-    public function get_list_child($user_id, $quota)
+    private function get_list_child($user_id, $quota)
     {
         $return = $listchild = NULL;
 
@@ -298,21 +314,32 @@ class UserController extends ApiController {
         LEFT JOIN ms_level l USING (level_id)
         WHERE 1 AND u.parent_user_id = ' . $user_id;
         $listchild = orm_get_list($q,'json');
-        $listchild = json_decode($listchild,1);
+		$listchild = json_decode($listchild,1);
+		// debug($listchild,1);
 
         if (! empty($listchild)) {
-            $temp = NULL;
+			$temp = NULL;
+			$total_person = count($listchild);
             foreach ($listchild as $x => $rc) {
 				
-				// fill quota here
-				if ($rc['totalchild'] > 1) $quota = $quota / $rc['totalchild'];
+				// Count quota here
+				$tmpquota = $quota / $total_person;
+				if (strpos($tmpquota,'.')) {
+					
+					// round up on last round
+					if ($x == ($total_person - 1)) {
+						$tmpquota = ceil($tmpquota);
+					} else {
+						$tmpquota = round($tmpquota);
+					}
+				}
 
-				$rc['quota'] = $quota;
+				$rc['quota'] = $tmpquota;
 				$temp[] = $rc;
 				
                 if ($rc['totalchild'] > 0) {
 					$tempchild = NULL;
-                    $tempchild = $this->get_list_child($rc['user_id'],$quota);
+                    $tempchild = $this->get_list_child($rc['user_id'],$tmpquota);
                     $temp[$x]['listchild'] = $tempchild;
                 } else {
 					// $quota = $quota;

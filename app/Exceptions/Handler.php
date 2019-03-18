@@ -45,6 +45,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        // Customer error page not found
+        if($e->getStatusCode() === 404){
+            return response(view("404"), 404);
+        }
         return parent::render($request, $e);
     }
 }
