@@ -147,7 +147,7 @@ class LevelController extends ApiController {
 	{
         $post = $attr = $result = NULL;
 		if (! empty($_POST)) $post = $_POST;
-		
+		debug($post,1);
 		// validate_column
 		$attr = validate_column($this->list_column, $post);
         
