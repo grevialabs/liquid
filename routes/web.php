@@ -186,7 +186,7 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
 	$router->put('/article_po', 'Api\v1\ArticlePoController@update');
     $router->delete('/article_po', 'Api\v1\ArticlePoController@delete');
 	
-	$router->get('/rfid_article', 'Api\v1\RfidArticleControler@get_list');
+	$router->get('/rfid_article', 'Api\v1\RfidArticleController@get_list');
 	$router->get('/rfid_article/get_list', 'Api\v1\RfidArticleController@get_list');
 	$router->get('/rfid_article/{id}', 'Api\v1\RfidArticleController@get');
 	$router->post('/rfid_article', 'Api\v1\RfidArticleController@save');
