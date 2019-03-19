@@ -78,6 +78,10 @@ class RfidArticleController extends ApiController {
 			$q.= ' AND rfid_article_id = '.$attr['rfid_article_id'];
 		}
 		
+		if (isset($attr['rfid']) && $attr['rfid'] != '') {
+			$q.= ' AND rfid = '.$attr['rfid'];
+		}
+		
 		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
 			$q.= ' AND status = '.$attr['status'];
         } else {
