@@ -66,6 +66,7 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
 		$router->get('/get_list', 'Api\v1\UserController@get_list');
 		// $router->get('/user/get_level_by_user', 'Api\v1\UserController@get_level_by_user');
 		$router->get('/insert_quota_by_site_id', 'Api\v1\UserController@insert_quota_by_site_id');
+		$router->get('/get_list_bottom_level_child', 'Api\v1\UserController@get_list_bottom_level_child');
     });
 
     // $router->get('/user', 'Api\v1\UserController@get_list');

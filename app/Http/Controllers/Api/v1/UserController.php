@@ -163,6 +163,7 @@ class UserController extends ApiController {
 		die;
 	}
 	
+	// insert quota by topdown
 	public function insert_quota_by_site_id()
 	{
 		$error = $return = $attr = NULL;
@@ -190,7 +191,7 @@ class UserController extends ApiController {
 			if ($obj_site['method_calc'] == 'top_down') {
 				
 				// Start top_down logic
-				$list_user = $this->get_level_by_user(array(
+				$list_user = $this->get_list_parent_by_user(array(
 					'site_id' => $obj_site['site_id'],
 					'flag_qty_value' => $obj_site['flag_qty_value'],
 					'site_qty_value' => $obj_site['site_qty_value'],
@@ -203,9 +204,11 @@ class UserController extends ApiController {
 					foreach ($list_user as $ky => $rs) {
 						// Check if
 						// $this->($site_qty_value);
-						debug($rs);
+						// debug($rs);
 					}
 				}
+				debug($list_user);
+				die;
 
 				// End top_down logic
 
@@ -217,14 +220,16 @@ class UserController extends ApiController {
 
 			}
 		}
-		debug('<hr/>topbro',1);
+		// debug('<hr/>topbro',1);
 		// debug($obj_site,1);
+		die;
 	}
     
 	// Return all user with quota - using recursive method
-	private function get_level_by_user($attr = NULL)
+	private function get_list_parent_by_user($attr = NULL)
 	{
 		$result = $error = $quota = NULL;
+		$userorder = 1; // user hierarchy
         // if (! empty($_GET)) $attr = $_GET;
 		// if (! empty($attr)) $attr = $_GET;
 		
@@ -244,7 +249,7 @@ class UserController extends ApiController {
 
         // Get all parent with child
         $q = '
-		SELECT user_id,user_code, l.level_name, l.level_hierarchy, 
+		SELECT user_id,user_code, l.level_name, l.level_hierarchy, ' . $userorder . ' as userorder, u.parent_user_id, 
         (
             SELECT COUNT(user_id)
             FROM ms_user mu 
@@ -275,7 +280,7 @@ class UserController extends ApiController {
 					if ($key == ($total_person - 1)) {
 						$tmpquota = ceil($tmpquota);
 					} else {
-						$tmpquota = round($tmpquota);
+						$tmpquota = floor($tmpquota);
 					}
 				} 
 
@@ -286,8 +291,10 @@ class UserController extends ApiController {
 				$result[$key]['quota'] = $tmpquota;
 
                 $listchild = NULL;
-                $listchild = $this->get_list_child($rs['user_id'], $tmpquota);
-                $result[$key]['listchild'] = $listchild;
+                $listchild = $this->get_list_child($rs['user_id'], $tmpquota, ($userorder + 1));
+				$result[$key]['listchild'] = $listchild;
+				
+				// $userorder++;
             }
         }
         
@@ -295,16 +302,18 @@ class UserController extends ApiController {
 		// die;
     }
     
-    // Recursive function get all child below level
-    private function get_list_child($user_id, $quota)
+	// Recursive function get all child below level
+	// userorder = user hierarchy level
+    private function get_list_child($user_id, $quota, $userorder)
     {
         $return = $listchild = NULL;
 
         if (! isset($user_id)) return $return;
         if (! isset($quota)) return $return;
+        if (! isset($userorder)) $userorder = 1;
 
         $q = '
-        SELECT user_id,user_code, l.level_name, l.level_hierarchy, 
+        SELECT user_id,user_code, l.level_name, l.level_hierarchy, u.parent_user_id, ' . $userorder . ' as userorder, 
         (
             SELECT COUNT(user_id)
             FROM ms_user mu 
@@ -330,27 +339,60 @@ class UserController extends ApiController {
 					if ($x == ($total_person - 1)) {
 						$tmpquota = ceil($tmpquota);
 					} else {
-						$tmpquota = round($tmpquota);
+						$tmpquota = floor($tmpquota);
 					}
 				}
 
 				$rc['quota'] = $tmpquota;
+				
+				$rc['userorder'] = $userorder;
 				$temp[] = $rc;
 				
+				// Still have child
                 if ($rc['totalchild'] > 0) {
+					
 					$tempchild = NULL;
-                    $tempchild = $this->get_list_child($rc['user_id'],$tmpquota);
-                    $temp[$x]['listchild'] = $tempchild;
+                    $tempchild = $this->get_list_child($rc['user_id'],$tmpquota,($userorder + 1));
+					$temp[$x]['listchild'] = $tempchild;
+					$temp[$x]['userorder'] = $userorder;
                 } else {
+					// No chilld
+					// $userorder--;
 					// $quota = $quota;
+                    $temp[$x]['listchild'] = array();
+                    $temp[$x]['is_bottom_child'] = '1';
+					$temp[$x]['userorder'] = $userorder;
 				}
+				// $userorder++;
 
-            }
+			}
+			
             $return = $temp;
         }
 
         return $return;
     }
+
+	// Get list bottom level child, sort by level_hierarchy
+	public function get_list_bottom_level_child()
+	{
+		$q = '
+		SELECT u.user_id, u.user_code, l.level_id , l.level_hierarchy, l.level_name
+		FROM ms_user u 
+		LEFT JOIN ms_level l USING(level_id)
+		WHERE u.user_id NOT IN (
+			SELECT mu.parent_user_id 
+			FROM ms_user mu
+			WHERE mu.parent_user_id IS NOT NULL
+		) AND u.parent_user_id IS NOT NULL
+		ORDER BY l.level_hierarchy DESC, l.level_id ASC
+		';
+
+		$listchild = orm_get_list($q,'json');
+		$listchild = json_decode($listchild,1);
+
+		debug($listchild);
+	}
 
 	public function get_list_dropdown()
 	{
