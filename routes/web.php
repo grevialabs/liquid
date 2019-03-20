@@ -57,7 +57,8 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
 
 	$router->group(['prefix' => '/user', ], function () use ($router)
     {		
-		$router->get('/', 'Api\v1\UserController@get');
+		$router->get('get', 'Api\v1\UserController@get');
+		$router->get('', 'Api\v1\UserController@get');
 		$router->post('', 'Api\v1\UserController@save');
 		$router->put('', 'Api\v1\UserController@update');
 		$router->delete('', 'Api\v1\UserController@delete');
@@ -66,7 +67,7 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
 		$router->get('/get_list', 'Api\v1\UserController@get_list');
 		// $router->get('/user/get_level_by_user', 'Api\v1\UserController@get_level_by_user');
 		$router->get('/insert_quota_by_site_id', 'Api\v1\UserController@insert_quota_by_site_id');
-		$router->get('/get_list_bottom_level_child', 'Api\v1\UserController@get_list_bottom_level_child');
+		$router->get('/get_list_bottom_level_child ', 'Api\v1\UserController@get_list_bottom_level_child');
     });
 
     // $router->get('/user', 'Api\v1\UserController@get_list');
