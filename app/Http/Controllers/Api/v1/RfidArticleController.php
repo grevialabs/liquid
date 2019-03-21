@@ -188,6 +188,7 @@ class RfidArticleController extends ApiController {
 			$q.= ', ' . $attr['perpage'];
 		}
 
+		debug($q,1);
 		$data = orm_get_list($q);
         $result['data'] = $data;
         
