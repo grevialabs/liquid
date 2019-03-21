@@ -160,7 +160,7 @@ class RfidArticleController extends ApiController {
 		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		
 		if (isset($attr['rfid']) && $attr['rfid'] != '') {
-			$q.= ' AND rfid IN ( ' . $attr['rfid'] . ')';
+			$q.= ' AND rfid IN ( '. $attr['rfid'] . ')';
 		}
 		
 		$q.= ' AND status = 1';
@@ -175,20 +175,20 @@ class RfidArticleController extends ApiController {
 		}
 		
 		// set default paging
-		if (! isset($attr['paging'])) {
-			if (! isset($attr['offset'])) $attr['offset'] = OFFSET;
-			if (! isset($attr['perpage'])) $attr['perpage'] = PERPAGE;
-		}
+		// if (! isset($attr['paging'])) {
+		// 	if (! isset($attr['offset'])) $attr['offset'] = OFFSET;
+		// 	if (! isset($attr['perpage'])) $attr['perpage'] = PERPAGE;
+		// }
 		
-		if (isset($attr['offset'])) { 
-			$q.= ' LIMIT ' . $attr['offset'];
+		// if (isset($attr['offset'])) { 
+		// 	$q.= ' LIMIT ' . $attr['offset'];
 			
-			if (! isset($attr['perpage'])) $attr['perpage'] = PERPAGE;
+		// 	if (! isset($attr['perpage'])) $attr['perpage'] = PERPAGE;
 			
-			$q.= ', ' . $attr['perpage'];
-		}
+		// 	$q.= ', ' . $attr['perpage'];
+		// }
 
-		debug($q,1);
+		// debug($q,1);
 		$data = orm_get_list($q);
         $result['data'] = $data;
         
