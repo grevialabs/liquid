@@ -95,7 +95,6 @@ class RfidArticleController extends ApiController {
 	
 	public function get_list()
 	{
-		debug('ter',1);
 		$attr = $result = NULL;
 		if (! empty($_GET)) $attr = $_GET;
 			
