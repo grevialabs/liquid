@@ -47,27 +47,38 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
 	$router->put('/article', 'Api\v1\ArticleController@update');
     $router->delete('/article', 'Api\v1\ArticleController@delete');
 	
-	$router->get('/company', 'Api\v1\CompanyController@get_list');
-	$router->get('/company/get_list', 'Api\v1\CompanyController@get_list');
-	$router->get('/company/{id}', 'Api\v1\CompanyController@get');
-	$router->post('/company', 'Api\v1\CompanyController@save');
-	$router->put('/company', 'Api\v1\CompanyController@update');
-    $router->delete('/company', 'Api\v1\CompanyController@delete');
+	
+	$router->group(['prefix' => '/company', ], function () use ($router)
+    {	
+		$router->post('', 'Api\v1\CompanyController@save');
+		$router->put('', 'Api\v1\CompanyController@update');
+		$router->delete('', 'Api\v1\CompanyController@delete');
+		$router->get('', 'Api\v1\CompanyController@get_list');
+		$router->get('/get', 'Api\v1\CompanyController@get');
+		$router->get('/{id}', 'Api\v1\CompanyController@get');
+		$router->get('/get_list', 'Api\v1\CompanyController@get_list');
+	});
+	
+	// $router->get('/company', 'Api\v1\CompanyController@get_list');
+	// $router->get('/company/get_list', 'Api\v1\CompanyController@get_list');
+	// $router->get('/company/{id}', 'Api\v1\CompanyController@get');
+	// $router->post('/company', 'Api\v1\CompanyController@save');
+	// $router->put('/company', 'Api\v1\CompanyController@update');
+    // $router->delete('/company', 'Api\v1\CompanyController@delete');
 
 
 	$router->group(['prefix' => '/user', ], function () use ($router)
     {		
-		$router->get('get', 'Api\v1\UserController@get');
 		$router->get('', 'Api\v1\UserController@get');
 		$router->post('', 'Api\v1\UserController@save');
 		$router->put('', 'Api\v1\UserController@update');
-		$router->delete('', 'Api\v1\UserController@delete');
-
-		$router->get('/get_list_dropdown', 'Api\v1\UserController@get_list_dropdown');
-		$router->get('/get_list', 'Api\v1\UserController@get_list');
+		$router->delete('', 'Api\v1\UserController@delete');		
+		$router->get('get', 'Api\v1\UserController@get');
+		$router->get('get_list', 'Api\v1\UserController@get_list');
+		$router->get('get_list_dropdown', 'Api\v1\UserController@get_list_dropdown');
 		// $router->get('/user/get_level_by_user', 'Api\v1\UserController@get_level_by_user');
-		$router->get('/insert_quota_by_site_id', 'Api\v1\UserController@insert_quota_by_site_id');
-		$router->get('/get_list_bottom_level_child ', 'Api\v1\UserController@get_list_bottom_level_child');
+		$router->get('get_list_bottom_level_child', 'Api\v1\UserController@get_list_bottom_level_child');
+		$router->get('insert_quota_by_site_id', 'Api\v1\UserController@insert_quota_by_site_id');
     });
 
     // $router->get('/user', 'Api\v1\UserController@get_list');
