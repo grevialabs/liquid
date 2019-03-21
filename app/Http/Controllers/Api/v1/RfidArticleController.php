@@ -154,7 +154,6 @@ class RfidArticleController extends ApiController {
 	
 	public function get_list_rfid()
 	{
-		debug('test',1);
 		$attr = $result = NULL;
 		if (! empty($_GET)) $attr = $_GET;
 			
@@ -189,7 +188,7 @@ class RfidArticleController extends ApiController {
 			$q.= ', ' . $attr['perpage'];
 		}
 
-		
+		debug($q,1);
 		$data = orm_get_list($q);
         $result['data'] = $data;
         
