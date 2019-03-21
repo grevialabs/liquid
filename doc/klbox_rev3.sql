@@ -863,7 +863,8 @@ CREATE TABLE IF NOT EXISTS `tr_transaction_in` (
   field_sync TINYINT(4) DEFAULT '0',
   flag_used TINYINT(4) DEFAULT '1',
   movement_type	TINYINT(3) DEFAULT '101',
-  Site_Chamber_GR VARCHAR(4) DEFAULT NULL,
+  site_chamber_gr VARCHAR(4) DEFAULT NULL,
+  status_document VARCHAR(25) DEFAULT NULL,
   STATUS TINYINT(4) DEFAULT '1',
   created_at DATETIME DEFAULT NULL,
   created_by VARCHAR(25) DEFAULT NULL,
@@ -872,7 +873,8 @@ CREATE TABLE IF NOT EXISTS `tr_transaction_in` (
   updated_by VARCHAR(25) DEFAULT NULL,
   updated_ip VARCHAR(25) DEFAULT NULL,
   PRIMARY KEY (transaction_id)
-) ENGINE=INNODB DEFAULT CHARSET=utf8;
+) COLLATE='utf8_general_ci'  
+ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `tr_transaction` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tr_transaction` ENABLE KEYS */;
