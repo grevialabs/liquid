@@ -141,6 +141,7 @@ class CapabilityController extends ApiController {
 		}
 
 		$data = orm_get_list($q);
+		if (empty($data)) $data = NULL;
         $result['data'] = $data;
         
         echo json_encode($result); 

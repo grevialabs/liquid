@@ -93,6 +93,7 @@ class SiteController extends ApiController {
 		}
 
 		$data = orm_get($q);
+		if (empty($data)) $data['data'] = NULL;
 		echo json_encode($data);
 		die;
 	}
@@ -124,7 +125,7 @@ class SiteController extends ApiController {
         }
 		
 		if (isset($attr['site_id']) && $attr['site_id'] != '') {
-			$q.= ' AND site_id = '.$attr['site_id'];
+			$q.= ' AND site_id = ' . replace_quote($attr['site_id']);
         }
 		
 		if (isset($attr['company_id']) && $attr['company_id'] != '') {
@@ -166,6 +167,7 @@ class SiteController extends ApiController {
 		}
 
 		$data = orm_get_list($q);
+		if (empty($data)) $data = NULL;
         $result['data'] = $data;
         
         echo json_encode($result); 

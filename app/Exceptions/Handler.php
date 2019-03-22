@@ -50,9 +50,9 @@ class Handler extends ExceptionHandler
         // Customer error page not found
         // if($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
             // return view('errors.404');
-        if($e->getStatusCode() === 404){
-            return response(view("404"), 404);
-        }
+        // if($e->getStatusCode() === 404){
+        //     return response(view("404"), 404);
+        // }
 
         // return response(view("errors.$status")->render(), $status);
 
