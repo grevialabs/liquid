@@ -42,7 +42,10 @@ ALTER TABLE `ms_user`
 create table ms_movement_type
 create table tr_transaction_in
 
-
+--tuesday 26 maret
+ALTER TABLE 'ms_user' ADD `article_attribute_reason` and 'attribute_value' ;
+ALTER TABLE 'ms_reason' ADD `is_replenish`;
+ALTER TABLE 'ms_reason_type' ADD `attribute`;
 
 
 
