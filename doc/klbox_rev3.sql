@@ -320,10 +320,9 @@ INSERT INTO `ms_reason` (`reason_id`, `reason_value`, `status`, `created_at`, `c
 
 CREATE TABLE IF NOT EXISTS `ms_reason_type` (
   `reason_type_id` int(11) NOT NULL AUTO_INCREMENT,
-  `article_attribute_id` int(11) NOT NULL,
+  `article_id` int(11) NOT NULL,
   `attribute` varchar(100) DEFAULT NULL,
   `attribute_value` varchar(100) DEFAULT NULL,
-  `site_id` varchar(10) DEFAULT NULL,
   `chamber_sync_flag` tinyint(4) DEFAULT '0',
   `field_sync` tinyint(4) DEFAULT '0',
   `status` tinyint(4) DEFAULT '1',
