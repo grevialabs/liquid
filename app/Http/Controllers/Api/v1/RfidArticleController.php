@@ -28,7 +28,7 @@ class RfidArticleController extends ApiController {
     */
     public $table = 'ms_rfid_article';
     public $primary_key = 'rfid_article_id';
-    public $list_column = array('rfid_article_id','site_id', 'outbound_delivery', 'article', 'description', 'rfid', 'picktime','user_id','status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
+    public $list_column = array('rfid_article_id','site_id', 'outbound_delivery', 'article', 'description', 'rfid', 'picktime','user_id','chamber_sync_flag','status_message','status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
 	
 	/**
 	 * Create a new controller instance.
@@ -154,6 +154,7 @@ class RfidArticleController extends ApiController {
 	
 	public function get_list_rfid()
 	{
+		debug('test',1);
 		$attr = $result = NULL;
 		if (! empty($_GET)) $attr = $_GET;
 			

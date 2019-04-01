@@ -28,7 +28,7 @@ class UserController extends ApiController {
     */
     public $table = 'ms_user';
     public $primary_key = 'user_id';
-    public $list_column = array('user_id', 'site_id', 'parent_user_id', 'level_id','user_code', 'firstname', 'lastname', 'quota_initial', 'quota_additional', 'quota_remaining', 'job_title', 'division','article_attribute_reason','attribute_value', 'email', 'user_category', 'password', 'counter_wrong_pass', 'status_lock', 'locked_time', 'reset_by', 'reset_time', 'reset_token', 'reset_token_expired', 'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
+    public $list_column = array('user_id', 'site_id', 'parent_user_id', 'level_id','user_code', 'firstname', 'lastname', 'quota_initial', 'quota_additional', 'quota_remaining', 'job_title', 'division','attribute','attribute_value', 'email', 'user_category', 'password', 'counter_wrong_pass', 'status_lock', 'locked_time', 'reset_by', 'reset_time', 'reset_token', 'reset_token_expired', 'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
     public $list_required_column = array('email');
 	
 	/**

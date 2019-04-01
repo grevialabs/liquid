@@ -47,5 +47,5 @@ ALTER TABLE 'ms_user' ADD `article_attribute_reason` and 'attribute_value' ;
 ALTER TABLE 'ms_reason' ADD `is_replenish`;
 ALTER TABLE 'ms_reason_type' ADD `attribute`;
 
-
-
+-- monday 1 april
+ALTER TABLE `klbox_dev`.`ms_rfid_article` ADD COLUMN `status_message` VARCHAR(25) NULL AFTER `field_sync`;
