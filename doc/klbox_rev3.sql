@@ -383,6 +383,7 @@ CREATE TABLE IF NOT EXISTS `ms_rfid_article` (
   `sync_date` datetime DEFAULT NULL,
   `chamber_sync_flag` tinyint(4) DEFAULT '0',
   `field_sync` tinyint(4) DEFAULT '0',
+  'status_message' VARCHAR(25) DEFAULT NULL,
   `status` tinyint(4) DEFAULT '1',
   `created_at` datetime DEFAULT NULL,
   `created_by` varchar(25) DEFAULT NULL,
