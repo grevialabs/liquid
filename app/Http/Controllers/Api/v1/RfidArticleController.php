@@ -154,6 +154,7 @@ class RfidArticleController extends ApiController {
 	
 	public function get_list_rfid()
 	{
+		debug('test',1);
 		$attr = $result = NULL;
 		if (! empty($_GET)) $attr = $_GET;
 			
