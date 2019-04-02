@@ -113,6 +113,7 @@ $router->group(['prefix' => 'api/v1', ], function () use ($router)
 	$router->get('/level', 'Api\v1\LevelController@get_list');
 	$router->get('/level/get', 'Api\v1\LevelController@get');
 	$router->get('/level/get_list', 'Api\v1\LevelController@get_list');
+	$router->get('/level/get_list_sync', 'Api\v1\LevelController@get_list_sync');
 	$router->post('/level', 'Api\v1\LevelController@save');
 	$router->put('/level', 'Api\v1\LevelController@update');
     $router->delete('/level', 'Api\v1\LevelController@delete');

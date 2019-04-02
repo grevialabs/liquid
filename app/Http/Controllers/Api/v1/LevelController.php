@@ -144,6 +144,68 @@ class LevelController extends ApiController {
 		die;
 	}
 
+	public function get_list_sync()
+	{
+		$attr = $result = NULL;
+		if (! empty($_GET)) $attr = $_GET;
+			
+		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
+		
+		if (isset($attr['keyword']) && $attr['keyword'] != '') {
+			$q.= ' AND ( ';
+			$q.= ' level_hierarchy LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR level_name LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ')';
+        }
+		
+		if (isset($attr['level_id']) && $attr['level_id'] != '') {
+			$q.= ' AND level_id = '.$attr['level_id'];
+		}
+		
+		if (isset($attr['chamber_sync_flag']) && $attr['chamber_sync_flag'] != '') {
+			$q.= ' AND chamber_sync_flag = '.replace_quote($attr['chamber_sync_flag']);
+        }
+		
+		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
+			$q.= ' AND status = '.$attr['status'];
+        } else {
+			$q.= ' AND status != -1';
+		}
+        
+        $result['total_rows'] = count(orm_get_list($q));
+		
+		if (isset($attr['order'])) { 
+			$q.= ' ORDER BY ' . $attr['order'];
+			if (isset($attr['orderby'])) $q .= ' '.$attr['orderby']; 
+		} else  {
+			$q.= ' ORDER BY '. $this->primary_key .' DESC';
+		}
+		
+		// set default paging
+		if (! isset($attr['paging'])) {
+			if (! isset($attr['offset'])) $attr['offset'] = OFFSET;
+			if (! isset($attr['perpage'])) $attr['perpage'] = PERPAGE;
+		}
+		
+		if (isset($attr['offset'])) { 
+			$q.= ' LIMIT ' . $attr['offset'];
+			
+			if (! isset($attr['perpage'])) $attr['perpage'] = PERPAGE;
+			
+			$q.= ', ' . $attr['perpage'];
+		}
+
+		// debug($q,1);
+		// debug('ngehek',1);
+
+		$data = orm_get_list($q);
+		if (empty($data)) $data = NULL;
+        $result['data'] = $data;
+        
+        echo json_encode($result); 
+		die;
+	}
+
 	public function save()
 	{
         $post = $attr = $result = NULL;

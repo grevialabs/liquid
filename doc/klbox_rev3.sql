@@ -854,7 +854,7 @@ PRIMARY KEY(movement_type_id)
 ) COLLATE='utf8_general_ci' 
 ENGINE=INNODB
 
-CREATE TABLE IF NOT EXISTS `tr_transaction_in` (
+CREATE TABLE `tr_transaction_in` (
   transaction_id VARCHAR(20) NOT NULL,
   site_id VARCHAR(4) NOT NULL,
   outbound_delivery VARCHAR(10) NOT NULL,
@@ -882,33 +882,34 @@ CREATE TABLE IF NOT EXISTS `tr_transaction_in` (
 ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 CREATE TABLE ms_emergency_log(
+emergency_log_id BIGINT NOT NULL AUTO_INCREMENT,
 site_id VARCHAR(4) NULL DEFAULT NULL,
-emergency_button VARCHAR(100) NULL DEFAULT NULL,
-pressed VARCHAR(100) NULL DEFAULT NULL,
-STATUS TINYINT NULL DEFAULT 1,
-created_at DATETIME NULL DEFAULT NULL,
-created_by VARCHAR(100) NULL DEFAULT NULL,
-created_ip VARCHAR(100) NULL DEFAULT NULL,
-updated_at DATETIME NULL DEFAULT NULL,
-updated_by VARCHAR(100) NULL DEFAULT NULL,
-updated_ip VARCHAR(100) NULL DEFAULT NULL
-) COLLATE='utf8mb4_general_ci' 
+emergency_button varchar(100) NULL DEFAULT NULL,
+pressed varchar(100) NULL DEFAULT NULL,
+status TINYINT NULL DEFAULT 1,
+created_at datetime NULL DEFAULT NULL,
+created_by varchar(100) NULL DEFAULT NULL,
+created_ip varchar(100) NULL DEFAULT NULL,
+updated_at datetime NULL DEFAULT NULL,
+updated_by varchar(100) NULL DEFAULT NULL,
+updated_ip varchar(100) NULL DEFAULT NULL,
+) COLLATE='utf8_general_ci' 
 ENGINE=INNODB;
 
 CREATE TABLE ms_power_log(
-site_id VARCHAR(4) DEFAULT NULL,
-pin_ups VARCHAR(100) DEFAULT NULL,
-active VARCHAR(10) DEFAULT NULL,
-STATUS TINYINT DEFAULT 1,
-created_at DATETIME DEFAULT NULL,
-created_by VARCHAR(100) DEFAULT NULL,
-created_ip VARCHAR(100) DEFAULT NULL,
-updated_at DATETIME DEFAULT NULL,
-updated_by VARCHAR(100) DEFAULT NULL,
-updated_ip VARCHAR(100) DEFAULT NULL
-) COLLATE='utf8mb4_general_ci' 
+power_log_id BIGINT NOT NULL AUTO_INCREMENT,
+site_id VARCHAR(4) NULL DEFAULT NULL,
+pin_ups VARCHAR(100) NULL DEFAULT NULL,
+active VARCHAR NULL DEFAULT NULL,
+status TINYINT NULL DEFAULT 1,
+created_at datetime NULL DEFAULT NULL,
+created_by varchar(100) NULL DEFAULT NULL,
+created_ip varchar(100) NULL DEFAULT NULL,
+updated_at datetime NULL DEFAULT NULL,
+updated_by varchar(100) NULL DEFAULT NULL,
+updated_ip varchar(100) NULL DEFAULT NULL,
+) COLLATE='utf8_general_ci' 
 ENGINE=INNODB;
-
 
 
 /*!40000 ALTER TABLE `tr_transaction` DISABLE KEYS */;
