@@ -881,6 +881,35 @@ CREATE TABLE IF NOT EXISTS `tr_transaction_in` (
 ) COLLATE='utf8_general_ci'  
 ENGINE=INNODB DEFAULT CHARSET=utf8;
 
+CREATE TABLE MS_EMERGENCY_LOG(
+site_id VARCHAR(4) NULL DEFAULT NULL,
+emergency_button varchar(100) NULL DEFAULT NULL,
+pressed varchar(100) NULL DEFAULT NULL,
+status TINYINT NULL DEFAULT 1,
+created_at datetime NULL DEFAULT NULL,
+created_by varchar(100) NULL DEFAULT NULL,
+created_ip varchar(100) NULL DEFAULT NULL,
+updated_at datetime NULL DEFAULT NULL,
+updated_by varchar(100) NULL DEFAULT NULL,
+updated_ip varchar(100) NULL DEFAULT NULL,
+) COLLATE='utf8mb4_general_ci' 
+ENGINE=INNODB;
+
+CREATE TABLE MS_POWER_LOG(
+site_id VARCHAR(4) NULL DEFAULT NULL,
+pin_ups VARCHAR(100) NULL DEFAULT NULL,
+active VARCHAR NULL DEFAULT NULL,
+status TINYINT NULL DEFAULT 1,
+created_at datetime NULL DEFAULT NULL,
+created_by varchar(100) NULL DEFAULT NULL,
+created_ip varchar(100) NULL DEFAULT NULL,
+updated_at datetime NULL DEFAULT NULL,
+updated_by varchar(100) NULL DEFAULT NULL,
+updated_ip varchar(100) NULL DEFAULT NULL,
+) COLLATE='utf8mb4_general_ci' 
+ENGINE=INNODB;
+
+
 /*!40000 ALTER TABLE `tr_transaction` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tr_transaction` ENABLE KEYS */;
 
