@@ -81,6 +81,7 @@ class ApiController extends Controller {
 
 			// debug($check,1);
 			// debug('<hr/>tutup',1);
+			header('Access-Control-Allow-Origin: *');
 			
 		} else {
 			$message['message'] = ERROR_SECRETKEY_NO_EXIST;

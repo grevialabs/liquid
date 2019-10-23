@@ -28,7 +28,7 @@ class UserController extends ApiController {
     */
     public $table = 'ms_user';
     public $primary_key = 'user_id';
-    public $list_column = array('user_id', 'site_id', 'parent_user_id', 'level_id','user_code', 'firstname', 'lastname', 'quota_initial', 'quota_additional', 'quota_remaining', 'job_title', 'division', 'email', 'user_category', 'password', 'counter_wrong_pass', 'status_lock', 'locked_time', 'reset_by', 'reset_time',  'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
+    public $list_column = array('user_id', 'site_id', 'parent_user_id', 'level_id','user_code', 'firstname', 'lastname', 'quota_initial', 'quota_additional', 'quota_remaining', 'job_title', 'division_id', 'email', 'user_category', 'password', 'counter_wrong_pass', 'status_lock', 'locked_time', 'reset_by', 'reset_time',  'status', 'created_at', 'created_by','created_ip','updated_at','updated_by','updated_ip');
     public $list_required_column = array('email');
 	
 	/**
@@ -57,7 +57,7 @@ class UserController extends ApiController {
 			
 		// $q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
 		$q = '
-		SELECT user_id, firstname, lastname, CONCAT(firstname," ",lastname) as fullname, job_title, division, 
+		SELECT user_id, firstname, lastname, CONCAT(firstname," ",lastname) as fullname, job_title, division_id, 
 		email, user_code, password, user_category, role_name, level_id, level_name, site_id, ur.role_id,
 		parent_user_id, quota_initial, quota_additional, quota_remaining, email, password, counter_wrong_pass, 
 		status_lock, locked_time, reset_by, reset_time,  u.status, u.created_at, u.created_by, u.created_ip, 
@@ -84,7 +84,7 @@ class UserController extends ApiController {
 		if (! empty($_GET)) $attr = $_GET;
 			
 		$q = '
-		SELECT user_id, firstname, lastname, job_title, division, email, user_category, role_name, level_id, level_name, site_id, ur.role_id, u.status
+		SELECT user_id, firstname, lastname, job_title, division_id, email, user_category, role_name, level_id, level_name, site_id, ur.role_id, u.status
 		FROM '	. $this->table . ' u
 		LEFT JOIN ms_level l USING(level_id)
 		LEFT JOIN ms_user_role ur USING(user_id)
@@ -100,7 +100,7 @@ class UserController extends ApiController {
 			$q.= ' OR CONCAT(firstname, " ", lastname) LIKE '.replace_quote($attr['keyword'],'like');
 			$q.= ' OR lastname LIKE '.replace_quote($attr['keyword'],'like');
 			$q.= ' OR job_title LIKE '.replace_quote($attr['keyword'],'like');
-			$q.= ' OR division LIKE '.replace_quote($attr['keyword'],'like');
+			$q.= ' OR division_id LIKE '.replace_quote($attr['keyword'],'like');
 			$q.= ' OR email LIKE '.replace_quote($attr['keyword'],'like');
 			$q.= ' OR user_category LIKE '.replace_quote($attr['keyword'],'like');
 			$q.= ')';
