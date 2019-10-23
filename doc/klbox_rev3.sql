@@ -295,6 +295,7 @@ INSERT INTO `ms_pic` (`pic_id`, `site_id`, `pic_name`, `pic_phone`, `pic_email`,
 CREATE TABLE IF NOT EXISTS `ms_reason` (
   `reason_id` int(11) NOT NULL AUTO_INCREMENT,
   `reason_value` varchar(100) DEFAULT NULL,
+  `is_replenish` tinyint(4) DEFAULT '0',
   `status` tinyint(4) DEFAULT '1',
   `created_at` datetime DEFAULT NULL,
   `created_by` varchar(25) DEFAULT NULL,
@@ -319,9 +320,9 @@ INSERT INTO `ms_reason` (`reason_id`, `reason_value`, `status`, `created_at`, `c
 
 CREATE TABLE IF NOT EXISTS `ms_reason_type` (
   `reason_type_id` int(11) NOT NULL AUTO_INCREMENT,
-  `article_attribute_id` int(11) NOT NULL,
+  `article_id` int(11) NOT NULL,
+  `attribute` varchar(100) DEFAULT NULL,
   `attribute_value` varchar(100) DEFAULT NULL,
-  `site_id` varchar(10) DEFAULT NULL,
   `chamber_sync_flag` tinyint(4) DEFAULT '0',
   `field_sync` tinyint(4) DEFAULT '0',
   `status` tinyint(4) DEFAULT '1',
@@ -434,7 +435,7 @@ CREATE TABLE IF NOT EXISTS `ms_role_capability` (
   `updated_at` datetime DEFAULT NULL,
   `updated_by` varchar(25) DEFAULT NULL,
   `updated_ip` varchar(25) DEFAULT NULL,
-  UNIQUE KEY `site_id_article` (`site_id`,`article`),
+  UNIQUE KEY `role_capability` (`role_id`,`capability_id`),
   PRIMARY KEY (`role_capability_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=374 DEFAULT CHARSET=utf8;
 
@@ -463,8 +464,8 @@ INSERT INTO `ms_role_capability` (`role_capability_id`, `role_id`, `capability_i
 	(84, '1', 21, 0, 0, 0, 0, 1, '2019-02-22 21:22:20', NULL, NULL, NULL, NULL, NULL),
 	(85, '1', 22, 0, 0, 0, 0, 1, '2019-02-22 21:22:20', NULL, NULL, NULL, NULL, NULL),
 	(86, '1', 23, 0, 0, 0, 0, 1, '2019-02-22 21:22:20', NULL, NULL, NULL, NULL, NULL),
-	(87, '1', 24, 0, 0, 0, 0, 1, '2019-02-22 21:22:20', NULL, NULL, NULL, NULL, NULL)
-/*!40000 ALTER TABLE `ms_role_capability` ENABLE KEYS */;
+	(87, '1', 24, 0, 0, 0, 0, 1, '2019-02-22 21:22:20', NULL, NULL, NULL, NULL, NULL);
+
 
 CREATE TABLE IF NOT EXISTS `ms_site` (
   `site_id` varchar(10) NOT NULL,
@@ -531,6 +532,8 @@ CREATE TABLE IF NOT EXISTS `ms_user` (
   `quota_additional` int(11) DEFAULT NULL,
   `quota_remaining` int(11) DEFAULT NULL,
   `job_title` varchar(100) DEFAULT NULL,
+  `article_attribute_reason` varchar(100) DEFAULT NULL,
+  `attribute_value` varchar(100) DEFAULT NULL,
   `division` varchar(100) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
   `user_category` varchar(100) DEFAULT NULL,
@@ -621,12 +624,9 @@ CREATE TABLE IF NOT EXISTS `tr_article_logistic_site` (
   PRIMARY KEY (`article_logistic_site_id`,`site_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*!40000 ALTER TABLE `tr_article_logistic_site` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tr_article_logistic_site` ENABLE KEYS */;
-
 CREATE TABLE IF NOT EXISTS `tr_article_logistic_site_detail` (
   `article_logistic_site_detail_id` int(11) NOT NULL AUTO_INCREMENT,
-  `outbound_delivery` int(11) NOT NULL,
+  `outbound_delivery` varchar(15) NOT NULL,
   `article` varchar(100) NOT NULL,
   `customer_article` varchar(100) NOT NULL,
   `description` varchar(200) DEFAULT NULL,
@@ -720,7 +720,7 @@ CREATE TABLE IF NOT EXISTS `tr_transaction` (
 
 CREATE TABLE tr_prepack_bundling_header(
 prepack_id int NOT NULL AUTO_INCREMENT,
-outbound_delivery int NOT NULL,
+outbound_delivery varchar(15) NOT NULL,
 site_created_on varchar(4) NULL,
 status_prepack varchar(100) NULL,
 conv_uom varchar(100) NULL,
@@ -741,7 +741,7 @@ AUTO_INCREMENT=1;
 CREATE TABLE tr_prepack_bundling_detail(
 prepack_bundling_detail_id int NOT NULL AUTO_INCREMENT,
 prepack_id int NOT NULL,
-outbound_delivery int NOT NULL,
+outbound_delivery varchar(15) NOT NULL,
 article varchar(100) NULL,
 line_id int NULL,
 qty_dashboard int NULL,
@@ -776,7 +776,7 @@ AUTO_INCREMENT=1;
 
 CREATE TABLE tr_article_logistic_site_detail(
 article_logistic_site_detail_id int NOT NULL AUTO_INCREMENT,
-outbound_delivery int NOT NULL,
+outbound_delivery varchar(15) NOT NULL,
 article varchar(100) NOT NULL,
 customer_article varchar(100) NOT NULL,
 description varchar(200) NULL DEFAULT NULL,
@@ -835,6 +835,49 @@ PRIMARY KEY(movement_quota_level_id)
 ) COLLATE='utf8_general_ci' 
 ENGINE=InnoDB
 AUTO_INCREMENT=1;
+
+CREATE TABLE ms_movement_type (
+movement_type_id INT(3)	NOT NULL,
+movement_type_desc VARCHAR(20) NULL,  
+chamber_sync_flag TINYINT(4) DEFAULT '0',
+field_sync TINYINT(4) DEFAULT '0',
+STATUS TINYINT NULL DEFAULT 1,
+created_at DATETIME NULL DEFAULT NULL,
+created_by VARCHAR(25) NULL DEFAULT NULL,
+created_ip VARCHAR(25) NULL DEFAULT NULL,
+updated_at DATETIME NULL DEFAULT NULL,
+updated_by VARCHAR(25) NULL DEFAULT NULL,
+updated_ip VARCHAR(25) NULL DEFAULT NULL,
+PRIMARY KEY(movement_type_id)
+) COLLATE='utf8_general_ci' 
+ENGINE=INNODB
+
+CREATE TABLE IF NOT EXISTS `tr_transaction_in` (
+  transaction_id VARCHAR(20) NOT NULL,
+  site_id VARCHAR(4) NOT NULL,
+  outbound_delivery VARCHAR(10) NOT NULL,
+  article VARCHAR(100) NOT NULL,
+  rfid VARCHAR(200) NOT NULL,
+  description VARCHAR(200) DEFAULT NULL,
+  picktime DATETIME DEFAULT NULL,
+  user_id VARCHAR(4) NOT NULL,
+  sync_date DATETIME DEFAULT NULL,
+  chamber_sync_flag TINYINT(4) DEFAULT '0',
+  field_sync TINYINT(4) DEFAULT '0',
+  flag_used TINYINT(4) DEFAULT '1',
+  movement_type	TINYINT(3) DEFAULT '101',
+  site_chamber_gr VARCHAR(4) DEFAULT NULL,
+  status_document VARCHAR(25) DEFAULT NULL,
+  STATUS TINYINT(4) DEFAULT '1',
+  created_at DATETIME DEFAULT NULL,
+  created_by VARCHAR(25) DEFAULT NULL,
+  created_ip VARCHAR(25) DEFAULT NULL,
+  updated_at DATETIME DEFAULT NULL,
+  updated_by VARCHAR(25) DEFAULT NULL,
+  updated_ip VARCHAR(25) DEFAULT NULL,
+  PRIMARY KEY (transaction_id)
+) COLLATE='utf8_general_ci'  
+ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*!40000 ALTER TABLE `tr_transaction` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tr_transaction` ENABLE KEYS */;

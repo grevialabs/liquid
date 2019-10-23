@@ -33,6 +33,13 @@ class ApiController extends Controller {
 		// parent::__construct();
 		
 		// $this->middleware('guest');
+		
+		header('Access-Control-Allow-Origin: *');
+		header('Access-Control-Allow-Credentials: *');
+		header('Access-Control-Max-Age: 86400');
+		header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+		header("Access-Control-Allow-Headers: X-Requested-With");
+		
 		$this->authToken();
 		// echo "yamete blokir";
 		// die;
@@ -60,7 +67,7 @@ class ApiController extends Controller {
 		// Disable when production
 		// $token = 'macbook';
 		if ($token) {
-			$header = Request::header();
+			// $header = Request::header();
 			// $token = Request::header('token');
 			// debug('mantapjiwa ada token',1);
 
@@ -93,6 +100,8 @@ class ApiController extends Controller {
 			echo json_encode($message);
 			die;
 		}
+		
+		
 	}
 
 	/**

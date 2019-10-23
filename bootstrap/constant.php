@@ -6,4 +6,7 @@ define('ERROR_SECRETKEY_NO_EXIST','you need token to access data');
 define('OFFSET','0');
 define('PERPAGE','20');
 
+define('BR','<br/>');
+define('HR','<hr/>');
+
 ?>

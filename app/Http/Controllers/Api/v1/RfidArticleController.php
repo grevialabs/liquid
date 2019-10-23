@@ -78,6 +78,10 @@ class RfidArticleController extends ApiController {
 			$q.= ' AND rfid_article_id = '.$attr['rfid_article_id'];
 		}
 		
+		if (isset($attr['rfid']) && $attr['rfid'] != '') {
+			$q.= ' AND rfid = '.$attr['rfid'];
+		}
+		
 		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
 			$q.= ' AND status = '.$attr['status'];
         } else {
@@ -141,6 +145,50 @@ class RfidArticleController extends ApiController {
 			$q.= ', ' . $attr['perpage'];
 		}
 
+		$data = orm_get_list($q);
+        $result['data'] = $data;
+        
+        echo json_encode($result); 
+		die;
+	}
+	
+	public function get_list_rfid()
+	{
+		$attr = $result = NULL;
+		if (! empty($_GET)) $attr = $_GET;
+			
+		$q = 'SELECT * FROM ' . $this->table . ' WHERE 1';
+		
+		if (isset($attr['rfid']) && $attr['rfid'] != '') {
+			$q.= ' AND rfid IN ( '. $attr['rfid'] . ')';
+		}
+		
+		$q.= ' AND status = 1';
+		        
+        $result['total_rows'] = count(orm_get_list($q));
+		
+		if (isset($attr['order'])) { 
+			$q.= ' ORDER BY ' . $attr['order'];
+			if (isset($attr['orderby'])) $q .= ' '.$attr['orderby']; 
+		} else  {
+			$q.= ' ORDER BY '. $this->primary_key .' DESC';
+		}
+		
+		// set default paging
+		// if (! isset($attr['paging'])) {
+		// 	if (! isset($attr['offset'])) $attr['offset'] = OFFSET;
+		// 	if (! isset($attr['perpage'])) $attr['perpage'] = PERPAGE;
+		// }
+		
+		// if (isset($attr['offset'])) { 
+		// 	$q.= ' LIMIT ' . $attr['offset'];
+			
+		// 	if (! isset($attr['perpage'])) $attr['perpage'] = PERPAGE;
+			
+		// 	$q.= ', ' . $attr['perpage'];
+		// }
+
+		// debug($q,1);
 		$data = orm_get_list($q);
         $result['data'] = $data;
         

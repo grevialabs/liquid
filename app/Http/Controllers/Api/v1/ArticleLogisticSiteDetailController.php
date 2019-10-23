@@ -177,6 +177,60 @@ class ArticleLogisticSiteDetailController extends ApiController {
 		die;
 	}
 
+	public function get_list_replenish()
+	{
+		$attr = $result = NULL;
+		if (! empty($_GET)) $attr = $_GET;
+			
+		$q = 'SELECT a.outbound_delivery, article, description,qty_issue, b.site_id FROM tr_article_logistic_site_detail a
+		LEFT JOIN tr_article_logistic_site b ON 1=1 AND b.outbound_delivery = a.outbound_delivery WHERE 1 = 1 ';
+						
+		if (isset($attr['outbound_delivery']) && $attr['outbound_delivery'] != '') 
+		{
+			$q.= ' AND a.outbound_delivery = '.$attr['outbound_delivery'];
+		}
+		
+		if (isset($attr['article']) && $attr['article'] != '') 
+		{
+			$q.= ' AND article = '.$attr['article'];
+		}
+				
+		if (isset($attr['status']) && in_array(array(-1,0,1),$attr['status'])) {
+			$q.= ' AND a.status = '.$attr['status'];
+        } else {
+			$q.= ' AND a.status != -1';
+		}
+        
+        $result['total_rows'] = count(orm_get_list($q));
+		
+		if (isset($attr['order'])) { 
+			$q.= ' ORDER BY ' . $attr['order'];
+			if (isset($attr['orderby'])) $q .= ' '.$attr['orderby']; 
+		} else  {
+			$q.= ' ORDER BY '. $this->primary_key .' DESC';
+		}
+		
+		// set default paging
+		if (! isset($attr['paging'])) {
+			if (! isset($attr['offset'])) $attr['offset'] = OFFSET;
+			if (! isset($attr['perpage'])) $attr['perpage'] = PERPAGE;
+		}
+		
+		if (isset($attr['offset'])) { 
+			$q.= ' LIMIT ' . $attr['offset'];
+			
+			if (! isset($attr['perpage'])) $attr['perpage'] = PERPAGE;
+			
+			$q.= ', ' . $attr['perpage'];
+		}
+
+		$data = orm_get_list($q);
+        $result['data'] = $data;
+        
+        echo json_encode($result); 
+		die;
+	}
+
 	public function save()
 	{
         $post = $attr = $result = NULL;
